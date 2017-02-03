@@ -1,23 +1,23 @@
 # Site settings
-title: Hux Blog
-SEOTitle: 黄玄的博客 | Hux Blog
+title: BY Blog
+SEOTitle: 柏荧的博客 | BY Blog
 header-img: img/home-bg.jpg
-email: huxpro@gmail.com
-description: "关于前端与设计、黑客与画家 | 黄玄，Web & Mobile Lover，Front-End Engineer，UX Designer | 这里是 @Hux黄玄 的个人博客，与你一起发现更大的世界。"
-keyword: "黄玄, Hux黄玄, Hux, 鬼栈, huxpro, @huxpro, 黄玄的博客, Hux Blog, 博客, 个人网站, 互联网, 前端, 设计, 产品, 肖玉, Lynn, 肖玉的男朋友"
-url: "https://qiubaiying.github.io"              # your host, for absolute URL
-baseurl: ""                             # for example, '/blog' if your blog hosted on 'host/blog'
-
+email: qiubaiying@gmail.com
+description: "每个胜利背后都有许多尝试"
+keyword: "BY, BY Blog, 柏荧的博客, qiubaiying, 邱柏荧, iOS, Apple, iPhone"
+url: "https://qiubaiying.github.io"          # your host, for absolute URL
+baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 
 
 # SNS settings
 RSS: false
-weibo_username:     huxpro
-zhihu_username:     huxpro
-github_username:    huxpro
-#twitter_username:  huxpro
-facebook_username:  huxpro
-# linkedin_username:  firstname-lastname-idxxxx
+weibo_username:     qiubaiying
+zhihu_username:     qiubaiying
+github_username:    qiubaiying
+facebook_username:  qiubaiying
+#jianshu_username:   qiubaiying
+#twitter_username:   qiubaiying
+
 
 
 
@@ -51,7 +51,7 @@ kramdown:
 #disqus_username: _your_disqus_short_name_
 
 # Duoshuo settings
-duoshuo_username: huxblog
+duoshuo_username: qiubaiying
 # Share component is depend on Comment so we can NOT use share only.
 duoshuo_share: true                     # set to false if you want to use Comment without Sharing
 
@@ -59,12 +59,12 @@ duoshuo_share: true                     # set to false if you want to use Commen
 
 
 # Analytics settings
-# Baidu Analytics 
-# ba_track_id: [your track id]
+# Baidu Analytics
+ba_track_id: 83e259f69b37d02a4633a2b7d960139c
 
 # Google Analytics
-ga_track_id: 'UA-49627206-1'            # Format: UA-xxxxxx-xx
-ga_domain: huangxuan.me
+ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
+ga_domain: auto
 
 
 
@@ -90,37 +90,13 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "Su",
-        href: "http://su.gallery/"
+        title: "BY 简书",
+        href: "http://www.jianshu.com/u/e71990ada2fd"
     },{
-        title: "乱序",
-        href: "http://mida.re/"
+        title: "Apple",
+        href: "https://apple.com"
     },{
-        title: "前端外刊评论",
-        href: "http://qianduan.guru/"
-    },{
-        title: "天镶的博客",
-        href: "http://lingyu.wang/"
-    },{
-        title: "Luke 的自留地",
-        href: "http://hmqk1995.github.io"
-    },{
-        title: "Ebn's Blog",
-        href: "http://ebnbin.com/"
-    },{
-        title: "SmdCn's Blog",
-        href: "http://blog.smdcn.net"
-    },{
-        title: "解旻的博客",
-        href: "http://xieminis.me/"
-    },{
-        title: "DHong Say",
-        href: "http://dhong.co"
-    },{
-        title: "尹峰以为",
-        href: "http://ingf.github.io/"
-    },{
-        title: "前端神盾局",
-        href: "http://wepiaofei.github.io/blog/"
+        title: "Apple Developer",
+        href: "https://developer.apple.com/"
     }
 ]
