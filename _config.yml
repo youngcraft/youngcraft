@@ -67,11 +67,11 @@ duoshuo_share: true                     # set to false if you want to use Commen
 
 # Analytics settings
 # Baidu Analytics
-ba_track_id: b50bf2b12b5338a1845e33832976fd68
+#ba_track_id: b50bf2b12b5338a1845e33832976fd68
 
 # Google Analytics
-ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
-ga_domain: auto
+#ga_track_id: 'UA-90855596-1'            # Format: UA-xxxxxx-xx
+#ga_domain: auto
 
 
 
@@ -92,13 +92,13 @@ service-worker: true
 # Friends
 friends: [
     {
-        title: "简书·BY",
-        href: "http://www.jianshu.com/u/e71990ada2fd"
+        title: "Youngcraft",
+        href: "http://www.xxxxx"
     },{
         title: "Apple",
-        href: "https://apple.com"
+        href: "https://xxxxx"
     },{
         title: "Apple Developer",
-        href: "https://developer.apple.com/"
+        href: "https://xxxxx"
     }
 ]
