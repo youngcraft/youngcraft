@@ -1,1 +1,14 @@
 http://snapshot.debian.org/archive/debian/20100907T162043Z/pool/main/g/git/git_1.7.2.3-1_amd64.deb
+
+deb     http://snapshot.debian.org/archive/debian/20120627T101242Z/ squeeze main
+deb-src http://snapshot.debian.org/archive/debian/20120627T101242Z/ squeeze main
+
+PATH_SEPARATOR = :
+AMTAR = ${SHELL} /home/young/
+AWK = mawk
+CC = gcc -fno-stack-protector -D_FORTIFY_SOURCE=0 -z norelro -z execstack
+DEPDIR = .deps
+INSTALL_STRIP_PROGRAM = ${SHELL} $(install_sh) -c -s 
+PACKAGE = dnstracer
+
+
