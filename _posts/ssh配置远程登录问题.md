@@ -1,3 +1,20 @@
+---
+layout:     post
+title:      SSH配置远程登陆问题
+subtitle:   Linux很繁琐，但是学会很简单
+date:       2017-10-27
+author:     BY TALA
+header-img: img/post-bg-re-vs-ng2.jpg
+catalog: true
+tags:
+    - Blog
+---
+
+>
+> 为了防止忘记，特意拷贝，如有冒犯，实属无悔，包涵包涵，如有问题请联系youngtala@gmail.com
+>
+
+
 http://www.linuxidc.com/Linux/2015-03/114709.htm
 
 
@@ -90,11 +107,6 @@ A机器ssh登录B机器无需输入密码；
 3、将 .pub 文件复制到B机器的 .ssh 目录， 并 cat id_dsa.pub >> ~/.ssh/authorized_keys
 4、大功告成，从A机器登录B机器的目标账户，不再需要密码了；
 
- 
-
- 
-
- 
 
 ssh-keygen做密码验证可以使在向对方机器上ssh ,scp不用使用密码.
 具体方法如下:
