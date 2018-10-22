@@ -447,6 +447,82 @@ subprocess.call ([&quot;cmd&quot;, &quot;arg1&quot;, &quot;arg2&quot;],shell=Tru
 
 
   
+    <article id="post-2018-10-21-heap初识" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/28/2018-10-21-heap初识/">Linux Heap introduction</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/28/2018-10-21-heap初识/" class="archive-article-date">
+  	<time datetime="2017-08-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="初识heap学习"><a href="#初识heap学习" class="headerlink" title="初识heap学习"></a>初识heap学习</h1><p>直接上代码，结合代码学习</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Per thread arena example. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">threadFunc</span><span class="params">(<span class="keyword">void</span>* arg)</span> </span>&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="keyword">char</span>* addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">pthread_t</span> t1;</span><br><span class="line"><span class="keyword">void</span>* s;</span><br><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line"><span class="keyword">char</span>* addr;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Welcome to per thread arena example::%d\n"</span>,getpid());</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">ret = pthread_create(&amp;t1, <span class="literal">NULL</span>, threadFunc, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread creation error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">ret = pthread_join(t1, &amp;s);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread join error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h2><p>gcc MyProgram.c -o MyProgram -lpthread</p>
+<h2 id="分阶段分析"><a href="#分阶段分析" class="headerlink" title="分阶段分析"></a>分阶段分析</h2>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Heap Pwn</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/28/2018-10-21-heap初识/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-2017-08-27-Linux汇编基础" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -514,82 +590,6 @@ Intel： add eax = 1；用=等号表示对左侧操作数进行加和
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/28/2017-08-27-Linux汇编基础/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2018-10-21-heap初识" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/28/2018-10-21-heap初识/">Linux Heap introduction</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/28/2018-10-21-heap初识/" class="archive-article-date">
-  	<time datetime="2017-08-27T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-28</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="初识heap学习"><a href="#初识heap学习" class="headerlink" title="初识heap学习"></a>初识heap学习</h1><p>直接上代码，结合代码学习</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Per thread arena example. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">threadFunc</span><span class="params">(<span class="keyword">void</span>* arg)</span> </span>&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="keyword">char</span>* addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">pthread_t</span> t1;</span><br><span class="line"><span class="keyword">void</span>* s;</span><br><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line"><span class="keyword">char</span>* addr;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Welcome to per thread arena example::%d\n"</span>,getpid());</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">ret = pthread_create(&amp;t1, <span class="literal">NULL</span>, threadFunc, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread creation error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">ret = pthread_join(t1, &amp;s);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread join error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h2><p>gcc MyProgram.c -o MyProgram -lpthread</p>
-<h2 id="分阶段分析"><a href="#分阶段分析" class="headerlink" title="分阶段分析"></a>分阶段分析</h2>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Heap Pwn</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/28/2018-10-21-heap初识/">展开全文 >></a>
         </p>
       
 
@@ -689,6 +689,201 @@ Intel： add eax = 1；用=等号表示对左侧操作数进行加和
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/11/2017-08-11-Linux下的堆块伪造/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2017-08-10-如何搭建pwn环境" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">搭建pwn环境</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/10/2017-08-10-如何搭建pwn环境/" class="archive-article-date">
+  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>正所谓前人栽树，后人乘凉。</p>
+<p>立志做pwn狗中web最好的</p>
+</blockquote>
+<h1 id="socat"><a href="#socat" class="headerlink" title="socat"></a>socat</h1><p>socat </p>
+<p>在ubuntu 16.04 测试：<br>sudo apt-get install socat </p>
+<p>运行命令：</p>
+<p>socat TCP-LISTEN:4444,REUSEADDR,FORK EXEC:./xxx</p>
+<p>xxxx表示文件路径</p>
+<p>#xinetd</p>
+<p>sudo apt-get install xinetd</p>
+<p>设置启动模板：</p>
+<pre><code>/etc/services 下先添加自己的服务端口信息 
+/etc/xinetd.d/ 下添加自己的服务
+service pwn_test
+{
+disable = no //打开
+port = 10002 
+socket_type = stream
+server = 【filepath】
+wait = no 
+user = pwn_user
+}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2017-08-10-bin文件中对齐问题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/2017-08-10-bin文件中对齐问题/">二进制对齐问题</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/10/2017-08-10-bin文件中对齐问题/" class="archive-article-date">
+  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="明白程序的执行逻辑"><a href="#明白程序的执行逻辑" class="headerlink" title="明白程序的执行逻辑"></a>明白程序的执行逻辑</h1><p>链接如下，问题是：</p>
+<p><a href="https://stackoverflow.com/questions/4228261/understanding-the-purpose-of-some-assembly-statements" target="_blank" rel="noopener">stackoverflow </a></p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8048394</span>:<span class="number">8</span>d <span class="number">4</span><span class="keyword">c</span> <span class="number">24</span> <span class="number">04</span>  lea<span class="number">0x4</span>(<span class="symbol">%esp</span>),<span class="symbol">%ecx</span>  <span class="comment">; ??</span></span><br><span class="line"><span class="comment">8048398:83 e4 f0 and$0xfffffff0,%esp; ??</span></span><br><span class="line"><span class="comment">804839b:ff 71 fc pushl  -0x4(%ecx)  ; ??</span></span><br><span class="line"><span class="comment">804839e:55   push   %ebp; Store the Base pointer</span></span><br><span class="line"><span class="comment">804839f:89 e5mov%esp,%ebp   ; Initialize the Base pointer with the stack pointer</span></span><br><span class="line"><span class="comment">80483a1:51   push   %ecx; ??</span></span><br><span class="line"><span class="comment">80483a2:83 ec 4c sub$0x4c,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483a5:c7 45 f8 0c 00 00 00 movl   $0xc,-0x8(%ebp) ; Move 12 into -0x8(%ebp)</span></span><br><span class="line"><span class="comment">80483ac:c7 45 f4 14 00 00 00 movl   $0x14,-0xc(%ebp); Move 20 into -0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483b3:8b 45 f8 mov-0x8(%ebp),%eax ; Move 12@-0x8(%ebp) into eax</span></span><br><span class="line"><span class="comment">80483b6:83 c0 7b add$0x7b,%eax  ; Add 123 to 12@eax</span></span><br><span class="line"><span class="comment">80483b9:89 45 f4 mov%eax,-0xc(%ebp) ; Store the result into b@-0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483bc:b8 00 00 00 00   mov$0x0,%eax   ; Move 0 into eax</span></span><br><span class="line"><span class="comment">80483c1:83 c4 10 add$0x10,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483c4:59   pop%ecx; ??</span></span><br><span class="line"><span class="comment">80483c5:5d   pop%ebp; ??</span></span><br><span class="line"><span class="comment">80483c6:8d 61 fc lea-0x4(%ecx),%esp ; ??</span></span><br></pre></td></tr></table></figure>
+<p>Understanding the purpose of some assembly statements<br>如何理解？</p>
+<pre><code>and $0xfffffff0,%esp 
+</code></pre><p>官方给出的解释是：</p>
+<blockquote>
+<p>This code makes sure that the stack is aligned to 16 bytes. After this operation esp will be less than or equal to what it was before this operation, so the stack may grow, which protects anything that might already be on the stack. This is sometimes done in main just in case the function is called with an unaligned stack, which can cause things to be really slow (16 byte is a cache line width on x86, I think, though 4 byte alignment is what is really important here). If main has a unaligned stack the rest of the program will too.</p>
+</blockquote>
+<p>总的来说就是为了对齐</p>
+<blockquote>
+<p>Many architectures have a concept called alignment where the hardware is designed to operate on addresses that are multiples of the word size. For example, on a 32-bit processor, objects might be aligned to 32-bit boundaries (4 bytes), and on a 64-bit processor, objects might be aligned to 64-bit boundaries (8 bytes). An aligned pointer is one that points to an address that’s a multiple of the word size, and an unaligned pointer is one that’s not pointing to an address that’s a multiple of the word size.</p>
+<p>On most architectures, reading or writing unaligned pointers suffers some sort of penalty. On some processors, doing this causes a bus error, which usually terminates the program immediately. On others, such as x86, unaligned reads and writes are legal but suffer a performance penalty due to how the hardware is structured.</p>
+</blockquote>
+<p>In your code, 0xBAD = 2989 is probably not aligned, since it’s not a multiple of most common word sizes, and the pointer you write to is also probably not aligned.</p>
+<p>Hope this helps!</p>
+<p>链接地址:<a href="https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer" target="_blank" rel="noopener">https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer</a></p>
+<h1 id="亲自搜一搜"><a href="#亲自搜一搜" class="headerlink" title="亲自搜一搜"></a>亲自搜一搜</h1><p>随便搜搜bin文件里，<br><img src="http://i.imgur.com/qhBqnj4.png" alt=""></p>
+<p>可以看到0x80482E5 esp自身自身进行了对齐，而Libc_csu_fini中实现了对main调用前的初始化操作，很多细节还是需要看</p>
+<p>调试下查看下位置,程序执行前，esp地址为：</p>
+<pre><code>ESP: 0xffffd0d4 --&gt; 0xffffd2ad 
+</code></pre><p>程序执行以后，栈的地址应该是低地址延伸：</p>
+<pre><code>ESP: 0xffffd0d0 --&gt; 0x1
+</code></pre><p>然后，可以看到向下移动了0x04个地址空间，浪费了这点地址，但是对齐了。</p>
+<p>Sometimes , compiler will optimize the code by adding some padding to make it align to word boundary<br>You have to inspect the assembly code to know the exactly stack position</p>
+<p>编译器执行操作命令</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/10/2017-08-10-bin文件中对齐问题/">展开全文 >></a>
         </p>
       
 
@@ -901,201 +1096,6 @@ gcc -fstack-protector-all -o test test.c //启用堆栈保护，为所有函数�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/10/2017-08-10-GDB_peda插件使用指南/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2017-08-10-bin文件中对齐问题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/10/2017-08-10-bin文件中对齐问题/">二进制对齐问题</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/10/2017-08-10-bin文件中对齐问题/" class="archive-article-date">
-  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="明白程序的执行逻辑"><a href="#明白程序的执行逻辑" class="headerlink" title="明白程序的执行逻辑"></a>明白程序的执行逻辑</h1><p>链接如下，问题是：</p>
-<p><a href="https://stackoverflow.com/questions/4228261/understanding-the-purpose-of-some-assembly-statements" target="_blank" rel="noopener">stackoverflow </a></p>
-<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8048394</span>:<span class="number">8</span>d <span class="number">4</span><span class="keyword">c</span> <span class="number">24</span> <span class="number">04</span>  lea<span class="number">0x4</span>(<span class="symbol">%esp</span>),<span class="symbol">%ecx</span>  <span class="comment">; ??</span></span><br><span class="line"><span class="comment">8048398:83 e4 f0 and$0xfffffff0,%esp; ??</span></span><br><span class="line"><span class="comment">804839b:ff 71 fc pushl  -0x4(%ecx)  ; ??</span></span><br><span class="line"><span class="comment">804839e:55   push   %ebp; Store the Base pointer</span></span><br><span class="line"><span class="comment">804839f:89 e5mov%esp,%ebp   ; Initialize the Base pointer with the stack pointer</span></span><br><span class="line"><span class="comment">80483a1:51   push   %ecx; ??</span></span><br><span class="line"><span class="comment">80483a2:83 ec 4c sub$0x4c,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483a5:c7 45 f8 0c 00 00 00 movl   $0xc,-0x8(%ebp) ; Move 12 into -0x8(%ebp)</span></span><br><span class="line"><span class="comment">80483ac:c7 45 f4 14 00 00 00 movl   $0x14,-0xc(%ebp); Move 20 into -0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483b3:8b 45 f8 mov-0x8(%ebp),%eax ; Move 12@-0x8(%ebp) into eax</span></span><br><span class="line"><span class="comment">80483b6:83 c0 7b add$0x7b,%eax  ; Add 123 to 12@eax</span></span><br><span class="line"><span class="comment">80483b9:89 45 f4 mov%eax,-0xc(%ebp) ; Store the result into b@-0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483bc:b8 00 00 00 00   mov$0x0,%eax   ; Move 0 into eax</span></span><br><span class="line"><span class="comment">80483c1:83 c4 10 add$0x10,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483c4:59   pop%ecx; ??</span></span><br><span class="line"><span class="comment">80483c5:5d   pop%ebp; ??</span></span><br><span class="line"><span class="comment">80483c6:8d 61 fc lea-0x4(%ecx),%esp ; ??</span></span><br></pre></td></tr></table></figure>
-<p>Understanding the purpose of some assembly statements<br>如何理解？</p>
-<pre><code>and $0xfffffff0,%esp 
-</code></pre><p>官方给出的解释是：</p>
-<blockquote>
-<p>This code makes sure that the stack is aligned to 16 bytes. After this operation esp will be less than or equal to what it was before this operation, so the stack may grow, which protects anything that might already be on the stack. This is sometimes done in main just in case the function is called with an unaligned stack, which can cause things to be really slow (16 byte is a cache line width on x86, I think, though 4 byte alignment is what is really important here). If main has a unaligned stack the rest of the program will too.</p>
-</blockquote>
-<p>总的来说就是为了对齐</p>
-<blockquote>
-<p>Many architectures have a concept called alignment where the hardware is designed to operate on addresses that are multiples of the word size. For example, on a 32-bit processor, objects might be aligned to 32-bit boundaries (4 bytes), and on a 64-bit processor, objects might be aligned to 64-bit boundaries (8 bytes). An aligned pointer is one that points to an address that’s a multiple of the word size, and an unaligned pointer is one that’s not pointing to an address that’s a multiple of the word size.</p>
-<p>On most architectures, reading or writing unaligned pointers suffers some sort of penalty. On some processors, doing this causes a bus error, which usually terminates the program immediately. On others, such as x86, unaligned reads and writes are legal but suffer a performance penalty due to how the hardware is structured.</p>
-</blockquote>
-<p>In your code, 0xBAD = 2989 is probably not aligned, since it’s not a multiple of most common word sizes, and the pointer you write to is also probably not aligned.</p>
-<p>Hope this helps!</p>
-<p>链接地址:<a href="https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer" target="_blank" rel="noopener">https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer</a></p>
-<h1 id="亲自搜一搜"><a href="#亲自搜一搜" class="headerlink" title="亲自搜一搜"></a>亲自搜一搜</h1><p>随便搜搜bin文件里，<br><img src="http://i.imgur.com/qhBqnj4.png" alt=""></p>
-<p>可以看到0x80482E5 esp自身自身进行了对齐，而Libc_csu_fini中实现了对main调用前的初始化操作，很多细节还是需要看</p>
-<p>调试下查看下位置,程序执行前，esp地址为：</p>
-<pre><code>ESP: 0xffffd0d4 --&gt; 0xffffd2ad 
-</code></pre><p>程序执行以后，栈的地址应该是低地址延伸：</p>
-<pre><code>ESP: 0xffffd0d0 --&gt; 0x1
-</code></pre><p>然后，可以看到向下移动了0x04个地址空间，浪费了这点地址，但是对齐了。</p>
-<p>Sometimes , compiler will optimize the code by adding some padding to make it align to word boundary<br>You have to inspect the assembly code to know the exactly stack position</p>
-<p>编译器执行操作命令</p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/10/2017-08-10-bin文件中对齐问题/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2017-08-10-如何搭建pwn环境" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">搭建pwn环境</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/10/2017-08-10-如何搭建pwn环境/" class="archive-article-date">
-  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>正所谓前人栽树，后人乘凉。</p>
-<p>立志做pwn狗中web最好的</p>
-</blockquote>
-<h1 id="socat"><a href="#socat" class="headerlink" title="socat"></a>socat</h1><p>socat </p>
-<p>在ubuntu 16.04 测试：<br>sudo apt-get install socat </p>
-<p>运行命令：</p>
-<p>socat TCP-LISTEN:4444,REUSEADDR,FORK EXEC:./xxx</p>
-<p>xxxx表示文件路径</p>
-<p>#xinetd</p>
-<p>sudo apt-get install xinetd</p>
-<p>设置启动模板：</p>
-<pre><code>/etc/services 下先添加自己的服务端口信息 
-/etc/xinetd.d/ 下添加自己的服务
-service pwn_test
-{
-disable = no //打开
-port = 10002 
-socket_type = stream
-server = 【filepath】
-wait = no 
-user = pwn_user
-}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">展开全文 >></a>
         </p>
       
 

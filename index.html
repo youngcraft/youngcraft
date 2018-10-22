@@ -536,7 +536,7 @@
 
 
   
-    <article id="post-2017-08-31scapy fuzz部分源码解析" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+    <article id="post-2017-08-31-scapy fuzz部分源码解析" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
@@ -547,7 +547,8 @@
 <p>然后我们来解析下发送的数据包<br><img src="http://" alt=""></p>
 <h1 id="源码解读-Fuzz模块"><a href="#源码解读-Fuzz模块" class="headerlink" title="源码解读 Fuzz模块"></a>源码解读 Fuzz模块</h1><h2 id="field-字段对fuzz的支持"><a href="#field-字段对fuzz的支持" class="headerlink" title="field 字段对fuzz的支持"></a>field 字段对fuzz的支持</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">I:\code\scapy\scapy\fields.py:</span><br><span class="line"> <span class="number">1081</span>  </span><br><span class="line"> <span class="number">1082</span>  <span class="class"><span class="keyword">class</span> <span class="title">ByteEnumKeysField</span><span class="params">(ByteEnumField)</span>:</span></span><br><span class="line"> <span class="number">1083</span>:     <span class="string">"""ByteEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1084</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1085</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br><span class="line"> ....</span><br><span class="line"> <span class="number">1087</span>  </span><br><span class="line"> <span class="number">1088</span>  <span class="class"><span class="keyword">class</span> <span class="title">ShortEnumKeysField</span><span class="params">(ShortEnumField)</span>:</span></span><br><span class="line"> <span class="number">1089</span>:     <span class="string">"""ShortEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1090</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1091</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br><span class="line"> ....</span><br><span class="line"> <span class="number">1093</span>  </span><br><span class="line"> <span class="number">1094</span>  <span class="class"><span class="keyword">class</span> <span class="title">IntEnumKeysField</span><span class="params">(IntEnumField)</span>:</span></span><br><span class="line"> <span class="number">1095</span>:     <span class="string">"""IntEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1096</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1097</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br></pre></td></tr></table></figure>
 <p>可以看到每个域，都对fuzz中字段变化方式做了一定探索</p>
-<h2 id="fuzz-field-递归生成packet包"><a href="#fuzz-field-递归生成packet包" class="headerlink" title="fuzz field 递归生成packet包"></a>fuzz field 递归生成packet包</h2><p>通过递归产生包结构，对响应产生的相应包结构，包结构发现必须<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h2 id="fuzz-field-递归生成packet包"><a href="#fuzz-field-递归生成packet包" class="headerlink" title="fuzz field 递归生成packet包"></a>fuzz field 递归生成packet包</h2><p>通过递归产生包结构，对响应产生的相应包结构，包结构发现必须</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
 
@@ -560,7 +561,7 @@
 
       
         <p class="article-more-link">
-          <a class="article-more-a" href="/2018/10/21/2017-08-31scapy fuzz部分源码解析/">展开全文 >></a>
+          <a class="article-more-a" href="/2018/10/21/2017-08-31-scapy fuzz部分源码解析/">展开全文 >></a>
         </p>
       
 

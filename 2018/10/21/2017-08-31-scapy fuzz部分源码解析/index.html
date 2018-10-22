@@ -12,16 +12,16 @@
 <meta name="keywords" content="Pwn,ICS,Dev">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gumeng&#39;s Blog">
-<meta property="og:url" content="http://gumeng.fun/2018/10/21/2017-08-31scapy fuzz部分源码解析/index.html">
+<meta property="og:url" content="http://gumeng.fun/2018/10/21/2017-08-31-scapy fuzz部分源码解析/index.html">
 <meta property="og:site_name" content="Gumeng&#39;s Blog">
 <meta property="og:description" content="Scapy Fuzz 模块解析很久以来，scapy都是一个交互式发包的神器，因为定制所以强大，借助scapy可以方便实现很多功能，但是对于其很多功能，并没有人给予很多深入的解释，因此在此苟且用自己粗糙的语言尝试解析一遍scapy源码。 Fuzz模块scapy在用户手册中，提到一个用户模块，就是fuzz功能 123&amp;gt;&amp;gt;&amp;gt;send(IP(dst=&quot;target&quot;)/fuzz(UDP(">
 <meta property="og:locale" content="En">
-<meta property="og:image" content="http://gumeng.fun/2018/10/21/2017-08-31scapy%20fuzz部分源码解析/index.html">
-<meta property="og:updated_time" content="2017-12-29T06:46:25.439Z">
+<meta property="og:image" content="http://gumeng.fun/2018/10/21/2017-08-31-scapy%20fuzz部分源码解析/index.html">
+<meta property="og:updated_time" content="2018-10-22T02:08:57.185Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gumeng&#39;s Blog">
 <meta name="twitter:description" content="Scapy Fuzz 模块解析很久以来，scapy都是一个交互式发包的神器，因为定制所以强大，借助scapy可以方便实现很多功能，但是对于其很多功能，并没有人给予很多深入的解释，因此在此苟且用自己粗糙的语言尝试解析一遍scapy源码。 Fuzz模块scapy在用户手册中，提到一个用户模块，就是fuzz功能 123&amp;gt;&amp;gt;&amp;gt;send(IP(dst=&quot;target&quot;)/fuzz(UDP(">
-<meta name="twitter:image" content="http://gumeng.fun/2018/10/21/2017-08-31scapy%20fuzz部分源码解析/index.html">
+<meta name="twitter:image" content="http://gumeng.fun/2018/10/21/2017-08-31-scapy%20fuzz部分源码解析/index.html">
   
     <link rel="alternative" href="/atom.xml" title="Gumeng&#39;s Blog" type="application/atom+xml">
   
@@ -157,7 +157,7 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-2017-08-31scapy fuzz部分源码解析" class="article article-type-post " itemscope="" itemprop="blogPost">
+            <article id="post-2017-08-31-scapy fuzz部分源码解析" class="article article-type-post " itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
     <div class="article-entry" itemprop="articleBody">
@@ -168,7 +168,8 @@
 <p>然后我们来解析下发送的数据包<br><img src="http://" alt=""></p>
 <h1 id="源码解读-Fuzz模块"><a href="#源码解读-Fuzz模块" class="headerlink" title="源码解读 Fuzz模块"></a>源码解读 Fuzz模块</h1><h2 id="field-字段对fuzz的支持"><a href="#field-字段对fuzz的支持" class="headerlink" title="field 字段对fuzz的支持"></a>field 字段对fuzz的支持</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">I:\code\scapy\scapy\fields.py:</span><br><span class="line"> <span class="number">1081</span>  </span><br><span class="line"> <span class="number">1082</span>  <span class="class"><span class="keyword">class</span> <span class="title">ByteEnumKeysField</span><span class="params">(ByteEnumField)</span>:</span></span><br><span class="line"> <span class="number">1083</span>:     <span class="string">"""ByteEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1084</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1085</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br><span class="line"> ....</span><br><span class="line"> <span class="number">1087</span>  </span><br><span class="line"> <span class="number">1088</span>  <span class="class"><span class="keyword">class</span> <span class="title">ShortEnumKeysField</span><span class="params">(ShortEnumField)</span>:</span></span><br><span class="line"> <span class="number">1089</span>:     <span class="string">"""ShortEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1090</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1091</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br><span class="line"> ....</span><br><span class="line"> <span class="number">1093</span>  </span><br><span class="line"> <span class="number">1094</span>  <span class="class"><span class="keyword">class</span> <span class="title">IntEnumKeysField</span><span class="params">(IntEnumField)</span>:</span></span><br><span class="line"> <span class="number">1095</span>:     <span class="string">"""IntEnumField that picks valid values when fuzzed. """</span></span><br><span class="line"> <span class="number">1096</span>      <span class="function"><span class="keyword">def</span> <span class="title">randval</span><span class="params">(self)</span>:</span></span><br><span class="line"> <span class="number">1097</span>          <span class="keyword">return</span> RandEnumKeys(self.i2s)</span><br></pre></td></tr></table></figure>
 <p>可以看到每个域，都对fuzz中字段变化方式做了一定探索</p>
-<h2 id="fuzz-field-递归生成packet包"><a href="#fuzz-field-递归生成packet包" class="headerlink" title="fuzz field 递归生成packet包"></a>fuzz field 递归生成packet包</h2><p>通过递归产生包结构，对响应产生的相应包结构，包结构发现必须<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<h2 id="fuzz-field-递归生成packet包"><a href="#fuzz-field-递归生成packet包" class="headerlink" title="fuzz field 递归生成packet包"></a>fuzz field 递归生成packet包</h2><p>通过递归产生包结构，对响应产生的相应包结构，包结构发现必须</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
 
@@ -248,7 +249,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://gumeng.fun/2018/10/21/2017-08-31scapy fuzz部分源码解析/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://gumeng.fun/2018/10/21/2017-08-31-scapy fuzz部分源码解析/" alt="微信分享二维码">
     </div>
 </div>
 
