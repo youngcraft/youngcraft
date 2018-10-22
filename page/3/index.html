@@ -718,102 +718,6 @@ Intel： add eax = 1；用=等号表示对左侧操作数进行加和
 
 
   
-    <article id="post-2017-08-10-如何搭建pwn环境" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">搭建pwn环境</a>
-    </h1>
-  
-
-        
-        <a href="/2017/08/10/2017-08-10-如何搭建pwn环境/" class="archive-article-date">
-  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <blockquote>
-<p>正所谓前人栽树，后人乘凉。</p>
-<p>立志做pwn狗中web最好的</p>
-</blockquote>
-<h1 id="socat"><a href="#socat" class="headerlink" title="socat"></a>socat</h1><p>socat </p>
-<p>在ubuntu 16.04 测试：<br>sudo apt-get install socat </p>
-<p>运行命令：</p>
-<p>socat TCP-LISTEN:4444,REUSEADDR,FORK EXEC:./xxx</p>
-<p>xxxx表示文件路径</p>
-<p>#xinetd</p>
-<p>sudo apt-get install xinetd</p>
-<p>设置启动模板：</p>
-<pre><code>/etc/services 下先添加自己的服务端口信息 
-/etc/xinetd.d/ 下添加自己的服务
-service pwn_test
-{
-disable = no //打开
-port = 10002 
-socket_type = stream
-server = 【filepath】
-wait = no 
-user = pwn_user
-}
-</code></pre>
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
     <article id="post-2017-08-10-bin文件中对齐问题" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
   <div class="article-inner">
     
@@ -1096,6 +1000,102 @@ gcc -fstack-protector-all -o test test.c //启用堆栈保护，为所有函数�
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/08/10/2017-08-10-GDB_peda插件使用指南/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-2017-08-10-如何搭建pwn环境" class="article article-type-post  article-index" itemscope="" itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">搭建pwn环境</a>
+    </h1>
+  
+
+        
+        <a href="/2017/08/10/2017-08-10-如何搭建pwn环境/" class="archive-article-date">
+  	<time datetime="2017-08-09T16:00:00.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-08-10</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>正所谓前人栽树，后人乘凉。</p>
+<p>立志做pwn狗中web最好的</p>
+</blockquote>
+<h1 id="socat"><a href="#socat" class="headerlink" title="socat"></a>socat</h1><p>socat </p>
+<p>在ubuntu 16.04 测试：<br>sudo apt-get install socat </p>
+<p>运行命令：</p>
+<p>socat TCP-LISTEN:4444,REUSEADDR,FORK EXEC:./xxx</p>
+<p>xxxx表示文件路径</p>
+<p>#xinetd</p>
+<p>sudo apt-get install xinetd</p>
+<p>设置启动模板：</p>
+<pre><code>/etc/services 下先添加自己的服务端口信息 
+/etc/xinetd.d/ 下添加自己的服务
+service pwn_test
+{
+disable = no //打开
+port = 10002 
+socket_type = stream
+server = 【filepath】
+wait = no 
+user = pwn_user
+}
+</code></pre>
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Blog</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/08/10/2017-08-10-如何搭建pwn环境/">展开全文 >></a>
         </p>
       
 
