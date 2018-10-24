@@ -8,22 +8,22 @@
   <link rel="dns-prefetch" href="http://gumeng.fun">
   <title>ELF 文件结构 | Gumeng&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言web狗做了这么久，也写了一些工具，用了别人很多工具，但是总觉得无法洞悉各种绕过的脑洞，深深被web中的脑洞所坑，因此转行做pwn狗，喜欢拿shell的感觉，虽然是不webshell，但同样带感！！！写在前边： 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689">
+  <meta name="description" content="前言基础概念，比如ELF文件结构，包括相关安全学习，IoT相关物联网 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689865https://en.wikipedia.org/wiki/Executable_and_Linkable_Formathttp://fli">
 <meta name="keywords" content="Blog">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ELF 文件结构">
 <meta property="og:url" content="http://gumeng.fun/2017/08/06/2017-08-06-Linux GDB 调试学习/index.html">
 <meta property="og:site_name" content="Gumeng&#39;s Blog">
-<meta property="og:description" content="前言web狗做了这么久，也写了一些工具，用了别人很多工具，但是总觉得无法洞悉各种绕过的脑洞，深深被web中的脑洞所坑，因此转行做pwn狗，喜欢拿shell的感觉，虽然是不webshell，但同样带感！！！写在前边： 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689">
+<meta property="og:description" content="前言基础概念，比如ELF文件结构，包括相关安全学习，IoT相关物联网 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689865https://en.wikipedia.org/wiki/Executable_and_Linkable_Formathttp://fli">
 <meta property="og:locale" content="En">
 <meta property="og:image" content="http://i.imgur.com/JbotCkK.png">
 <meta property="og:image" content="http://i.imgur.com/3LcpwS1.png">
 <meta property="og:image" content="http://i.imgur.com/7QtLFBP.png">
 <meta property="og:image" content="http://i.imgur.com/FJHtUrs.png">
-<meta property="og:updated_time" content="2018-10-21T13:21:40.083Z">
+<meta property="og:updated_time" content="2018-10-22T13:11:31.245Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ELF 文件结构">
-<meta name="twitter:description" content="前言web狗做了这么久，也写了一些工具，用了别人很多工具，但是总觉得无法洞悉各种绕过的脑洞，深深被web中的脑洞所坑，因此转行做pwn狗，喜欢拿shell的感觉，虽然是不webshell，但同样带感！！！写在前边： 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689">
+<meta name="twitter:description" content="前言基础概念，比如ELF文件结构，包括相关安全学习，IoT相关物联网 从ELF文件结构开始自己bing、google了多久，把能找到有用的连接挂在上去  http://blog.csdn.net/alan0521/article/details/7689865https://en.wikipedia.org/wiki/Executable_and_Linkable_Formathttp://fli">
 <meta name="twitter:image" content="http://i.imgur.com/JbotCkK.png">
   
     <link rel="alternative" href="/atom.xml" title="Gumeng&#39;s Blog" type="application/atom+xml">
@@ -180,7 +180,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>web狗做了这么久，也写了一些工具，用了别人很多工具，但是总觉得无法洞悉各种绕过的脑洞，深深被web中的脑洞所坑，因此转行做pwn狗，喜欢拿shell的感觉，虽然是不webshell，但同样带感！！！写在前边：</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>基础概念，比如ELF文件结构，包括相关安全学习，IoT相关物联网</p>
 <h1 id="从ELF文件结构开始"><a href="#从ELF文件结构开始" class="headerlink" title="从ELF文件结构开始"></a>从ELF文件结构开始</h1><p>自己bing、google了多久，把能找到有用的连接挂在上去</p>
 <blockquote>
 <p><a href="http://blog.csdn.net/alan0521/article/details/7689865" target="_blank" rel="noopener">http://blog.csdn.net/alan0521/article/details/7689865</a><br><a href="https://en.wikipedia.org/wiki/Executable_and_Linkable_Format" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Executable_and_Linkable_Format</a><br><a href="http://flint.cs.yale.edu/cs422/doc/ELF_Format.pdf" target="_blank" rel="noopener">http://flint.cs.yale.edu/cs422/doc/ELF_Format.pdf</a></p>
@@ -333,8 +333,8 @@
     </a>
   
   
-    <a href="/2017/08/04/2017-08-26-C库函数学习/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">C库函数学习</div>
+    <a href="/2017/08/04/2017-08-07-netzob/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">外国ctf网站</div>
       <i class="icon-circle-right"></i>
     </a>
   
