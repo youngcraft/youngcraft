@@ -1,25 +1,25 @@
 # Header
 
 menu:
-  主页: /
-  关于我: /tags/
+  Main: /
+  AboutMe: /aboutme/
 
 # SubNav
 subnav:
-  github: "#"
-  weibo: "#"
+  github: "https://github.com/youngcraft"
+  weibo: "https://weibo.com/youngcraft"
   #rss: "#"
   #zhihu: "#"
-  qq: "#"
-  weixin: "#"
+  #qq: "#"
+  #weixin: "#"
   #jianshu: "#"
   #douban: "#"
   #segmentfault: "#"
   #bilibili: "#"
   #acfun: "#"
-  #mail: "mailto:litten225@qq.com"
+  mail: "mailto:youngtala@gmail.com"
   #facebook: "#"
-  google: "#"
+  #google: "#"
   #twitter: "#"
   #linkedin: "#"
 
@@ -120,12 +120,12 @@ slider:
 #smart_menu:
 #  friends: false
 smart_menu:
-  innerArchive: '所有文章'
-  friends: '友链'
-  aboutme: '关于我'
+  innerArchive: 'articles'
+  friends: 'friends'
+  aboutme: 'aboutme'
 
 friends:
-  友情链接1: http://localhost:4000/
+  friends1: http://localhost:4000/
   友情链接2: http://localhost:4000/
   友情链接3: http://localhost:4000/
   友情链接4: http://localhost:4000/
