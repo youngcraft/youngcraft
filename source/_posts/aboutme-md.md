@@ -5,4 +5,7 @@ tags:
 
 ---
 
-# 关于我
+# about me 
+
+my email： youngtala@gmail.com
+my slack
