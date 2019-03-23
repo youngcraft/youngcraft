@@ -8,4 +8,3 @@ tags:
 # about me 
 
 my email： youngtala@gmail.com
-my slack
