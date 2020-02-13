@@ -3,11 +3,11 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Gumeng's Blog
-subtitle: Pwner in ICS, Python Exploit developer
-description: follow your heart
-keywords: Pwn,ICS,Dev
-author: Gumeng
+title: 古萌
+subtitle: Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict
+description: follow your heart!fly your dream!
+keywords: Pwn,ICS,Python 
+author: 古萌
 language: En
 timezone: 
 
@@ -73,7 +73,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: 3-hexo
 prism_plugin:
   mode: 'preprocess'    # realtime/preprocess
   theme: 'default'
