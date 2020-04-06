@@ -1,15 +1,13 @@
 ---
-
-
-
-
-
+title: 一步一步学ROP之linux_x64篇
+date: 2020-02-16 22:09:29
+tags:
+    - Pwn
+author:     gumeng
+categories:   
+    - Pwn
 ---
 
-
-
-
-# 一步一步学ROP之linux_x64篇
 
 # 一、序
 **ROP的全称为Return-oriented programming（返回导向编程），这是一种高级的内存攻击技术可以用来绕过现代操作系统的各种通用防御（比如内存不可执行和代码签名等）。上次我们主要讨论了linux_x86的ROP攻击：《一步一步学ROP之linux_x86篇》，在这次的教程中我们会带来上一篇的补充以及linux_x64方面的ROP利用方法，欢迎大家继续学习。
@@ -21,7 +19,6 @@
 
 这里我们采用pwntools提供的DynELF模块来进行内存搜索。首先我们需要实现一个leak(address)函数，通过这个函数可以获取到某个地址上最少1 byte的数据。拿我们上一篇中的level2程序举例。leak函数应该是这样实现的：
 
-#
 
 ```python
 def leak(address):

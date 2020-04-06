@@ -1,0 +1,42 @@
+---
+title:      Python执行系统命令方法
+subtitle:   一点一点学python
+date:       2017-10-30 09:50:08
+author:     gumeng
+tags:
+	- Linux
+categories: 
+	- Coding
+---
+
+# Python 执行系统命令的三种方法
+
+
+## Python OS 库函数
+
+```
+	os.system('ls')
+```
+
+
+## Python os popen 库函数
+
+打开一个管道，然后将命令返回结果输出到日志。
+
+```
+	popen(command [, mode='r' [, bufsize]]) -> pipe
+	Open a pipe to/from a command returning a file object.
+```
+
+具体操作：
+
+在Python命令行下：
+
+```
+	tmp = os.popen('ls *.py').readlines()
+	tmp
+```
+## Python subprocess
+
+	import subprocess 
+	subprocess.call (["cmd", "arg1", "arg2"],shell=True)

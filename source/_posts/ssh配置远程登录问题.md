@@ -2,17 +2,11 @@
 layout:     post
 title:      SSH配置远程登陆问题
 subtitle:   Linux很繁琐，但是学会很简单
-date:       2017-10-27
-author:     BY TALA
-header-img: img/post-bg-re-vs-ng2.jpg
-catalog: true
-tags:
-    - Blog
+date:       2017-10-27 09:50:08
+author:     Gumeng
+categories:   
+    - Linux
 ---
-
->
-> 为了防止忘记，特意拷贝，如有冒犯，实属无悔，包涵包涵，如有问题请联系youngtala@gmail.com
->
 
 
 http://www.linuxidc.com/Linux/2015-03/114709.htm
