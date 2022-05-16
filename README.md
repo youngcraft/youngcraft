@@ -8,6 +8,6 @@ Youngcraft Bolg →
 hexo s 
 
 2. 每次更新完博客，需要
-hexo clean
+hexo clean 
 hexo generate 简写 hexo g
 hexo deploy  简写 hexo d
