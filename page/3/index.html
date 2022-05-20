@@ -1,565 +1,488 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="follow your heart!fly your dream!">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="拾荒者CD" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        
-        
-    </title>
+  <meta charset="utf-8">
+  
 
-    <link rel="canonical" href="http://gumeng.fun/page/3/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+  
+  <title>拾荒者CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="follow your heart!fly your dream!">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="website">
+<meta property="og:title" content="拾荒者CD">
+<meta property="og:url" content="http://gumeng.fun/page/3/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="follow your heart!fly your dream!">
+<meta property="og:locale" content="En">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="拾荒者CD">
+<meta name="twitter:description" content="follow your heart!fly your dream!">
+  
+    <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="false" data-istags="false
-" data-ishome="true">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    拾荒者CD
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/aboutme/">关于我和我的博客</a>
-                        </li>
-							
-						
-                    
-                        
-							
-								
-							
-						
-                    
-					
-					
-						<li>
-							<a href="/about">About</a>
-						</li>
-					
-                </ul>
-            </div>
-        </div>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">拾荒者CD</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-
-<style>
-
-    .custom-haojen-container .post-preview:nth-of-type(1),
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        text-align: center;
-        background-repeat: no-repeat;
-        border-radius: 3px;
-        background-size: cover;
-        padding: 0;
-        height: 300px;
-        display: table;
-        width: 100%;
-        background-color: rgba(0, 0, 0, 0.16);
-    }
-
-    /*去掉诗歌的背景图片*/
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) {
-        background-image: none !important;
-        background-color: rgba(255, 248, 220, 0.5);
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) h2,
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta,
-    .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-        text-shadow: 0 0 40px rgba(0, 0, 0, 1);
-        letter-spacing: 1px;
-        color: #fff;
-        margin-top: 0;
-        padding-left: 60px;
-        padding-right: 60px;
-    }
-
-    .custom-haojen-container .post-preview:nth-child(1) .post-meta {
-        font-size: .9em;
-        font-weight: 300;
-        margin-top: 0;
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-child(1) .post-subtitle {
-        letter-spacing: 6px;
-        font-size: 18px;
-        font-family: unset;
-        font-weight: 400;
-        color: rgba(0, 0, 0, .75)
-    }
-
-    /*不显示摘要*/
-    .custom-haojen-container .post-preview:nth-child(1) .post-content-preview {
-        display: none
-    }
-
-    /*只第一个显示背景图片*/
-    .custom-haojen-container .post-preview:not(:nth-child(1)) {
-        background-image: none !important;
-    }
-
-    /*第一个分界线去掉*/
-    .custom-haojen-container hr:nth-of-type(1) {
-        display: none;
-    }
-
-    /*主题*/
-    .custom-haojen-container .post-preview:nth-of-type(1) > a {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    /*诗词标题*/
-    .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-        font-size: 35px;
-        font-family: STKaiti;
-        color: rgba(0, 0, 0, .8);
-    }
-
-    .custom-haojen-container .post-preview-poetry:nth-of-type(1) .post-meta {
-        color: #0e2231;
-    }
-
-    @media (max-width: 768px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 240px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 28px !important;
-            margin-top: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 18px;
-            font-weight: 400;
-            padding-left: 0;
-            padding-right: 0;
-        }
-
-        .custom-haojen-container .post-preview:nth-of-type(1) > a {
-            padding: 20px
-        }
-    }
-
-    /*手机屏幕*/
-    @media (max-width: 400px) {
-        .custom-haojen-container .post-preview:nth-child(1) {
-            height: 195px;
-        }
-
-        .custom-haojen-container .post-preview-poetry:nth-child(1) h2 {
-            font-size: 20px !important;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) .post-subtitle {
-            font-size: 16px;
-        }
-
-        .custom-haojen-container .post-preview:nth-child(1) a {
-            padding: 30px 20px;
-        }
-    }
-</style>
-
-<!-- Page Header -->
-<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
-    <div class="row">
-        <header class="intro-header">
-            <div class="container">
-                <div class="site-heading text-center">
-                    <div class="about-me">
-                        <!--移动端头部显示-->
-                        <img src="">
-                        <h5><a href="/about/">拾荒者CD</a></h5>
-                        <p></p>
-                    </div>
-                </div>
-            </div>
-        </header>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://gumeng.fun"></form>
+      </div>
     </div>
-</div>
-<!-- Main Content -->
-<div class="container custom-haojen-container">
-    <!-- Post Container -->
-    <div class="row">
-        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
-            <!-- Main Content -->
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2017/10/27/20171027-ssh配置远程登录问题/">
-        <h2 class="post-title">
-            SSH配置远程登陆问题
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-10-27
-        </p>
-        
-        <h3 class="post-subtitle">
-            Linux很繁琐，但是学会很简单
-        </h3>
-        
-        <div class="post-content-preview">
-            <p>
-                http://www.linuxidc.com/Linux/2015-03/114709.htm
-首先更新源　　sudo apt-get update安装ssh服务sudo apt-get install openssh-server检测是否已启动ps -e | grep ssh看到有ssh字样..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2017/08/28/20170828-heap初识/">
-        <h2 class="post-title">
-            Linux下堆利用学习
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-08-28
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                初识heap学习直接上代码，结合代码学习
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647/* Per thread arena example. */#include &l..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2017/07/01/20170701-ROPgadget使用方法/">
-        <h2 class="post-title">
-            ROPgadget 使用指南
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-07-01
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                ROPgadget 使用方法usage:ROPgadget [-h] [-v] [-c] [–binary ] [–opcode ]                 [–string ] [–memstr ] [–depth ]                 [–only ] [–filter..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2017/06/15/20170615-为什么文件名要用小名/">
-        <h2 class="post-title">
-            为什么文件名用小名
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2017-06-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                为什么文件名用小名?其实说实话，这个问题我的确没有仔细想过，今天查了一下，把搜到的内容记录下。
-阮一峰师傅曾写过一篇文章，在开头写过如下这段话：
-
-“文件名建议只使用小写字母，不使用大写字母。”“为了醒目，某些说明文件的文件名，可以使用大写字母，比如README、LICENSE。”
-
-说实话，虽..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-<div class="post-preview " style="background-image: url('')">
-    <a href="/2016/06/15/20160615-SQLChop检测引擎原理/">
-        <h2 class="post-title">
-            长亭 SQLchop 实现方法
-        </h2>
-        <p class="post-meta">
-            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-06-15
-        </p>
-        
-        <div class="post-content-preview">
-            <p>
-                SQL原理部分https://blog.chaitin.cn/sqlchop-the-sqli-detection-engine/
-github地址在 8 月 5 日的 Blackhat 大会上，我们在 Arsenal 分会场做了 SQLChop 的展示，同步上线的还有 SQLChop 的网站 ..
-            </p>
-        </div>
-    </a>
-
-</div>
-
-<hr>
-
-
-
-
-<!-- 翻页 pager -->
-
-<ul class="pager">
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-20171027-ssh配置远程登录问题" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/10/27/20171027-ssh配置远程登录问题/" class="article-date">
+  <time datetime="2017-10-27T01:50:08.000Z" itemprop="datePublished">2017-10-27</time>
+</a>
     
-    <li class="previous">
-        <a href="/page/2/">&larr; Newer Posts</a>
-    </li>
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Linux/">Linux</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/10/27/20171027-ssh配置远程登录问题/">SSH配置远程登陆问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://www.linuxidc.com/Linux/2015-03/114709.htm" target="_blank" rel="noopener">http://www.linuxidc.com/Linux/2015-03/114709.htm</a></p>
+<p>首先更新源　　<br>sudo apt-get update<br>安装ssh服务<br>sudo apt-get install openssh-server<br>检测是否已启动<br>ps -e | grep ssh<br>看到有ssh字样，说明已启动，如果没有就手动启动</p>
+<p>/etc/init.d/ssh start<br>配置ssh-server，配置文件位于/etc/ssh/sshd_config，默认端口为22，为了安全，一般自定义为其他端口，然后重启<br>sudo /etc/init.d/ssh resart<br>在windows中，使用putty或者SSH Secure Shell等登录虚拟机</p>
+<p>ssh 无密码登录要使用公钥与私钥。linux下可以用用ssh-keygen生成公钥/私钥对，下面我以CentOS为例。</p>
+<p>有机器A(192.168.1.155)，B(192.168.1.181)。现想A通过ssh免密码登录到B。<br>首先以root账户登陆为例。</p>
+<p>1.在A机下生成公钥/私钥对。</p>
+<p>[root@A ~]# ssh-keygen -t rsa </p>
+<p>-P表示密码，-P ‘’ 就表示空密码，也可以不用-P参数，这样就要三车回车，用-P就一次回车。<br>该命令将在/root/.ssh目录下面产生一对密钥id_rsa和id_rsa.pub。</p>
+<p>一般采用的ssh的rsa密钥:<br>id_rsa     私钥<br>id_rsa.pub 公钥<br>下述命令产生不同类型的密钥<br>ssh-keygen -t dsa<br>ssh-keygen -t rsa<br>ssh-keygen -t rsa1</p>
+<p>2.把A机下的/root/.ssh/id_rsa.pub 复制到B机的 /root/.ssh/authorized_keys文件里，先要在B机上创建好 /root/.ssh 这个目录，用scp复制。(authorized_keys是一个文件，这个不是一个文件夹，需要给权限和内容)</p>
+<p>[root@A ~]# scp /root/.ssh/id_rsa.pub <a href="mailto:root@192.168.1.181" target="_blank" rel="noopener">root@192.168.1.181</a>:/root/.ssh/authorized_keys<br><a href="mailto:root@192.168.1.181" target="_blank" rel="noopener">root@192.168.1.181</a>‘s password:<br>id_rsa.pub                                    100%  223     0.2KB/s   00:00</p>
+<p>由于还没有免密码登录的，所以要输入一次B机的root密码。</p>
+<p>3.authorized_keys的权限要是600!!!</p>
+<p>[root@B ~]# chmod 600 /root/.ssh/authorized_keys</p>
+<p>4.A机登录B机。</p>
+<p>[root@A ~]# ssh -l root 192.168.1.181<br>The authenticity of host ‘192.168.1.181 (192.168.1.181)’ can’t be established.<br>RSA key fingerprint is 00:a6:a8:87:eb:c7:40:10:39:cc:a0:eb:50:d9:6a:5b.<br>Are you sure you want to continue connecting (yes/no)? yes<br>Warning: Permanently added ‘192.168.1.181’ (RSA) to the list of known hosts.<br>Last login: Thu Jul  3 09:53:18 2008 from root<br>[root@B ~]#</p>
+<p>第一次登录是时要你输入yes。</p>
+<p>现在A机可以无密码登录B机了。</p>
+<p>小结：登录的机子可有私钥，被登录的机子要有登录机子的公钥。这个公钥/私钥对一般在私钥宿主机产生。上面是用rsa算法的公钥/私钥对，当然也可以用dsa(对应的文件是id_dsa，id_dsa.pub)</p>
+<p>想让A，B机无密码互登录，那B机以上面同样的方式配置即可。</p>
+<p>SSH-KeyGen 的用法</p>
+<p>假设 A 为客户机器，B为目标机；</p>
+<p>要达到的目的：<br>A机器ssh登录B机器无需输入密码；<br>加密方式选 rsa|dsa均可以，默认dsa</p>
+<p>做法：<br>1、登录A机器<br>2、ssh-keygen -t [rsa|dsa]，将会生成密钥文件和私钥文件 id_rsa,id_rsa.pub或id_dsa,id_dsa.pub<br>3、将 .pub 文件复制到B机器的 .ssh 目录， 并 cat id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys<br>4、大功告成，从A机器登录B机器的目标账户，不再需要密码了；</p>
+<p>ssh-keygen做密码验证可以使在向对方机器上ssh ,scp不用使用密码.<br>具体方法如下:<br>ssh-keygen -t rsa<br>然后全部回车,采用默认值.</p>
+<p>这样生成了一对密钥，存放在用户目录的~/.ssh下。<br>将公钥考到对方机器的用户目录下，并拷到~/.ssh/authorized_keys中。</p>
+<p>要保证.ssh和authorized_keys都只有用户自己有写权限。否则验证无效。（今天就是遇到这个问题，找了好久问题所在），其实仔细想想，这样做是为了不会出现系统漏洞。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2017/10/27/20171027-ssh配置远程登录问题/" data-id="cl3ej0qtz000zq4vk7r0q6jgg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20170828-heap初识" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/28/20170828-heap初识/" class="article-date">
+  <time datetime="2017-08-28T01:50:08.000Z" itemprop="datePublished">2017-08-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/28/20170828-heap初识/">Linux下堆利用学习</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="初识heap学习"><a href="#初识heap学习" class="headerlink" title="初识heap学习"></a>初识heap学习</h1><p>直接上代码，结合代码学习</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* Per thread arena example. */</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;pthread.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span>* <span class="title">threadFunc</span><span class="params">(<span class="keyword">void</span>* arg)</span> </span>&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="keyword">char</span>* addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in thread 1\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="keyword">pthread_t</span> t1;</span><br><span class="line"><span class="keyword">void</span>* s;</span><br><span class="line"><span class="keyword">int</span> ret;</span><br><span class="line"><span class="keyword">char</span>* addr;</span><br><span class="line"></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Welcome to per thread arena example::%d\n"</span>,getpid());</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Before malloc in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">addr = (<span class="keyword">char</span>*) <span class="built_in">malloc</span>(<span class="number">1000</span>);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After malloc and before free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line"><span class="built_in">free</span>(addr);</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"After free in main thread\n"</span>);</span><br><span class="line">getchar();</span><br><span class="line">ret = pthread_create(&amp;t1, <span class="literal">NULL</span>, threadFunc, <span class="literal">NULL</span>);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread creation error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line">ret = pthread_join(t1, &amp;s);</span><br><span class="line"><span class="keyword">if</span>(ret)</span><br><span class="line">&#123;</span><br><span class="line"><span class="built_in">printf</span>(<span class="string">"Thread join error\n"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="编译阶段"><a href="#编译阶段" class="headerlink" title="编译阶段"></a>编译阶段</h2><p>gcc MyProgram.c -o MyProgram -lpthread</p>
+<h2 id="分阶段分析"><a href="#分阶段分析" class="headerlink" title="分阶段分析"></a>分阶段分析</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2017/08/28/20170828-heap初识/" data-id="cl3ej0qtr000qq4vk2cc86v6t" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20170701-ROPgadget使用方法" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/01/20170701-ROPgadget使用方法/" class="article-date">
+  <time datetime="2017-07-01T01:50:08.000Z" itemprop="datePublished">2017-07-01</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/01/20170701-ROPgadget使用方法/">ROPgadget 使用指南</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="ROPgadget-使用方法"><a href="#ROPgadget-使用方法" class="headerlink" title="ROPgadget 使用方法"></a>ROPgadget 使用方法</h1><h2 id="usage"><a href="#usage" class="headerlink" title="usage:"></a>usage:</h2><p>ROPgadget [-h] [-v] [-c] [–binary <binary>] [–opcode <opcodes>]<br>                 [–string <string>] [–memstr <string>] [–depth <nbyte>]<br>                 [–only <key>] [–filter <key>] [–range <start-end>]<br>                 [–badbytes <byte>] [–rawArch <arch>] [–rawMode <mode>]<br>                 [–re <re>] [–offset <hexaddr>] [–ropchain] [–thumb]<br>                 [–console] [–norop] [–nojop] [–callPreceded] [–nosys]<br>                 [–multibr] [–all] [–dump]</hexaddr></re></mode></arch></byte></start-end></key></key></nbyte></string></string></opcodes></binary></p>
+<h2 id="description"><a href="#description" class="headerlink" title="description:"></a>description:</h2><p>  ROPgadget lets you search your gadgets on a binary. It supports several<br>  file formats and architectures and uses the Capstone disassembler for<br>  the search engine.</p>
+<h2 id="formats-supported"><a href="#formats-supported" class="headerlink" title="formats supported:"></a>formats supported:</h2><ul>
+<li>ELF</li>
+<li>PE</li>
+<li>Mach-O</li>
+<li>Raw</li>
 </ul>
-
-
-        </div>
-        <!-- Sidebar Container -->
-        <div class="
-                col-lg-3 col-lg-offset-0
-                col-md-3 col-md-offset-0
-                col-sm-12
-                col-xs-12
-                sidebar-container
-            ">
-
-            <!-- About Me -->
-            <section class="visible-md visible-lg" style="padding: 0 18px">
-                <div class="short-about">
-                    <!--侧边栏头像-->
-                    
-                    <h5><a href="/about/">拾荒者CD</a></h5>
-                    
-                    <hr>
-                    <!-- SNS Link 社交 -->
-                    <ul class="list-inline">
-                        
-                        
-                        
-
-                        
-
-                        
-
-                        
-
-                        
-                    </ul>
-                </div>
-            </section>
-
-            <!-- Featured Tags  标签 -->
-            
-
-            
-
-        </div>
+<h2 id="architectures-supported"><a href="#architectures-supported" class="headerlink" title="architectures supported:"></a>architectures supported:</h2><ul>
+<li>x86</li>
+<li>x86-64</li>
+<li>ARM</li>
+<li>ARM64</li>
+<li>MIPS</li>
+<li>PowerPC</li>
+<li>Sparc</li>
+</ul>
+<h2 id="optional-arguments"><a href="#optional-arguments" class="headerlink" title="optional arguments:"></a>optional arguments:</h2><p>  -h, –help           show this help message and exit<br>  -v, –version        Display the ROPgadget’s version<br>  -c, –checkUpdate    Checks if a new version is available<br>  –binary <binary>    Specify a binary filename to analyze<br>  –opcode <opcodes>   Search opcode in executable segment<br>  –string <string>    Search string in readable segment<br>  –memstr <string>    Search each byte in all readable segment<br>  –depth <nbyte>      Depth for search engine (default 10)<br>  –only <key>         Only show specific instructions<br>  –filter <key>       Suppress specific instructions<br>  –range <start-end>  Search between two addresses (0x…-0x…)<br>  –badbytes <byte>    Rejects specific bytes in the gadget’s address<br>  –rawArch <arch>     Specify an arch for a raw file<br>  –rawMode <mode>     Specify a mode for a raw file<br>  –re <re>            Regular expression<br>  –offset <hexaddr>   Specify an offset for gadget addresses<br>  –ropchain           Enable the ROP chain generation<br>  –thumb              Use the thumb mode for the search engine (ARM only)<br>  –console            Use an interactive console for search engine<br>  –norop              Disable ROP search engine<br>  –nojop              Disable JOP search engine<br>  –callPreceded       Only show gadgets which are call-preceded<br>  –nosys              Disable SYS search engine<br>  –multibr            Enable multiple branch gadgets<br>  –all                Disables the removal of duplicate gadgets<br>  –dump               Outputs the gadget bytes</hexaddr></re></mode></arch></byte></start-end></key></key></nbyte></string></string></opcodes></binary></p>
+<h2 id="examples"><a href="#examples" class="headerlink" title="examples:"></a>examples:</h2><p>测试用例：</p>
+<pre><code>ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 
+#获取全部binary下的gadget组件
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --ropchain
+#形成rops链
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --depth 3
+#遍历深度为3，即只是遍历3层深度
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --string &quot;main&quot;
+#在出现main字符串的周围检索
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --string &quot;m..n&quot;
+#在m..n这种字符串周围检索gadgets
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --opcode c9c3
+#操作码是c9c3 
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --only &quot;mov|ret&quot;
+#包含mov|ret 这种模式的
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --only &quot;mov|pop|xor|ret&quot;
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --filter &quot;xchg|add|sub&quot;
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --norop --nosys
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --range 0x08041000-0x08042000
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --string main --range 0x080c9aaa-0x080c9aba
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --memstr &quot;/bin/sh&quot;
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --console
+ROPgadget.py --binary ./test-suite-binaries/elf-Linux-x86 --badbytes &quot;00|01-1f|7f|42&quot;
+ROPgadget.py --binary ./test-suite-binaries/Linux_lib64.so --offset 0xdeadbeef00000000
+ROPgadget.py --binary ./test-suite-binaries/elf-ARMv7-ls --depth 5
+ROPgadget.py --binary ./test-suite-binaries/elf-ARM64-bash --depth 5
+ROPgadget.py --binary ./test-suite-binaries/raw-x86.raw --rawArch=x86 --rawMode=32
+</code></pre>
+      
     </div>
-</div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2017/07/01/20170701-ROPgadget使用方法/" data-id="cl3ej0qtq000pq4vkn591yism" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exp/">Exp</a></li></ul>
 
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
+    </footer>
+  </div>
+  
+</article>
 
-                
 
-                
+  
+    <article id="post-20170615-为什么文件名要用小名" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/15/20170615-为什么文件名要用小名/" class="article-date">
+  <time datetime="2017-06-15T01:50:08.000Z" itemprop="datePublished">2017-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
 
-                
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/15/20170615-为什么文件名要用小名/">为什么文件名用小名</a>
+    </h1>
+  
 
-                
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="为什么文件名用小名"><a href="#为什么文件名用小名" class="headerlink" title="为什么文件名用小名?"></a>为什么文件名用小名?</h1><p>其实说实话，这个问题我的确没有仔细想过，今天查了一下，把搜到的内容记录下。</p>
+<p>阮一峰师傅曾写过一篇文章，在开头写过如下这段话：</p>
+<blockquote>
+<p>“文件名建议只使用小写字母，不使用大写字母。”<br>“为了醒目，某些说明文件的文件名，可以使用大写字母，比如README、LICENSE。”</p>
+</blockquote>
+<p>说实话，虽然这是 Linux 传统，我却从没认真想过原因。赶紧查资料，结果发现四个很有说服力的理由，支持这样做。</p>
+<p>阮大神在其中提到了四点原因：</p>
+<h2 id="可移植性"><a href="#可移植性" class="headerlink" title="可移植性"></a>可移植性</h2><p>Linux系统是大小写敏感的，而Windows、Mac系统正好相反，大小写不敏感。但是跨平台，这些都是问题。例如：abc，Abc，ABC文件名在windows、Mac、Linux系统中的识别会出现不同的问题，在Windows系统中abc不论大小写都是一样的。在Mac系统中，大小写也是不敏感的，在linux系统中，abc和ABC是不一样的文件，如果所有文件名都采用小写，具备保持良好的可移植性。</p>
+<h2 id="易读性"><a href="#易读性" class="headerlink" title="易读性"></a>易读性</h2><p>英文字母是大小写，方便读，试想看所有字母都是大小，你读着不累吗？？？</p>
+<h2 id="易用性"><a href="#易用性" class="headerlink" title="易用性"></a>易用性</h2><p>某些系统会生成一些预置的用户目录，采用首字母大写的目录名。比如，Ubuntu 在用户主目录会默认生成Downloads、 Pictures、Documents等目录。</p>
+<p>另外，某些常见的配置文件或说明文件，也采用大写的文件名，比如Makefile、INSTALL、CHANGELOG、.Xclients和.Xauthority等等。</p>
+<h2 id="便捷性"><a href="#便捷性" class="headerlink" title="便捷性"></a>便捷性</h2><p>文件名全部小写，还有利于命令行操作。比如，某些命令可以不使用-i参数了。</p>
 
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 拾荒者CD 2022
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2017/06/15/20170615-为什么文件名要用小名/" data-id="cl3ej0qts000uq4vkql506v30" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Filename/">Filename</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-20160615-SQLChop检测引擎原理" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/06/15/20160615-SQLChop检测引擎原理/" class="article-date">
+  <time datetime="2016-06-15T01:50:08.000Z" itemprop="datePublished">2016-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/tools/">tools</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/15/20160615-SQLChop检测引擎原理/">长亭 SQLchop 实现方法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="SQL原理部分"><a href="#SQL原理部分" class="headerlink" title="SQL原理部分"></a>SQL原理部分</h1><p><a href="https://blog.chaitin.cn/sqlchop-the-sqli-detection-engine/" target="_blank" rel="noopener">https://blog.chaitin.cn/sqlchop-the-sqli-detection-engine/</a></p>
+<h1 id="github地址"><a href="#github地址" class="headerlink" title="github地址"></a>github地址</h1><p>在 8 月 5 日的 Blackhat 大会上，我们在 Arsenal 分会场做了 SQLChop 的展示，同步上线的还有 SQLChop 的网站 <a href="http://sqlchop.chaitin.com/" target="_blank" rel="noopener">http://sqlchop.chaitin.com/</a> ，以及在 Github 放出了 SQLChop 二进制模块的下载试用 <a href="https://github.com/chaitin/sqlchop" target="_blank" rel="noopener">https://github.com/chaitin/sqlchop</a> ，API 使用文档在 <a href="http://sqlchop.chaitin.com/doc.html" target="_blank" rel="noopener">http://sqlchop.chaitin.com/doc.html</a> 。</p>
+<h1 id="基于编译原理的sql处理引擎"><a href="#基于编译原理的sql处理引擎" class="headerlink" title="基于编译原理的sql处理引擎"></a>基于编译原理的sql处理引擎</h1><ol>
+<li>递归解码模块</li>
+<li>词法分析模块</li>
+<li>语法分析模块</li>
+<li>综合打分模块</li>
+</ol>
+<h1 id="编译语言中的完成语法语义解读SQL解读"><a href="#编译语言中的完成语法语义解读SQL解读" class="headerlink" title="编译语言中的完成语法语义解读SQL解读"></a>编译语言中的完成语法语义解读SQL解读</h1>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2016/06/15/20160615-SQLChop检测引擎原理/" data-id="cl3ej0qtp000oq4vkq41n33cr" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Exploit/">Exploit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Pwn/">Pwn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/">工控协议</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/逆向工程/">逆向工程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/模糊测试/">模糊测试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exp/">Exp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exploit/">Exploit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filename/">Filename</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pwn/">Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmap/">nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privilge/">privilge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础概念类/">基础概念类</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Exp/" style="font-size: 10px;">Exp</a> <a href="/tags/Exploit/" style="font-size: 20px;">Exploit</a> <a href="/tags/Filename/" style="font-size: 10px;">Filename</a> <a href="/tags/Heap-Pwn/" style="font-size: 10px;">Heap Pwn</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Pwn/" style="font-size: 10px;">Pwn</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/tags/privilge/" style="font-size: 10px;">privilge</a> <a href="/tags/基础概念类/" style="font-size: 10px;">基础概念类</a> <a href="/tags/漏洞利用/" style="font-size: 15px;">漏洞利用</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">初探wavpack测试crashes样本分析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/20220507-UMAS协议初探/">施耐德umas工控协议初探</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-ELF 文件结构/">ELF 文件结构初初级解析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-外国ctf网站/">外国ctf学习网站集锦（未完待续）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 拾荒者CD<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
 
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://gumeng.fun/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
+<script src="/js/script.js"></script>
 
 
 
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
-</script>
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
+  </div>
 </body>
-
 </html>

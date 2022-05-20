@@ -1,190 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="follow your heart!fly your dream!">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="拾荒者CD" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        Linux Pwn 之堆块伪造技术｜undefined
-        
-    </title>
+  <meta charset="utf-8">
+  
 
-    <link rel="canonical" href="http://gumeng.fun/2018/06/15/20180615-Linux下的堆块伪造/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+  
+  <title>Linux Pwn 之堆块伪造技术 | 拾荒者CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="借鉴下别人的文章，如有冒犯，还望多多包涵 Linux下的堆块伪造这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。 原理1.ptmalloc的相邻空块合并原则。2.堆chunk本身的结构机制。 详解堆chunk判断一个块是否为空仅仅依赖于相邻后块的pre">
+<meta name="keywords" content="Exploit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux Pwn 之堆块伪造技术">
+<meta property="og:url" content="http://gumeng.fun/2018/06/15/20180615-Linux下的堆块伪造/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="借鉴下别人的文章，如有冒犯，还望多多包涵 Linux下的堆块伪造这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。 原理1.ptmalloc的相邻空块合并原则。2.堆chunk本身的结构机制。 详解堆chunk判断一个块是否为空仅仅依赖于相邻后块的pre">
+<meta property="og:locale" content="En">
+<meta property="og:updated_time" content="2022-01-28T15:31:43.926Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Linux Pwn 之堆块伪造技术">
+<meta name="twitter:description" content="借鉴下别人的文章，如有冒犯，还望多多包涵 Linux下的堆块伪造这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。 原理1.ptmalloc的相邻空块合并原则。2.堆chunk本身的结构机制。 详解堆chunk判断一个块是否为空仅仅依赖于相邻后块的pre">
+  
+    <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    拾荒者CD
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/aboutme/">关于我和我的博客</a>
-                        </li>
-							
-						
-                    
-                        
-							
-								
-							
-						
-                    
-					
-					
-						<li>
-							<a href="/about">About</a>
-						</li>
-					
-                </ul>
-            </div>
-        </div>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">拾荒者CD</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img" src="">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>Linux Pwn 之堆块伪造技术</h1>
-                    
-                    <span class="meta">
-                         作者 gumeng
-                        <span>
-                          日期 2018-06-15
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Exploit" title="Exploit">Exploit</a>
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://gumeng.fun"></form>
+      </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            Linux Pwn 之堆块伪造技术
-        </span>
-    </div>
+  </div>
 </header>
+      <div class="outer">
+        <section id="main"><article id="post-20180615-Linux下的堆块伪造" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/06/15/20180615-Linux下的堆块伪造/" class="article-date">
+  <time datetime="2018-06-15T01:50:08.000Z" itemprop="datePublished">2018-06-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Pwn/">Pwn</a>
+  </div>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>借鉴下别人的文章，如有冒犯，还望多多包涵</p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Linux Pwn 之堆块伪造技术
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>借鉴下别人的文章，如有冒犯，还望多多包涵</p>
 <h1 id="Linux下的堆块伪造"><a href="#Linux下的堆块伪造" class="headerlink" title="Linux下的堆块伪造"></a>Linux下的堆块伪造</h1><p>这是一个基本的堆利用技巧，很多堆利用的地方都会用到。比如double free。<br>这种利用方式的出现是由于unlink的check机制的出现。这里主要从堆溢出和double free两个角度谈一下。</p>
 <h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>1.ptmalloc的相邻空块合并原则。<br>2.堆chunk本身的结构机制。</p>
 <h2 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h2><p>堆chunk判断一个块是否为空仅仅依赖于相邻后块的<strong>prev_size</strong>和<strong>最低flag位</strong>。<br>如果在堆上构造合理的堆块结构，那么堆管理机制就会误以为我们的伪造的堆块是真正的空堆块。<br>当释放掉相邻的后块时（这个块是真的），就会触发空块合并。也就达成了堆块伪造的目的。</p>
@@ -207,166 +118,147 @@
 <p>这个exp就可以实现利用，感觉这个exp的伪堆块构造要比上面Demo更复杂一些。这个exp我搞了好久，因为不知道为什么一直会触发free的check导致程序崩溃。后来查了一些资料终于明白了，必须要保证你分配的堆与你在其中构造的两个堆块的大小完全一致。<br>比方说我这里是malloc(500)，调试一下发现分配了504（鬼知道为什么），那么就是504-8-200=0x128，如果不跟分配的堆块边境符合的话就会触发check从而crash掉。</p>
 <p>by:Ox9A82</p>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2018/06/15/20180615-GDB_peda插件使用指南/" data-toggle="tooltip" data-placement="top" title="GDB_PEDA Exploit 调试插件安装">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2018/06/15/20180615-peda-pwntools安装使用问题/" data-toggle="tooltip" data-placement="top" title="Peda 安装指南">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-
-                
-
-
-                <!--加入新的评论系统-->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux下的堆块伪造"><span class="toc-text">Linux下的堆块伪造</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#原理"><span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#详解"><span class="toc-text">详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#要求"><span class="toc-text">要求</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#利用的效果"><span class="toc-text">利用的效果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#两个演示的DEMO"><span class="toc-text">两个演示的DEMO</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Demo1"><span class="toc-text">Demo1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Demo2"><span class="toc-text">Demo2</span></a></li></ol></li></ol></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2018/06/15/20180615-Linux下的堆块伪造/" data-id="cl3ej0qu4001cq4vkch7wgee7" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Exploit/">Exploit</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/06/15/20180615-GDB_peda插件使用指南/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          GDB_PEDA Exploit 调试插件安装
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/06/15/20180615-peda-pwntools安装使用问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Peda 安装指南</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
-
-
-
-
-
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 拾荒者CD 2022
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Exploit/">Exploit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Pwn/">Pwn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/">工控协议</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/逆向工程/">逆向工程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/模糊测试/">模糊测试</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exp/">Exp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exploit/">Exploit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filename/">Filename</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pwn/">Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmap/">nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privilge/">privilge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础概念类/">基础概念类</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Exp/" style="font-size: 10px;">Exp</a> <a href="/tags/Exploit/" style="font-size: 20px;">Exploit</a> <a href="/tags/Filename/" style="font-size: 10px;">Filename</a> <a href="/tags/Heap-Pwn/" style="font-size: 10px;">Heap Pwn</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Pwn/" style="font-size: 10px;">Pwn</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/tags/privilge/" style="font-size: 10px;">privilge</a> <a href="/tags/基础概念类/" style="font-size: 10px;">基础概念类</a> <a href="/tags/漏洞利用/" style="font-size: 15px;">漏洞利用</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">初探wavpack测试crashes样本分析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/20220507-UMAS协议初探/">施耐德umas工控协议初探</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-ELF 文件结构/">ELF 文件结构初初级解析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-外国ctf网站/">外国ctf学习网站集锦（未完待续）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 拾荒者CD<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
 
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://gumeng.fun/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
+<script src="/js/script.js"></script>
 
 
 
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
-</script>
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
+  </div>
 </body>
-
 </html>

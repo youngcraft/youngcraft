@@ -1,188 +1,103 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<!-- Head tag -->
+<html>
 <head><meta name="generator" content="Hexo 3.8.0">
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="follow your heart!fly your dream!">
-    <meta name="keyword" content="">
-    <meta name="theme-color" content="#600090">
-    <meta name="msapplication-navbutton-color" content="#600090">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
-    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
-    <link rel="alternate" type="application/atom+xml" title="拾荒者CD" href="/atom.xml">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
-    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
-    <title>
-        
-        初探wavpack测试crashes样本分析｜undefined
-        
-    </title>
+  <meta charset="utf-8">
+  
 
-    <link rel="canonical" href="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/">
-
-    <!-- Bootstrap Core CSS -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/css/blog-style.css">
-
-    <!-- Pygments Github CSS -->
-    <link rel="stylesheet" href="/css/syntax.css">
+  
+  <title>初探wavpack测试crashes样本分析 | 拾荒者CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="初探wavpack测试crashes样本分析">
+<meta property="og:url" content="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+<meta property="og:locale" content="En">
+<meta property="og:image" content="http://gumeng.fun/img/wavpack代码行1.png">
+<meta property="og:updated_time" content="2022-05-18T11:34:01.738Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="初探wavpack测试crashes样本分析">
+<meta name="twitter:description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+<meta name="twitter:image" content="http://gumeng.fun/img/wavpack代码行1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-
-<style>
-
-    header.intro-header {
-        background-image: url('')
-    }
-</style>
-<!-- hack iOS CSS :active style -->
-<body ontouchstart="" class="animated fadeIn">
-<!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
-" data-ishome="false">
-    <div class="container-fluid">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header page-scroll">
-            <button type="button" class="navbar-toggle">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand animated pulse" href="/">
-                <span class="brand-logo">
-                    拾荒者CD
-                </span>
-                's Blog
-            </a>
-        </div>
-
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <!-- Known Issue, found by Hux:
-            <nav>'s height woule be hold on by its content.
-            so, when navbar scale out, the <nav> will cover tags.
-            also mask any touch event of tags, unfortunately.
-        -->
-        <!-- /.navbar-collapse -->
-        <div id="huxblog_navbar">
-            <div class="navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-					
-                    
-                        
-							
-                        <li>
-                            <a href="/aboutme/">关于我和我的博客</a>
-                        </li>
-							
-						
-                    
-                        
-							
-								
-							
-						
-                    
-					
-					
-						<li>
-							<a href="/about">About</a>
-						</li>
-					
-                </ul>
-            </div>
-        </div>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">拾荒者CD</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict</a>
+        </h2>
+      
     </div>
-    <!-- /.container -->
-</nav>
-<script>
-    // Drop Bootstarp low-performance Navbar
-    // Use customize navbar with high-quality material design animation
-    // in high-perf jank-free CSS3 implementation
-//    var $body   = document.body;
-    var $toggle = document.querySelector('.navbar-toggle');
-    var $navbar = document.querySelector('#huxblog_navbar');
-    var $collapse = document.querySelector('.navbar-collapse');
-
-    $toggle.addEventListener('click', handleMagic)
-    function handleMagic(e){
-        if ($navbar.className.indexOf('in') > 0) {
-        // CLOSE
-            $navbar.className = " ";
-            // wait until animation end.
-            setTimeout(function(){
-                // prevent frequently toggle
-                if($navbar.className.indexOf('in') < 0) {
-                    $collapse.style.height = "0px"
-                }
-            },400)
-        }else{
-        // OPEN
-            $collapse.style.height = "auto"
-            $navbar.className += " in";
-        }
-    }
-</script>
-
-<!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img" src="">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>初探wavpack测试crashes样本分析</h1>
-                    
-                    <span class="meta">
-                         作者 拾荒者CD
-                        <span>
-                          日期 2022-05-14
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://gumeng.fun"></form>
+      </div>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            初探wavpack测试crashes样本分析
-        </span>
-    </div>
+  </div>
 </header>
+      <div class="outer">
+        <section id="main"><article id="post-20220516-初探wavpack测试crashes文件分析" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/" class="article-date">
+  <time datetime="2022-05-14T00:42:53.000Z" itemprop="datePublished">2022-05-14</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/模糊测试/">模糊测试</a>
+  </div>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h1 id="wavpack-crash文件分析"><a href="#wavpack-crash文件分析" class="headerlink" title="wavpack crash文件分析"></a>wavpack crash文件分析</h1><p>&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。</p>
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      初探wavpack测试crashes样本分析
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="wavpack-crash文件分析"><a href="#wavpack-crash文件分析" class="headerlink" title="wavpack crash文件分析"></a>wavpack crash文件分析</h1><p>&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。</p>
 <h1 id="1-关于崩溃样本文件"><a href="#1-关于崩溃样本文件" class="headerlink" title="1 关于崩溃样本文件"></a>1 关于崩溃样本文件</h1><p>&emsp;&emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自afl fuzz的结果，系统栈帧崩溃时的backtrace如下：</p>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ <span class="keyword">bt</span></span><br><span class="line">#<span class="number">0</span>  __memmove_avx_unaligned_erms () <span class="meta">at</span> ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:<span class="number">416</span></span><br><span class="line">#<span class="number">1</span>  <span class="number">0x00007ffff7a2438e</span> <span class="keyword">in</span> __GI__IO_file_xsgetn (fp=<span class="number">0x555555675580</span>, data=&lt;optimized <span class="keyword">out</span>&gt;, n=<span class="number">0x95959596</span>) <span class="meta">at</span> fileops.c:<span class="number">1304</span></span><br><span class="line">#<span class="number">2</span>  <span class="number">0x00007ffff7a17f13</span> <span class="keyword">in</span> __GI__IO_fread (buf=<span class="number">0x0</span>, size=size@entry=<span class="number">0x1</span>, count=count@entry=<span class="number">0x95959596</span>, fp=fp@entry=<span class="number">0x555555675580</span>) <span class="meta">at</span> iofread.c:<span class="number">38</span></span><br><span class="line">#<span class="number">3</span>  <span class="number">0x00005555555b4cd6</span> <span class="keyword">in</span> fread (__stream=<span class="number">0x555555675580</span>, __n=<span class="number">0x95959596</span>, __size=<span class="number">0x1</span>, __<span class="built_in">ptr</span>=&lt;optimized <span class="keyword">out</span>&gt;) <span class="meta">at</span> /usr/include/x86_64-linux-gnu/<span class="meta">bits</span>/stdio2.h:<span class="number">297</span></span><br><span class="line">#<span class="number">4</span>  DoReadFile (hFile=hFile@entry=<span class="number">0x555555675580</span>, lpBuffer=lpBuffer@entry=<span class="number">0x0</span>, nNumberOfBytesToRead=nNumberOfBytesToRead@entry=<span class="number">0x95959596</span>, </span><br><span class="line">    lpNumberOfBytesRead=lpNumberOfBytesRead@entry=<span class="number">0x7fffffffba0c</span>) <span class="meta">at</span> utils.c:<span class="number">618</span></span><br><span class="line">#<span class="number">5</span>  <span class="number">0x000055555559c086</span> <span class="keyword">in</span> ParseRiffHeaderConfig (infile=<span class="number">0x555555675580</span>, infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, fourcc=&lt;optimized <span class="keyword">out</span>&gt;, wpc=<span class="number">0x555555675300</span>, </span><br><span class="line">    config=<span class="number">0x7fffffffbc60</span>) <span class="meta">at</span> riff.c:<span class="number">296</span></span><br><span class="line">#<span class="number">6</span>  <span class="number">0x0000555555599386</span> <span class="keyword">in</span> pack_file (infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, outfilename=<span class="number">0x5555556752e0</span> <span class="string">"test09.wv"</span>, out2filename=<span class="number">0x0</span>, config=&lt;optimized <span class="keyword">out</span>&gt;)</span><br><span class="line">    <span class="meta">at</span> wavpack.c:<span class="number">1776</span></span><br><span class="line">#<span class="number">7</span>  <span class="number">0x000055555555af58</span> <span class="keyword">in</span> main (argc=&lt;optimized <span class="keyword">out</span>&gt;, argc@entry=<span class="number">0x3</span>, argv=&lt;optimized <span class="keyword">out</span>&gt;, argv@entry=<span class="number">0x7fffffffe338</span>) <span class="meta">at</span> wavpack.c:<span class="number">1272</span></span><br><span class="line">#<span class="number">8</span>  <span class="number">0x00007ffff79b90b3</span> <span class="keyword">in</span> __libc_start_main (main=<span class="number">0x555555557600</span> &lt;main&gt;, argc=<span class="number">0x3</span>, argv=<span class="number">0x7fffffffe338</span>, init=&lt;optimized <span class="keyword">out</span>&gt;, fini=&lt;optimized <span class="keyword">out</span>&gt;, </span><br><span class="line">    rtld_fini=&lt;optimized <span class="keyword">out</span>&gt;, stack_end=<span class="number">0x7fffffffe328</span>) <span class="meta">at</span> ../csu/libc-start.c:<span class="number">308</span></span><br><span class="line">#<span class="number">9</span>  <span class="number">0x000055555556d8ee</span> <span class="keyword">in</span> _start ()</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;其中，#3,#4分别表示在fread和utils.c 618行函数DoReadFile出现错误，从具体调用关系上看，#4在调用#3过程中，需要调用fread函数，fread函数的标准释义是：</p>
@@ -359,162 +274,136 @@
 <li>glibc-2.3.1下fileops.c的实现  <a href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c" target="_blank" rel="noopener">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c</a></li>
 </ol>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    
-                    <li class="next">
-                        <a href="/2022/05/07/20220507-UMAS协议初探/" data-toggle="tooltip" data-placement="top" title="施耐德umas工控协议初探">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-
-                
-
-
-                <!--加入新的评论系统-->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#wavpack-crash文件分析"><span class="toc-text">wavpack crash文件分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-关于崩溃样本文件"><span class="toc-text">1 关于崩溃样本文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-分析崩溃原因"><span class="toc-text">2 分析崩溃原因</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-分析Core-dump文件"><span class="toc-text">2.1 分析Core dump文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-分析出错代码位置"><span class="toc-text">2.2 分析出错代码位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-拷贝内存时报错"><span class="toc-text">2.3 拷贝内存时报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-总结"><span class="toc-text">2.4 总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-发现的4个问题"><span class="toc-text">3 发现的4个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-IO-FILE文件结构"><span class="toc-text">4.1 IO_FILE文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-调试中寄存器细节问题"><span class="toc-text">4.2 调试中寄存器细节问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-寄存器部分功能描述"><span class="toc-text">4.3 寄存器部分功能描述</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#课后温习"><span class="toc-text">课后温习</span></a></li></ol>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-
-                <!-- Friends Blog -->
-                
-            </div>
-        </div>
-
+      
     </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-id="cl3ej0qur002tq4vk9ke44x9s" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/05/07/20220507-UMAS协议初探/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">施耐德umas工控协议初探</div>
+    </a>
+  
+</nav>
+
+  
 </article>
 
-
-
-
-
-
-
-<!-- Footer -->
-<!-- Footer -->
-<footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <br>
-                <ul class="list-inline text-center">
-                
-                
-                
-
-                
-
-                
-
-                
-
-                
-
-                </ul>
-                <p class="copyright text-muted">
-                    Copyright &copy; 拾荒者CD 2022
-                    <br>
-                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
-                    <br>
-                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
-                </p>
-
-            </div>
-        </div>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Exploit/">Exploit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Pwn/">Pwn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/">工控协议</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/逆向工程/">逆向工程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/模糊测试/">模糊测试</a></li></ul>
     </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exp/">Exp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exploit/">Exploit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filename/">Filename</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pwn/">Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmap/">nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privilge/">privilge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础概念类/">基础概念类</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Exp/" style="font-size: 10px;">Exp</a> <a href="/tags/Exploit/" style="font-size: 20px;">Exploit</a> <a href="/tags/Filename/" style="font-size: 10px;">Filename</a> <a href="/tags/Heap-Pwn/" style="font-size: 10px;">Heap Pwn</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Pwn/" style="font-size: 10px;">Pwn</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/tags/privilge/" style="font-size: 10px;">privilge</a> <a href="/tags/基础概念类/" style="font-size: 10px;">基础概念类</a> <a href="/tags/漏洞利用/" style="font-size: 15px;">漏洞利用</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">初探wavpack测试crashes样本分析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/20220507-UMAS协议初探/">施耐德umas工控协议初探</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-ELF 文件结构/">ELF 文件结构初初级解析</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/04/20200804-外国ctf网站/">外国ctf学习网站集锦（未完待续）</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2022 拾荒者CD<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
 </footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
 
-<!-- jQuery -->
-<script src="/js/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="/js/bootstrap.min.js"></script>
 
-<!-- Custom Theme JavaScript -->
-<script src="/js/blog.js"></script>
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
 
-<!-- async load function -->
-<script>
-    function async(u, c) {
-      var d = document, t = 'script',
-          o = d.createElement(t),
-          s = d.getElementsByTagName(t)[0];
-      o.src = u;
-      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
-      s.parentNode.insertBefore(o, s);
-    }
-</script>
 
-<!-- jquery.tagcloud.js -->
-<script>
-    // only load tagcloud.js in tag.html
-    if($('#tag_cloud').length !== 0){
-        async("http://gumeng.fun/js/jquery.tagcloud.js",function(){
-            $.fn.tagcloud.defaults = {
-                //size: {start: 1, end: 1, unit: 'em'},
-                color: {start: '#bbbbee', end: '#0085a1'},
-            };
-            $('#tag_cloud a').tagcloud();
-        })
-    }
-</script>
-
-<!--fastClick.js -->
-<script>
-    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
-        var $nav = document.querySelector("nav");
-        if($nav) FastClick.attach($nav);
-    })
-</script>
+<script src="/js/script.js"></script>
 
 
 
-<!-- Google Analytics -->
-
-
-
-<!-- Baidu Tongji -->
-
-
-<!-- swiftype -->
-<script type="text/javascript">
-  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
-  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
-  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
-  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
-
-  _st('install','','2.0.0');
-</script>
-
-<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-
-<!--wechat title img-->
-<img class="wechat-title-img" src="">
+  </div>
 </body>
-
 </html>
