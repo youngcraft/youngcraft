@@ -1,489 +1,190 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<!-- Head tag -->
 <head><meta name="generator" content="Hexo 3.8.0">
-  <meta charset="utf-8">
-  <title>GDB_PEDA Exploit 调试插件安装 | 拾荒者CD</title>
-  <meta name="keywords" content=" Exploit ">
-  <meta name="description" content="GDB_PEDA Exploit 调试插件安装 | 拾荒者CD">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<meta name="description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：   “昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。 “衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。 “众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然">
-<meta name="keywords" content="Pwn,ICS,Python">
-<meta property="og:type" content="website">
-<meta property="og:title" content="关于我和我的博客">
-<meta property="og:url" content="http://gumeng.fun/aboutme/index.html">
-<meta property="og:site_name" content="拾荒者CD">
-<meta property="og:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：   “昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。 “衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。 “众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然">
-<meta property="og:locale" content="En">
-<meta property="og:updated_time" content="2022-01-28T15:31:43.936Z">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于我和我的博客">
-<meta name="twitter:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：   “昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。 “衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。 “众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="follow your heart!fly your dream!">
+    <meta name="keyword" content="">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="拾荒者CD" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        GDB_PEDA Exploit 调试插件安装｜undefined
+        
+    </title>
 
+    <link rel="canonical" href="http://gumeng.fun/2018/06/15/20180615-GDB_peda插件使用指南/">
 
-<link rel="icon" href="/img/head.jpg">
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
 
-<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
 
-<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
-
-<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
-<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="/js/jquery.autocomplete.min.js?v=1.0.1"></script>
-
-<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
-<script>
-    hljs.initHighlightingOnLoad();
-</script>
-
-<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-
-
-
-<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
-
-<script src="/js/iconfont.js?v=1.0.1"></script>
-
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
 <link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
-<div style="display: none">
-  <input class="theme_disqus_on" value="false">
-  <input class="theme_preload_comment" value="false">
-  <input class="theme_blog_path" value="">
-</div>
 
-<body>
-<aside class="nav">
-    <div class="nav-left">
-        <a href="/" class="avatar_target">
-    <img class="avatar" src="/img/head.jpg">
-</a>
-<div class="author">
-    <span>拾荒者CD</span>
-</div>
-
-<div class="icon">
-    
-        
-        <a title="rss" href="/atom.xml" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-rss"/>
-                </svg>
-            
-        </a>
-        
-    
-        
-        <a title="github" href="https://github.com/youngcraft" target="_blank">
-            
-                <svg class="iconfont-svg" aria-hidden="true">
-                    <use xlink:href="#icon-github"/>
-                </svg>
-            
-        </a>
-        
-    
-</div>
-
-
-
-
-<ul>
-    <li><div class="all active">全部文章<small>(25)</small></div></li>
-    
-        
-            
-            <li><div data-rel="Linux">Linux<small>(2)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="随笔">随笔<small>(0)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="tools">tools<small>(9)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="Coding">Coding<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="Pwn">Pwn<small>(4)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="Exploit">Exploit<small>(3)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="CTF">CTF<small>(1)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="模糊测试">模糊测试<small>(2)</small></div>
-                
-            </li>
-            
-        
-    
-        
-            
-            <li><div data-rel="工控协议"><i class="fold iconfont icon-right"></i>工控协议<small>(1)</small></div>
-                
-                    <ul class="sub hide">
-                        
-                        <li><div data-rel="逆向工程">逆向工程<small>(1)</small></div>
-                            
-                        </li>
-                            
-                    </ul>
-                
-            </li>
-            
-        
-    
-        
-            
-        
-    
-</ul>
-<div class="left-bottom">
-    <div class="menus">
-    
-    
-    
-    
-    </div>
-    <div><a class="about  hasFriend  site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
-</div>
-<input type="hidden" id="yelog_site_posts_number" value="25">
-
-<div style="display: none">
-    <span id="busuanzi_value_site_uv"></span>
-    <span id="busuanzi_value_site_pv"></span>
-</div>
-
-    </div>
-    <div class="nav-right">
-        <div class="friends-area">
-    <div class="friends-title">
-        友情链接
-        <i class="back-title-list"></i>
-    </div>
-    <div class="friends-content">
-        <ul>
-            
-            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
-            
-            <li><a target="_blank" href="http://whereisk0shl.top">k0shl</a></li>
-            
-            <li><a target="_blank" href="https://lcamtuf.blogspot.com">AFL大神lcamtuf</a></li>
-            
-            <li><a target="_blank" href="https://www.fastly.com">国外Fastly大神</a></li>
-            
-        </ul>
-    </div>
-</div>
-        <div class="title-list">
-    <form onkeydown="if(event.keyCode === 13){return false;}">
-        <input id="local-search-input" class="search" type="text" placeholder="Search...">
-        <i class="cross"></i>
-        <span>
-            <label for="tagswitch">Tags:</label>
-            <input id="tagswitch" type="checkbox" style="display: none">
-            <i id="tagsWitchIcon"></i>
-        </span>
-    </form>
-    <div class="tags-list">
-    
-    <li class="article-tag-list-item">
-        <a class="color5">Blog</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">随笔</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color3">Exploit</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">Heap Pwn</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">Filename</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">Exp</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color1">Linux</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color1">linux</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">privilge</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">漏洞利用</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color4">Pwn</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color5">nmap</a>
-    </li>
-    
-    <li class="article-tag-list-item">
-        <a class="color1">基础概念类</a>
-    </li>
-    
-    <div class="clearfix"></div>
-</div>
-
-    
-    <nav id="title-list-nav">
-        
-        <a class="tools " href="/2016/06/15/20160615-SQLChop检测引擎原理/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="长亭 SQLchop 实现方法">长亭 SQLchop 实现方法</span>
-            <span class="post-date" title="2016-06-15 09:50:08">2016/06/15</span>
-        </a>
-        
-        <a class="" href="/2017/08/28/20170828-heap初识/" data-tag="Heap Pwn" data-author="">
-            <span class="post-title" title="Linux下堆利用学习">Linux下堆利用学习</span>
-            <span class="post-date" title="2017-08-28 09:50:08">2017/08/28</span>
-        </a>
-        
-        <a class="Linux " href="/2017/10/27/20171027-ssh配置远程登录问题/" data-tag="" data-author="">
-            <span class="post-title" title="SSH配置远程登陆问题">SSH配置远程登陆问题</span>
-            <span class="post-date" title="2017-10-27 09:50:08">2017/10/27</span>
-        </a>
-        
-        <a class="tools " href="/2017/06/15/20170615-为什么文件名要用小名/" data-tag="Filename" data-author="">
-            <span class="post-title" title="为什么文件名用小名">为什么文件名用小名</span>
-            <span class="post-date" title="2017-06-15 09:50:08">2017/06/15</span>
-        </a>
-        
-        <a class="tools " href="/2017/07/01/20170701-ROPgadget使用方法/" data-tag="Exp" data-author="">
-            <span class="post-title" title="ROPgadget 使用指南">ROPgadget 使用指南</span>
-            <span class="post-date" title="2017-07-01 09:50:08">2017/07/01</span>
-        </a>
-        
-        <a class="Coding " href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/" data-tag="Linux" data-author="">
-            <span class="post-title" title="Python执行系统命令方法">Python执行系统命令方法</span>
-            <span class="post-date" title="2017-10-30 09:50:08">2017/10/30</span>
-        </a>
-        
-        <a class="tools " href="/2018/01/01/20180101-modbus协议扫描器设计与实现/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="Modbus协议扫描器的分析">Modbus协议扫描器的分析</span>
-            <span class="post-date" title="2018-01-01 09:50:08">2018/01/01</span>
-        </a>
-        
-        <a class="Pwn " href="/2018/06/15/20180615-Linux下的堆块伪造/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="Linux Pwn 之堆块伪造技术">Linux Pwn 之堆块伪造技术</span>
-            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
-        </a>
-        
-        <a class="Pwn " href="/2018/01/15/20180115-linux提权之setuid方法/" data-tag="linux,privilge" data-author="">
-            <span class="post-title" title="Linux 提权之setuid使用提权">Linux 提权之setuid使用提权</span>
-            <span class="post-date" title="2018-01-15 09:50:08">2018/01/15</span>
-        </a>
-        
-        <a class="tools " href="/2018/06/15/20180615-GDB_peda插件使用指南/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="GDB_PEDA Exploit 调试插件安装">GDB_PEDA Exploit 调试插件安装</span>
-            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
-        </a>
-        
-        <a class="tools " href="/2018/06/15/20180615-gdb 无法attach进程/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="GDB 无法attach进程">GDB 无法attach进程</span>
-            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
-        </a>
-        
-        <a class="tools " href="/2018/06/15/20180615-peda-pwntools安装使用问题/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="Peda 安装指南">Peda 安装指南</span>
-            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
-        </a>
-        
-        <a class="" href="/2018/10/24/20181024-docker之容器逃逸问题/" data-tag="" data-author="">
-            <span class="post-title" title="escape">escape</span>
-            <span class="post-date" title="2018-10-24 23:51:52">2018/10/24</span>
-        </a>
-        
-        <a class="Exploit " href="/2019/02/15/20190215-bin文件中对齐问题/" data-tag="漏洞利用" data-author="">
-            <span class="post-title" title="二进制文件中堆栈对齐问题初探">二进制文件中堆栈对齐问题初探</span>
-            <span class="post-date" title="2019-02-15 09:50:08">2019/02/15</span>
-        </a>
-        
-        <a class="Exploit " href="/2020/02/15/20200215-J2EE struts2远程命令执行漏洞 /" data-tag="漏洞利用" data-author="">
-            <span class="post-title" title="struts2远程命令执行漏洞S2-045">struts2远程命令执行漏洞S2-045</span>
-            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
-        </a>
-        
-        <a class="tools " href="/2020/02/16/20200215-aflsmart牛刀小试/" data-tag="" data-author="">
-            <span class="post-title" title="aflsmart小试">aflsmart小试</span>
-            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
-        </a>
-        
-        <a class="Pwn " href="/2020/02/15/20200215-如何搭建pwn环境/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="如何搭建Pwn利用环境">如何搭建Pwn利用环境</span>
-            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
-        </a>
-        
-        <a class="Pwn " href="/2020/02/16/20200216-ROP攻击技术/" data-tag="Pwn" data-author="">
-            <span class="post-title" title="一步一步学ROP之linux_x64篇">一步一步学ROP之linux_x64篇</span>
-            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
-        </a>
-        
-        <a class="Exploit " href="/2020/02/26/20200226-微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）/" data-tag="Exploit" data-author="">
-            <span class="post-title" title="微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）">微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）</span>
-            <span class="post-date" title="2020-02-26 23:00:16">2020/02/26</span>
-        </a>
-        
-        <a class="tools " href="/2020/02/15/20200215-nmap使用方法/" data-tag="nmap" data-author="">
-            <span class="post-title" title="nmap使用方法">nmap使用方法</span>
-            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
-        </a>
-        
-        <a class="Linux " href="/2020/08/04/20200804-ELF 文件结构/" data-tag="基础概念类" data-author="">
-            <span class="post-title" title="ELF 文件结构初初级解析">ELF 文件结构初初级解析</span>
-            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
-        </a>
-        
-        <a class="CTF " href="/2020/08/04/20200804-外国ctf网站/" data-tag="" data-author="">
-            <span class="post-title" title="外国ctf学习网站集锦（未完待续）">外国ctf学习网站集锦（未完待续）</span>
-            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
-        </a>
-        
-        <a class="模糊测试 " href="/2022/04/07/20220413-fuzz技术最新进展与展望/" data-tag="" data-author="">
-            <span class="post-title" title="Fuzzing技术最新进展与展望">Fuzzing技术最新进展与展望</span>
-            <span class="post-date" title="2022-04-07 08:42:53">2022/04/07</span>
-        </a>
-        
-        <a class="工控协议 逆向工程 " href="/2022/05/07/20220507-UMAS协议初探/" data-tag="" data-author="">
-            <span class="post-title" title="施耐德umas工控协议初探">施耐德umas工控协议初探</span>
-            <span class="post-date" title="2022-05-07 08:42:53">2022/05/07</span>
-        </a>
-        
-        <a class="模糊测试 " href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-tag="" data-author="">
-            <span class="post-title" title="初探wavpack测试crashes样本分析">初探wavpack测试crashes样本分析</span>
-            <span class="post-date" title="2022-05-14 08:42:53">2022/05/14</span>
-        </a>
-        
-    </nav>
-</div>
-    </div>
-    <div class="hide-list">
-        <div class="semicircle">
-            <div class="brackets first"><</div>
-            <div class="brackets">&gt;</div>
-        </div>
-    </div>
-</aside>
-<div class="post">
-    <div class="pjax">
-        <article id="post-20180615-GDB_peda插件使用指南" class="article article-type-post" itemscope="" itemprop="blogPost">
-    
-        <h1 class="article-title">GDB_PEDA Exploit 调试插件安装</h1>
-    
-    <div class="article-meta">
-        
-        
-        
-        <span class="book">
-            
-                <a data-rel="tools">tools</a>
-            
-        </span>
-        
-        
-        <span class="tag">
-            
-            <a class="color3">Exploit</a>
-            
-        </span>
-        
-    </div>
-    <div class="article-meta">
-        
-        创建时间:<time class="date" title="更新时间: 2022-01-28 23:31:43">2018-06-15 09:50</time>
-        
-    </div>
-    <div class="article-meta">
-        
-        
-        <span id="busuanzi_container_page_pv">
-            阅读:<span id="busuanzi_value_page_pv">
-                <span class="count-comment">
-                    <span class="spinner">
-                      <div class="cube1"></div>
-                      <div class="cube2"></div>
-                    </span>
-                </span>
-            </span>
-        </span>
-        
-        
-    </div>
-    
-    <div class="toc-ref">
-    
-        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GDB-peda-神器-利用命令"><span class="toc-text">GDB-peda 神器 利用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-指令"><span class="toc-text">linux 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ldd"><span class="toc-text">ldd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询libc-so-版本号"><span class="toc-text">查询libc.so 版本号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec-检测保护方式"><span class="toc-text">checksec 检测保护方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GANNARY（栈保护）"><span class="toc-text">GANNARY（栈保护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FORTIFY"><span class="toc-text">FORTIFY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NX（DEP）"><span class="toc-text">NX（DEP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ASLR（PIE）"><span class="toc-text">ASLR（PIE）</span></a></li></ol></li></ol></li></ol>
-    
 <style>
-    .left-col .switch-btn,
-    .left-col .switch-area {
-        display: none;
-    }
-    .toc-level-3 i,
-    .toc-level-3 ol {
-        display: none !important;
+
+    header.intro-header {
+        background-image: url('')
     }
 </style>
-</div>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost="true" data-istags="false
+" data-ishome="false">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    拾荒者CD
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/aboutme/">关于我和我的博客</a>
+                        </li>
+							
+						
+                    
+                        
+							
+								
+							
+						
+                    
+					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img" src="">
+
+
+<style>
     
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="GDB-peda-神器-利用命令"><a href="#GDB-peda-神器-利用命令" class="headerlink" title="GDB-peda 神器 利用命令"></a>GDB-peda 神器 利用命令</h1><pre><code>Key Features:
+    header.intro-header {
+        background-image: url('')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>GDB_PEDA Exploit 调试插件安装</h1>
+                    
+                    <span class="meta">
+                         作者 gumeng
+                        <span>
+                          日期 2018-06-15
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Exploit" title="Exploit">Exploit</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            GDB_PEDA Exploit 调试插件安装
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="GDB-peda-神器-利用命令"><a href="#GDB-peda-神器-利用命令" class="headerlink" title="GDB-peda 神器 利用命令"></a>GDB-peda 神器 利用命令</h1><pre><code>Key Features:
 
 Enhance the display of gdb: colorize and display disassembly codes, registers, memory information during debugging.
 Add commands to support debugging and exploit development (for a full list of commands use peda help):
@@ -623,305 +324,166 @@ gcc -fstack-protector-all -o test test.c //启用堆栈保护，为所有函数�
 <p>切换到root用户来做更新，直接使用sudo会出现下面结果</p>
 <p>In any ASLR enabled binary (and most normal binaries for that<br>matter) there has to be a way for the binary to ‘know’ where the libc functions<br>are at. The binary creates a PLT stub for functions used in the source. These<br>are <strong>always at a constant address</strong>. This PLT stub is essentially a wrapper<br>function for the actual function in libc. The GOT contains the actual adresses<br>in libc for the functions used in the program. The actual adresses change from<br>runtime to runtime, but pointers to the same function are <strong>always in the same<br>spot in the GOT</strong>.</p>
 
-      
-       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 youngcraft@qq.com </span>
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2018/10/24/20181024-docker之容器逃逸问题/" data-toggle="tooltip" data-placement="top" title="escape">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2018/06/15/20180615-gdb 无法attach进程/" data-toggle="tooltip" data-placement="top" title="GDB 无法attach进程">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+
+                
+
+
+                <!--加入新的评论系统-->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GDB-peda-神器-利用命令"><span class="toc-text">GDB-peda 神器 利用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-指令"><span class="toc-text">linux 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ldd"><span class="toc-text">ldd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询libc-so-版本号"><span class="toc-text">查询libc.so 版本号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec-检测保护方式"><span class="toc-text">checksec 检测保护方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GANNARY（栈保护）"><span class="toc-text">GANNARY（栈保护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FORTIFY"><span class="toc-text">FORTIFY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NX（DEP）"><span class="toc-text">NX（DEP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ASLR（PIE）"><span class="toc-text">ASLR（PIE）</span></a></li></ol></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+
+                <!-- Friends Blog -->
+                
+            </div>
+        </div>
+
     </div>
 </article>
 
 
-<p>
-    <a class="dashang" onclick="dashangToggle()">赏</a>
-</p>
-
-
-<div class="article_copyright">
-    <p><span class="copy-title">文章标题:</span>GDB_PEDA Exploit 调试插件安装</p>
-    
-    <p><span class="copy-title">本文作者:</span><a title="拾荒者CD">拾荒者CD</a></p>
-    <p><span class="copy-title">发布时间:</span>2018-06-15, 09:50:08</p>
-    <p><span class="copy-title">最后更新:</span>2022-01-28, 23:31:43</p>
-    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/06/15/20180615-GDB_peda插件使用指南/" title="GDB_PEDA Exploit 调试插件安装">http://gumeng.fun/2018/06/15/20180615-GDB_peda插件使用指南/</a>
-    <p>
-        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
-    </p>
-</div>
 
 
 
 
 
-    
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
 
+                
 
+                
 
+                
 
-    </div>
-    <div class="copyright">
-        <p class="footer-entry">©2016-2020 Gumeng</p>
-<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+                
 
-    </div>
-    <div class="full-toc">
-        <button class="full"><span class="min "></span></button>
-<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
-<div class="post-toc"><span class="post-toc-title">目录</span>
-    <div class="post-toc-content">
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 拾荒者CD 2022
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
 
-    </div>
-</div>
-<a class="" id="rocket"></a>
-
-    </div>
-</div>
-<div class="acParent"></div>
-
-<div class="hide_box" onclick="dashangToggle()"></div>
-<div class="shang_box">
-    <a class="shang_close" onclick="dashangToggle()">×</a>
-    <div class="shang_tit">
-        <p>喜欢就点赞,疼爱就打赏</p>
-    </div>
-    <div class="shang_payimg">
-        <div class="pay_img">
-            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
-            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+            </div>
         </div>
     </div>
-    <div class="shang_payselect">
-        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
-    </div>
-</div>
+</footer>
 
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
 
-</body>
-<script src="/js/jquery.pjax.js?v=1.0.1"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
 
-<script src="/js/script.js?v=1.0.1"></script>
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
 <script>
-    var img_resize = 'default';
-    /*作者、标签的自动补全*/
-    $(function () {
-        $('.search').AutoComplete({
-            'data': ['#Blog','#随笔','#Exploit','#Heap Pwn','#Filename','#Exp','#Linux','#linux','#privilge','#漏洞利用','#Pwn','#nmap','#基础概念类',],
-            'itemHeight': 20,
-            'width': 418
-        }).AutoComplete('show');
-    })
-    function initArticle() {
-        /*渲染对应的表格样式*/
-        
-            $(".post .pjax table").addClass("green_title");
-        
-
-        /*渲染打赏样式*/
-        
-        $("input[name=pay]").on("click", function () {
-            if($("input[name=pay]:checked").val()=="weixin"){
-                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
-            } else {
-                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
-            }
-        })
-        
-
-        /*高亮代码块行号*/
-        
-        $('pre code').each(function(){
-            var lines = $(this).text().split('\n').length - 1, widther='';
-            if (lines>99) {
-                widther = 'widther'
-            }
-            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
-            $(this).addClass('has-numbering ' + widther)
-                    .parent()
-                    .append($numbering);
-            for(var i=1;i<=lines;i++){
-                $numbering.append($('<li/>').text(i));
-            }
-        });
-        
-
-        /*访问数量*/
-        
-        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
-        
-
-        /*代码高亮，行号对齐*/
-        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
-
-        
-        
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
     }
-
-    /*打赏页面隐藏与展示*/
-    
-    function dashangToggle() {
-        $(".shang_box").fadeToggle();
-        $(".hide_box").fadeToggle();
-    }
-    
-
 </script>
 
-<!--加入行号的高亮代码块样式-->
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://gumeng.fun/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
 
-<style>
-    pre{
-        position: relative;
-        margin-bottom: 24px;
-        border-radius: 10px;
-        border: 1px solid #e2dede;
-        background: #FFF;
-        overflow: hidden;
-    }
-    code.has-numbering{
-        margin-left: 30px;
-    }
-    code.has-numbering.widther{
-        margin-left: 35px;
-    }
-    .pre-numbering{
-        margin: 0px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 20px;
-        padding: 0.5em 3px 0.7em 5px;
-        border-right: 1px solid #C3CCD0;
-        text-align: right;
-        color: #AAA;
-        background-color: #fafafa;
-    }
-    .pre-numbering.widther {
-        width: 35px;
-    }
-</style>
-
-<!--自定义样式设置-->
-<style>
-    
-    
-    .nav {
-        width: 542px;
-    }
-    .nav.fullscreen {
-        margin-left: -542px;
-    }
-    .nav-left {
-        width: 120px;
-    }
-    
-    
-    @media screen and (max-width: 1468px) {
-        .nav {
-            width: 492px;
-        }
-        .nav.fullscreen {
-            margin-left: -492px;
-        }
-        .nav-left {
-            width: 100px;
-        }
-    }
-    
-    
-    @media screen and (max-width: 1024px) {
-        .nav {
-            width: 492px;
-            margin-left: -492px
-        }
-        .nav.fullscreen {
-            margin-left: 0;
-        }
-        .nav .hide-list.fullscreen {
-            left: 492px
-        }
-    }
-    
-    @media screen and (max-width: 426px) {
-        .nav {
-            width: 100%;
-        }
-        .nav-left {
-            width: 100%;
-        }
-    }
-    
-    
-    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
-        color: #383636;
-    }
-    
-    
-    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
-        color: #5e5e5f;
-    }
-    
-    
-    .nav-right nav a.hover, #local-search-result a.hover{
-        background-color: #e2e0e0;
-    }
-    
-    
-
-    /*列表样式*/
-    
-    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
-        border: #e2dede solid 1px;
-        border-radius: 10px;
-        padding: 10px 32px 10px 56px;
-    }
-    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
-        margin-bottom: auto;
-        margin-left: auto;
-    }
-    
-
-    /* 背景图样式 */
-    
-    
-
-
-    /*引用块样式*/
-    
-
-    /*文章列表背景图*/
-    
-    .nav-right:before {
-        content: ' ';
-        display: block;
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0.3;
-        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
-        background-repeat: no-repeat;
-        background-position: 50% 0;
-        -ms-background-size: cover;
-        -o-background-size: cover;
-        -moz-background-size: cover;
-        -webkit-background-size: cover;
-        background-size: cover;
-    }
-    
-
-    
-</style>
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
 
 
 
+<!-- Google Analytics -->
 
 
 
+<!-- Baidu Tongji -->
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','','2.0.0');
+</script>
+
+<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="">
+</body>
 
 </html>
