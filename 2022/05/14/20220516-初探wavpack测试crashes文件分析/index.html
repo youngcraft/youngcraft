@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>初探wavpack测试crashes样本分析 | 拾荒者CD</title>
+  <meta name="keywords" content="">
+  <meta name="description" content="初探wavpack测试crashes样本分析 | 拾荒者CD">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://gumeng.fun/about/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+<meta property="og:locale" content="En">
+<meta property="og:updated_time" content="2022-01-28T15:31:43.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="about">
+<meta name="twitter:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+
+
+<link rel="icon" href="/img/head.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js?v=1.0.1"></script>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/head.jpg">
+</a>
+<div class="author">
+    <span>拾荒者CD</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="rss" href="/atom.xml" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-rss"/>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/youngcraft" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"/>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(25)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Linux">Linux<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="随笔">随笔<small>(0)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="tools">tools<small>(9)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Coding">Coding<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Pwn">Pwn<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Exploit">Exploit<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="模糊测试">模糊测试<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="CTF">CTF<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="工控协议"><i class="fold iconfont icon-right"></i>工控协议<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="逆向工程">逆向工程<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  hasFriend  site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="25">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+            <li><a target="_blank" href="http://whereisk0shl.top">k0shl</a></li>
+            
+            <li><a target="_blank" href="https://lcamtuf.blogspot.com">AFL大神lcamtuf</a></li>
+            
+            <li><a target="_blank" href="https://www.fastly.com">国外Fastly大神</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search...">
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none">
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Blog</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">随笔</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">Exploit</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Heap Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">Linux</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Exp</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">linux</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">privilge</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Filename</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">漏洞利用</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">nmap</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">基础概念类</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a class="tools " href="/2016/06/15/20160615-SQLChop检测引擎原理/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="长亭 SQLchop 实现方法">长亭 SQLchop 实现方法</span>
+            <span class="post-date" title="2016-06-15 09:50:08">2016/06/15</span>
+        </a>
+        
+        <a class="" href="/2017/08/28/20170828-heap初识/" data-tag="Heap Pwn" data-author="">
+            <span class="post-title" title="Linux下堆利用学习">Linux下堆利用学习</span>
+            <span class="post-date" title="2017-08-28 09:50:08">2017/08/28</span>
+        </a>
+        
+        <a class="Coding " href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/" data-tag="Linux" data-author="">
+            <span class="post-title" title="Python执行系统命令方法">Python执行系统命令方法</span>
+            <span class="post-date" title="2017-10-30 09:50:08">2017/10/30</span>
+        </a>
+        
+        <a class="tools " href="/2017/07/01/20170701-ROPgadget使用方法/" data-tag="Exp" data-author="">
+            <span class="post-title" title="ROPgadget 使用指南">ROPgadget 使用指南</span>
+            <span class="post-date" title="2017-07-01 09:50:08">2017/07/01</span>
+        </a>
+        
+        <a class="Pwn " href="/2018/01/15/20180115-linux提权之setuid方法/" data-tag="linux,privilge" data-author="">
+            <span class="post-title" title="Linux 提权之setuid使用提权">Linux 提权之setuid使用提权</span>
+            <span class="post-date" title="2018-01-15 09:50:08">2018/01/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/01/01/20180101-modbus协议扫描器设计与实现/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Modbus协议扫描器的分析">Modbus协议扫描器的分析</span>
+            <span class="post-date" title="2018-01-01 09:50:08">2018/01/01</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-GDB_peda插件使用指南/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="GDB_PEDA Exploit 调试插件安装">GDB_PEDA Exploit 调试插件安装</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="tools " href="/2017/06/15/20170615-为什么文件名要用小名/" data-tag="Filename" data-author="">
+            <span class="post-title" title="为什么文件名用小名">为什么文件名用小名</span>
+            <span class="post-date" title="2017-06-15 09:50:08">2017/06/15</span>
+        </a>
+        
+        <a class="Linux " href="/2017/10/27/20171027-ssh配置远程登录问题/" data-tag="" data-author="">
+            <span class="post-title" title="SSH配置远程登陆问题">SSH配置远程登陆问题</span>
+            <span class="post-date" title="2017-10-27 09:50:08">2017/10/27</span>
+        </a>
+        
+        <a class="Pwn " href="/2018/06/15/20180615-Linux下的堆块伪造/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Linux Pwn 之堆块伪造技术">Linux Pwn 之堆块伪造技术</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="Exploit " href="/2019/02/15/20190215-bin文件中对齐问题/" data-tag="漏洞利用" data-author="">
+            <span class="post-title" title="二进制文件中堆栈对齐问题初探">二进制文件中堆栈对齐问题初探</span>
+            <span class="post-date" title="2019-02-15 09:50:08">2019/02/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-peda-pwntools安装使用问题/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Peda 安装指南">Peda 安装指南</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-gdb 无法attach进程/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="GDB 无法attach进程">GDB 无法attach进程</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="Exploit " href="/2020/02/15/20200215-J2EE struts2远程命令执行漏洞 /" data-tag="漏洞利用" data-author="">
+            <span class="post-title" title="struts2远程命令执行漏洞S2-045">struts2远程命令执行漏洞S2-045</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="tools " href="/2020/02/15/20200215-nmap使用方法/" data-tag="nmap" data-author="">
+            <span class="post-title" title="nmap使用方法">nmap使用方法</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="" href="/2018/10/24/20181024-docker之容器逃逸问题/" data-tag="" data-author="">
+            <span class="post-title" title="escape">escape</span>
+            <span class="post-date" title="2018-10-24 23:51:52">2018/10/24</span>
+        </a>
+        
+        <a class="tools " href="/2020/02/16/20200215-aflsmart牛刀小试/" data-tag="" data-author="">
+            <span class="post-title" title="aflsmart小试">aflsmart小试</span>
+            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
+        </a>
+        
+        <a class="Pwn " href="/2020/02/16/20200216-ROP攻击技术/" data-tag="Pwn" data-author="">
+            <span class="post-title" title="一步一步学ROP之linux_x64篇">一步一步学ROP之linux_x64篇</span>
+            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
+        </a>
+        
+        <a class="Linux " href="/2020/08/04/20200804-ELF 文件结构/" data-tag="基础概念类" data-author="">
+            <span class="post-title" title="ELF 文件结构初初级解析">ELF 文件结构初初级解析</span>
+            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
+        </a>
+        
+        <a class="Pwn " href="/2020/02/15/20200215-如何搭建pwn环境/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="如何搭建Pwn利用环境">如何搭建Pwn利用环境</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="模糊测试 " href="/2022/04/07/20220413-fuzz技术最新进展与展望/" data-tag="" data-author="">
+            <span class="post-title" title="Fuzzing技术最新进展与展望">Fuzzing技术最新进展与展望</span>
+            <span class="post-date" title="2022-04-07 08:42:53">2022/04/07</span>
+        </a>
+        
+        <a class="Exploit " href="/2020/02/26/20200226-微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）">微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）</span>
+            <span class="post-date" title="2020-02-26 23:00:16">2020/02/26</span>
+        </a>
+        
+        <a class="CTF " href="/2020/08/04/20200804-外国ctf网站/" data-tag="" data-author="">
+            <span class="post-title" title="外国ctf学习网站集锦（未完待续）">外国ctf学习网站集锦（未完待续）</span>
+            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
+        </a>
+        
+        <a class="工控协议 逆向工程 " href="/2022/05/07/20220507-UMAS协议初探/" data-tag="" data-author="">
+            <span class="post-title" title="施耐德umas工控协议初探">施耐德umas工控协议初探</span>
+            <span class="post-date" title="2022-05-07 08:42:53">2022/05/07</span>
+        </a>
+        
+        <a class="模糊测试 " href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-tag="" data-author="">
+            <span class="post-title" title="初探wavpack测试crashes样本分析">初探wavpack测试crashes样本分析</span>
+            <span class="post-date" title="2022-05-14 08:42:53">2022/05/14</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-20220516-初探wavpack测试crashes文件分析" class="article article-type-post" itemscope="" itemprop="blogPost">
+    
+        <h1 class="article-title">初探wavpack测试crashes样本分析</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a data-rel="模糊测试">模糊测试</a>
+            
+        </span>
+        
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title="更新时间: 2022-05-18 19:34:01">2022-05-14 08:42</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#wavpack-crash文件分析"><span class="toc-text">wavpack crash文件分析</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-关于崩溃样本文件"><span class="toc-text">1 关于崩溃样本文件</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-分析崩溃原因"><span class="toc-text">2 分析崩溃原因</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-分析Core-dump文件"><span class="toc-text">2.1 分析Core dump文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-分析出错代码位置"><span class="toc-text">2.2 分析出错代码位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-拷贝内存时报错"><span class="toc-text">2.3 拷贝内存时报错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-总结"><span class="toc-text">2.4 总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-发现的4个问题"><span class="toc-text">3 发现的4个问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-IO-FILE文件结构"><span class="toc-text">4.1 IO_FILE文件结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-调试中寄存器细节问题"><span class="toc-text">4.2 调试中寄存器细节问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-寄存器部分功能描述"><span class="toc-text">4.3 寄存器部分功能描述</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#课后温习"><span class="toc-text">课后温习</span></a></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="wavpack-crash文件分析"><a href="#wavpack-crash文件分析" class="headerlink" title="wavpack crash文件分析"></a>wavpack crash文件分析</h1><p>&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。</p>
+<h1 id="1-关于崩溃样本文件"><a href="#1-关于崩溃样本文件" class="headerlink" title="1 关于崩溃样本文件"></a>1 关于崩溃样本文件</h1><p>&emsp;&emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自afl fuzz的结果，系统栈帧崩溃时的backtrace如下：</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ <span class="keyword">bt</span></span><br><span class="line">#<span class="number">0</span>  __memmove_avx_unaligned_erms () <span class="meta">at</span> ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:<span class="number">416</span></span><br><span class="line">#<span class="number">1</span>  <span class="number">0x00007ffff7a2438e</span> <span class="keyword">in</span> __GI__IO_file_xsgetn (fp=<span class="number">0x555555675580</span>, data=&lt;optimized <span class="keyword">out</span>&gt;, n=<span class="number">0x95959596</span>) <span class="meta">at</span> fileops.c:<span class="number">1304</span></span><br><span class="line">#<span class="number">2</span>  <span class="number">0x00007ffff7a17f13</span> <span class="keyword">in</span> __GI__IO_fread (buf=<span class="number">0x0</span>, size=size@entry=<span class="number">0x1</span>, count=count@entry=<span class="number">0x95959596</span>, fp=fp@entry=<span class="number">0x555555675580</span>) <span class="meta">at</span> iofread.c:<span class="number">38</span></span><br><span class="line">#<span class="number">3</span>  <span class="number">0x00005555555b4cd6</span> <span class="keyword">in</span> fread (__stream=<span class="number">0x555555675580</span>, __n=<span class="number">0x95959596</span>, __size=<span class="number">0x1</span>, __<span class="built_in">ptr</span>=&lt;optimized <span class="keyword">out</span>&gt;) <span class="meta">at</span> /usr/include/x86_64-linux-gnu/<span class="meta">bits</span>/stdio2.h:<span class="number">297</span></span><br><span class="line">#<span class="number">4</span>  DoReadFile (hFile=hFile@entry=<span class="number">0x555555675580</span>, lpBuffer=lpBuffer@entry=<span class="number">0x0</span>, nNumberOfBytesToRead=nNumberOfBytesToRead@entry=<span class="number">0x95959596</span>, </span><br><span class="line">    lpNumberOfBytesRead=lpNumberOfBytesRead@entry=<span class="number">0x7fffffffba0c</span>) <span class="meta">at</span> utils.c:<span class="number">618</span></span><br><span class="line">#<span class="number">5</span>  <span class="number">0x000055555559c086</span> <span class="keyword">in</span> ParseRiffHeaderConfig (infile=<span class="number">0x555555675580</span>, infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, fourcc=&lt;optimized <span class="keyword">out</span>&gt;, wpc=<span class="number">0x555555675300</span>, </span><br><span class="line">    config=<span class="number">0x7fffffffbc60</span>) <span class="meta">at</span> riff.c:<span class="number">296</span></span><br><span class="line">#<span class="number">6</span>  <span class="number">0x0000555555599386</span> <span class="keyword">in</span> pack_file (infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, outfilename=<span class="number">0x5555556752e0</span> <span class="string">"test09.wv"</span>, out2filename=<span class="number">0x0</span>, config=&lt;optimized <span class="keyword">out</span>&gt;)</span><br><span class="line">    <span class="meta">at</span> wavpack.c:<span class="number">1776</span></span><br><span class="line">#<span class="number">7</span>  <span class="number">0x000055555555af58</span> <span class="keyword">in</span> main (argc=&lt;optimized <span class="keyword">out</span>&gt;, argc@entry=<span class="number">0x3</span>, argv=&lt;optimized <span class="keyword">out</span>&gt;, argv@entry=<span class="number">0x7fffffffe338</span>) <span class="meta">at</span> wavpack.c:<span class="number">1272</span></span><br><span class="line">#<span class="number">8</span>  <span class="number">0x00007ffff79b90b3</span> <span class="keyword">in</span> __libc_start_main (main=<span class="number">0x555555557600</span> &lt;main&gt;, argc=<span class="number">0x3</span>, argv=<span class="number">0x7fffffffe338</span>, init=&lt;optimized <span class="keyword">out</span>&gt;, fini=&lt;optimized <span class="keyword">out</span>&gt;, </span><br><span class="line">    rtld_fini=&lt;optimized <span class="keyword">out</span>&gt;, stack_end=<span class="number">0x7fffffffe328</span>) <span class="meta">at</span> ../csu/libc-start.c:<span class="number">308</span></span><br><span class="line">#<span class="number">9</span>  <span class="number">0x000055555556d8ee</span> <span class="keyword">in</span> _start ()</span><br></pre></td></tr></table></figure>
+<p>&emsp;&emsp;其中，#3,#4分别表示在fread和utils.c 618行函数DoReadFile出现错误，从具体调用关系上看，#4在调用#3过程中，需要调用fread函数，fread函数的标准释义是：</p>
+<blockquote>
+<p>size_t fread( void <em>restrict buffer, size_t size, size_t count, FILE </em>restrict stream );</p>
+</blockquote>
+<p>&emsp;&emsp;其中restrict buffer表示要拷贝数据，从steam中读取size*count个字节数据到buffer中，在执行文件中发现 实际参数值为buf=0x0, size=size@entry=0x1, count=count@entry=0x95959596, fp=fp@entry=0x555555675580。一般而言，系统函数库中的函数一般不会出错的，出错的问题在于我们调用时使用了不正确的参数或者地址，导致系统出错。跟着bt的结果，我们一步步发掘系统报段错误的原因：</p>
+<hr>
+<h1 id="2-分析崩溃原因"><a href="#2-分析崩溃原因" class="headerlink" title="2 分析崩溃原因"></a>2 分析崩溃原因</h1><p>&emsp;&emsp;崩溃前最后一个自写的函数就是DoReadFile，函数调用参数分别如下<br> (buf=0x0, size=size@entry=0x1, count=count@entry=0x95959596, fp=fp@entry=0x555555675580) </p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">Breakpoint</span> <span class="selector-tag">1</span>, <span class="selector-tag">DoReadFile</span> (hFile=hFile<span class="variable">@entry</span>=<span class="number">0</span>x555555675580, </span><br><span class="line">    lpBuffer=lpBuffer<span class="variable">@entry</span>=<span class="number">0</span>x7fffffffbb4c, </span><br><span class="line">    nNumberOfBytesToRead=nNumberOfBytesToRead<span class="variable">@entry</span>=<span class="number">0</span>x8, </span><br><span class="line">    lpNumberOfBytesRead=lpNumberOfBytesRead<span class="variable">@entry</span>=<span class="number">0</span>x7fffffffbb1c) <span class="selector-tag">at</span> <span class="selector-tag">utils</span><span class="selector-class">.c</span><span class="selector-pseudo">:620</span></span><br><span class="line"></span><br><span class="line"><span class="selector-tag">0x000055555559b3fa</span> <span class="selector-tag">in</span> <span class="selector-tag">ParseRiffHeaderConfig</span> (infile=<span class="number">0</span>x555555675580, </span><br><span class="line">    infilename=<span class="number">0</span>x455641570003877c &lt;<span class="attribute">error</span>: Cannot access memory at address <span class="number">0</span>x455641570003877c&gt;, fourcc=&lt;optimized out&gt;, wpc=<span class="number">0</span>x555555675300, config=<span class="number">0</span>x7fffffffbd70) <span class="selector-tag">at</span> <span class="selector-tag">riff</span><span class="selector-class">.c</span><span class="selector-pseudo">:75</span></span><br><span class="line"><span class="selector-tag">75</span>          <span class="selector-tag">if</span> ((!DoReadFile (infile, ((char *) &amp;riff_chunk_header) + <span class="number">4</span>, sizeof (RiffChunkHeader) - <span class="number">4</span>, &amp;bcount) ||</span><br></pre></td></tr></table></figure>
+<h2 id="2-1-分析Core-dump文件"><a href="#2-1-分析Core-dump文件" class="headerlink" title="2.1 分析Core dump文件"></a>2.1 分析Core dump文件</h2><p>core转储文件可以用于发现具体错误点，core dump文件需要提前设置，这里不再过多赘述。从分析core dump文件开始，发现报错是出现了glibc文件之中。</p>
+<h2 id="2-2-分析出错代码位置"><a href="#2-2-分析出错代码位置" class="headerlink" title="2.2 分析出错代码位置"></a>2.2 分析出错代码位置</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Core was generated by `./cli/wavpack -y test09.wav<span class="string">'.</span></span><br><span class="line"><span class="string">Program terminated with signal SIGSEGV, Segmentation fault.</span></span><br><span class="line"><span class="string">#0  __memmove_avx_unaligned_erms () at ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:416</span></span><br></pre></td></tr></table></figure>
+<p>出错的代码部分，fileops.c:1304行，glibc版本为2.3.1，在线链接是：<a href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c：" target="_blank" rel="noopener">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c：</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (want &gt; <span class="number">0</span>)</span><br><span class="line">  &#123;</span><br><span class="line">  </span><br><span class="line">    have = fp-&gt;_IO_read_end - fp-&gt;_IO_read_ptr;</span><br><span class="line">    <span class="keyword">if</span> (want &lt;= have)   ## 第二部分，输入缓冲区里已经有足够的字符，则直接把缓冲区里的字符给目标buff</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="built_in">memcpy</span> (s, fp-&gt;_IO_read_ptr, want);</span><br><span class="line">      fp-&gt;_IO_read_ptr += want;</span><br><span class="line">      want = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (have &gt; <span class="number">0</span>)  ## 第三部分，输入缓冲区里有部分字符，但是没有达到fread的size需求，先把已有的拷贝至目标buff</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">memcpy</span> (s, fp-&gt;_IO_read_ptr, have);  &lt;&lt;&lt;============程序运行到这一步报错，fileops.c：<span class="number">1304</span>行</span><br><span class="line">            s += have;</span><br><span class="line">            want -= have;</span><br><span class="line">            fp-&gt;_IO_read_ptr += have;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-3-拷贝内存时报错"><a href="#2-3-拷贝内存时报错" class="headerlink" title="2.3 拷贝内存时报错"></a>2.3 拷贝内存时报错</h2><p>&emsp;&emsp;在memcpy函数拷贝数据出现越界，第1个参数*s为数据data，拷贝的目标地址，第二个fp参数，拷贝的源地址，fp-&gt;_IO_read_ptr是FILE结构体的一部分，偏移为8，表示读取的起始地址。have表示传入数据长度。在IO_FILE结构体中，fp也是一个IO_FILE结构体，遵从IO_FILE标准结构。</p>
+<p><img src="/img/wavpack代码行1.png" alt="代码报错fileops.c:1304"></p>
+<p>&emsp;&emsp;程序运行逻辑中，have表示实际能够存储的内存大小，want表示当前传入的参数，报错上下文也就是want = 0x95959596。此时，have &lt; want,因此，程序进入if (have &gt; 0)对应的逻辑块，程序直接如上图所示的代码行，直接从_IO_read_ptr标记的内存处拷贝have个大小的，该部分可能并不会引起溢出</p>
+<p>&emsp;&emsp;可以看到file类型的fp函数IO_read_ptr地址偏移为8，通过gdb-peda看到fp第二个地址为_IO_read_ptr=0x555555676258,最大读指针地址_IO_read_end=0x55555555676940，其中可读取空间包括0x940-0x258=0x6E8个地址空间。memcpy如果执行复制n=0x95959596（大约相当于2G内存）后，_IO_read_ptr（0x555555676258）+ n（0x95959596）= 0x5555EAFCF7EE &gt; 程序所在内存空间，导致覆盖了0x0x555555676258~0x55555EAFCF7EE范围的数据，这一覆盖范围远远大于映射的内存区域，导致出现段错误，但这个只是我们的猜想。</p>
+<p>还原整个调试过程，如下所示：</p>
+<figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br></pre></td><td class="code"><pre><span class="line">------------------------------------------------------------------------------]</span><br><span class="line"><span class="symbol">Legend:</span> code, data, rodata, value</span><br><span class="line"><span class="number">289</span>	            char *buff = malloc (bytes_to_copy);  <span class="comment"># &lt;-----------------申请2G内存区域，申请失败返回0，导致没有申请成功</span></span><br><span class="line">gdb-peda$ p bytes_to_copy</span><br><span class="line">$<span class="number">4</span> = <span class="number">0x95959596</span></span><br><span class="line">gdb-peda$ n</span><br><span class="line">[----------------------------------registers-----------------------------------]</span><br><span class="line"><span class="symbol">RAX:</span> <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RBX:</span> <span class="number">0x7fffffffbc7c</span> --&gt; <span class="number">0x8</span> </span><br><span class="line"><span class="symbol">RCX:</span> <span class="number">0x9595</span> </span><br><span class="line"><span class="symbol">RDX:</span> <span class="number">0x95959595</span> </span><br><span class="line"><span class="symbol">RSI:</span> <span class="number">0x959595</span> </span><br><span class="line"><span class="symbol">RDI:</span> <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RBP:</span> <span class="number">0x555555675580</span> --&gt; <span class="number">0xfbad2488</span> </span><br><span class="line"><span class="symbol">RSP:</span> <span class="number">0x7fffffffbc40</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RIP:</span> <span class="number">0x55555559bfcb</span> (&lt;ParseRiffHeaderConfig+<span class="number">3515</span>&gt;:	test   r8d,r8d)</span><br><span class="line">R8 : <span class="number">0x0</span> </span><br><span class="line">R9 : <span class="number">0x95959595</span> </span><br><span class="line"><span class="symbol">R10:</span> <span class="number">0x2</span> </span><br><span class="line"><span class="symbol">R11:</span> <span class="number">0x7ffff793a900</span> --&gt; <span class="number">0x9595959595959595</span> </span><br><span class="line"><span class="symbol">R12:</span> <span class="number">0x7fffffffbed0</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">R13:</span> <span class="number">0x555555675300</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">R14:</span> <span class="number">0x95959596</span> </span><br><span class="line"><span class="symbol">R15:</span> <span class="number">0x7fffffffbca0</span> --&gt; <span class="number">0x9595959595959595</span></span><br><span class="line"><span class="symbol">EFLAGS:</span> <span class="number">0x246</span> (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)</span><br><span class="line">[-------------------------------------code-------------------------------------]</span><br><span class="line">   <span class="number">0x55555559bfbc</span> &lt;ParseRiffHeaderConfig+<span class="number">3500</span>&gt;:	mov    r8d,DWORD PTR [rip+<span class="number">0xd84fd</span>]        <span class="comment"># 0x5555556744c0 &lt;debug_logging_mode&gt;</span></span><br><span class="line">   <span class="number">0x55555559bfc3</span> &lt;ParseRiffHeaderConfig+<span class="number">3507</span>&gt;:	mov    r9d,DWORD PTR [rsp+<span class="number">0x28</span>]</span><br><span class="line">   <span class="number">0x55555559bfc8</span> &lt;ParseRiffHeaderConfig+<span class="number">3512</span>&gt;:	mov    rdi,rax</span><br><span class="line">=&gt; <span class="number">0x55555559bfcb</span> &lt;ParseRiffHeaderConfig+<span class="number">3515</span>&gt;:	test   r8d,r8d</span><br><span class="line">   <span class="number">0x55555559bfce</span> &lt;ParseRiffHeaderConfig+<span class="number">3518</span>&gt;:	je     <span class="number">0x55555559c035</span> &lt;ParseRiffHeaderConfig+<span class="number">3621</span>&gt;</span><br><span class="line">   <span class="number">0x55555559bfd0</span> &lt;ParseRiffHeaderConfig+<span class="number">3520</span>&gt;:	lea    rsp,[rsp-<span class="number">0x98</span>]</span><br><span class="line">   <span class="number">0x55555559bfd8</span> &lt;ParseRiffHeaderConfig+<span class="number">3528</span>&gt;:	mov    QWORD PTR [rsp],rdx</span><br><span class="line">   <span class="number">0x55555559bfdc</span> &lt;ParseRiffHeaderConfig+<span class="number">3532</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x8</span>],rcx</span><br><span class="line">[------------------------------------stack-------------------------------------]</span><br><span class="line"><span class="number">0000</span>| <span class="number">0x7fffffffbc40</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="number">0008</span>| <span class="number">0x7fffffffbc48</span> --&gt; <span class="number">0x5555556752c0</span> (<span class="string">"test09.wav"</span>)</span><br><span class="line"><span class="number">0016</span>| <span class="number">0x7fffffffbc50</span> --&gt; <span class="number">0x68b81</span> </span><br><span class="line"><span class="number">0024</span>| <span class="number">0x7fffffffbc58</span> --&gt; <span class="number">0x7fffffffbcc0</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="number">0032</span>| <span class="number">0x7fffffffbc60</span> --&gt; <span class="number">0x1</span> </span><br><span class="line"><span class="number">0040</span>| <span class="number">0x7fffffffbc68</span> --&gt; <span class="number">0x555595959595</span> </span><br><span class="line"><span class="number">0048</span>| <span class="number">0x7fffffffbc70</span> --&gt; <span class="number">0x3</span> </span><br><span class="line"><span class="number">0056</span>| <span class="number">0x7fffffffbc78</span> --&gt; <span class="number">0x800000000</span> </span><br><span class="line">[------------------------------------------------------------------------------]</span><br><span class="line"><span class="symbol">Legend:</span> code, data, rodata, value</span><br><span class="line"><span class="number">291</span>	            <span class="keyword">if</span> (debug_logging_mode)</span><br><span class="line">gdb-peda$ n</span><br><span class="line">[----------------------------------registers-----------------------------------]</span><br><span class="line"><span class="symbol">RAX:</span> <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RBX:</span> <span class="number">0x7fffffffbc7c</span> --&gt; <span class="number">0x8</span> </span><br><span class="line"><span class="symbol">RCX:</span> <span class="number">0x9595</span> </span><br><span class="line"><span class="symbol">RDX:</span> <span class="number">0x95959595</span> </span><br><span class="line"><span class="symbol">RSI:</span> <span class="number">0x959595</span> </span><br><span class="line"><span class="symbol">RDI:</span> <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RBP:</span> <span class="number">0x555555675580</span> --&gt; <span class="number">0xfbad2488</span> </span><br><span class="line"><span class="symbol">RSP:</span> <span class="number">0x7fffffffbc40</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">RIP:</span> <span class="number">0x55555559c035</span> (&lt;ParseRiffHeaderConfig+<span class="number">3621</span>&gt;:	nop    DWORD PTR [rax])</span><br><span class="line">R8 : <span class="number">0x0</span> </span><br><span class="line">R9 : <span class="number">0x95959595</span> </span><br><span class="line"><span class="symbol">R10:</span> <span class="number">0x2</span> </span><br><span class="line"><span class="symbol">R11:</span> <span class="number">0x7ffff793a900</span> --&gt; <span class="number">0x9595959595959595</span> </span><br><span class="line"><span class="symbol">R12:</span> <span class="number">0x7fffffffbed0</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">R13:</span> <span class="number">0x555555675300</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="symbol">R14:</span> <span class="number">0x95959596</span> </span><br><span class="line"><span class="symbol">R15:</span> <span class="number">0x7fffffffbca0</span> --&gt; <span class="number">0x9595959595959595</span></span><br><span class="line"><span class="symbol">EFLAGS:</span> <span class="number">0x246</span> (carry PARITY adjust ZERO sign trap INTERRUPT direction overflow)</span><br><span class="line">[-------------------------------------code-------------------------------------]</span><br><span class="line">   <span class="number">0x55555559c029</span> &lt;ParseRiffHeaderConfig+<span class="number">3609</span>&gt;:	xor    eax,eax</span><br><span class="line">   <span class="number">0x55555559c02b</span> &lt;ParseRiffHeaderConfig+<span class="number">3611</span>&gt;:	call   <span class="number">0x5555555b47d0</span> &lt;error_line&gt;</span><br><span class="line">   <span class="number">0x55555559c030</span> &lt;ParseRiffHeaderConfig+<span class="number">3616</span>&gt;:	mov    rdi,QWORD PTR [rsp+<span class="number">0x28</span>]</span><br><span class="line">=&gt; <span class="number">0x55555559c035</span> &lt;ParseRiffHeaderConfig+<span class="number">3621</span>&gt;:	nop    DWORD PTR [rax]</span><br><span class="line">   <span class="number">0x55555559c038</span> &lt;ParseRiffHeaderConfig+<span class="number">3624</span>&gt;:	lea    rsp,[rsp-<span class="number">0x98</span>]</span><br><span class="line">   <span class="number">0x55555559c040</span> &lt;ParseRiffHeaderConfig+<span class="number">3632</span>&gt;:	mov    QWORD PTR [rsp],rdx</span><br><span class="line">   <span class="number">0x55555559c044</span> &lt;ParseRiffHeaderConfig+<span class="number">3636</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x8</span>],rcx</span><br><span class="line">   <span class="number">0x55555559c049</span> &lt;ParseRiffHeaderConfig+<span class="number">3641</span>&gt;:	mov    QWORD PTR [rsp+<span class="number">0x10</span>],rax</span><br><span class="line">[------------------------------------stack-------------------------------------]</span><br><span class="line"><span class="number">0000</span>| <span class="number">0x7fffffffbc40</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="number">0008</span>| <span class="number">0x7fffffffbc48</span> --&gt; <span class="number">0x5555556752c0</span> (<span class="string">"test09.wav"</span>)</span><br><span class="line"><span class="number">0016</span>| <span class="number">0x7fffffffbc50</span> --&gt; <span class="number">0x68b81</span> </span><br><span class="line"><span class="number">0024</span>| <span class="number">0x7fffffffbc58</span> --&gt; <span class="number">0x7fffffffbcc0</span> --&gt; <span class="number">0x0</span> </span><br><span class="line"><span class="number">0032</span>| <span class="number">0x7fffffffbc60</span> --&gt; <span class="number">0x1</span> </span><br><span class="line"><span class="number">0040</span>| <span class="number">0x7fffffffbc68</span> --&gt; <span class="number">0x555595959595</span> </span><br><span class="line"><span class="number">0048</span>| <span class="number">0x7fffffffbc70</span> --&gt; <span class="number">0x3</span> </span><br><span class="line"><span class="number">0056</span>| <span class="number">0x7fffffffbc78</span> --&gt; <span class="number">0x800000000</span> </span><br><span class="line">[------------------------------------------------------------------------------]</span><br><span class="line"><span class="symbol">Legend:</span> code, data, rodata, value</span><br><span class="line"><span class="number">296</span>	            <span class="keyword">if</span> (!DoReadFile (infile, buff, bytes_to_copy, &amp;bcount) ||</span><br><span class="line">gdb-peda$ p buff</span><br><span class="line">$<span class="number">5</span> = &lt;optimized <span class="keyword">out</span>&gt;</span><br><span class="line">gdb-peda$ p bytes_to_copy   <span class="comment"># &lt;-----------------进入到读取FIle文件到memecpy的源目的地址中，由于申请的地址为空，则出现错误，无法写入到指定内存区域</span></span><br><span class="line">$<span class="number">6</span> = <span class="number">0x95959596</span></span><br><span class="line">gdb-peda$ vmmap</span><br><span class="line">Start              End                Perm	Name</span><br><span class="line"><span class="number">0x0000555555554000</span> <span class="number">0x0000555555557000</span> r--p	/home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555557000</span> <span class="number">0x0000555555665000</span> r-xp	/home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555665000</span> <span class="number">0x0000555555673000</span> r--p	/home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555673000</span> <span class="number">0x0000555555674000</span> r--p	/home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555674000</span> <span class="number">0x0000555555675000</span> rw-p	/home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555675000</span> <span class="number">0x0000555555696000</span> rw-p	[heap]</span><br><span class="line"><span class="number">0x00007ffff78f8000</span> <span class="number">0x00007ffff793b000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff796a000</span> <span class="number">0x00007ffff796c000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff796c000</span> <span class="number">0x00007ffff7972000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libpthread</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7972000</span> <span class="number">0x00007ffff7983000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libpthread</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7983000</span> <span class="number">0x00007ffff7989000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libpthread</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7989000</span> <span class="number">0x00007ffff798a000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libpthread</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff798a000</span> <span class="number">0x00007ffff798b000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libpthread</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff798b000</span> <span class="number">0x00007ffff798f000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff798f000</span> <span class="number">0x00007ffff7990000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7990000</span> <span class="number">0x00007ffff7992000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7992000</span> <span class="number">0x00007ffff7993000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7993000</span> <span class="number">0x00007ffff7994000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7994000</span> <span class="number">0x00007ffff7995000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7995000</span> <span class="number">0x00007ffff79b7000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff79b7000</span> <span class="number">0x00007ffff7b2f000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b2f000</span> <span class="number">0x00007ffff7b7d000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b7d000</span> <span class="number">0x00007ffff7b81000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b81000</span> <span class="number">0x00007ffff7b83000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b83000</span> <span class="number">0x00007ffff7b87000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff7b87000</span> <span class="number">0x00007ffff7bff000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libcrypto</span>.<span class="title">so</span>.1.1</span></span><br><span class="line"><span class="number">0x00007ffff7bff000</span> <span class="number">0x00007ffff7d9a000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libcrypto</span>.<span class="title">so</span>.1.1</span></span><br><span class="line"><span class="number">0x00007ffff7d9a000</span> <span class="number">0x00007ffff7e2b000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libcrypto</span>.<span class="title">so</span>.1.1</span></span><br><span class="line"><span class="number">0x00007ffff7e2b000</span> <span class="number">0x00007ffff7e57000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libcrypto</span>.<span class="title">so</span>.1.1</span></span><br><span class="line"><span class="number">0x00007ffff7e57000</span> <span class="number">0x00007ffff7e59000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libcrypto</span>.<span class="title">so</span>.1.1</span></span><br><span class="line"><span class="number">0x00007ffff7e59000</span> <span class="number">0x00007ffff7e5d000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff7e5d000</span> <span class="number">0x00007ffff7e6a000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libm</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7e6a000</span> <span class="number">0x00007ffff7f11000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libm</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7f11000</span> <span class="number">0x00007ffff7faa000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libm</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7faa000</span> <span class="number">0x00007ffff7fab000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libm</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7fab000</span> <span class="number">0x00007ffff7fac000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libm</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7fac000</span> <span class="number">0x00007ffff7fae000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffff7fc9000</span> <span class="number">0x00007ffff7fcd000</span> r--p	[vvar]</span><br><span class="line"><span class="number">0x00007ffff7fcd000</span> <span class="number">0x00007ffff7fcf000</span> r-xp	[vdso]</span><br><span class="line"><span class="number">0x00007ffff7fcf000</span> <span class="number">0x00007ffff7fd0000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">ld</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7fd0000</span> <span class="number">0x00007ffff7ff3000</span> r-xp	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">ld</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7ff3000</span> <span class="number">0x00007ffff7ffb000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">ld</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7ffc000</span> <span class="number">0x00007ffff7ffd000</span> r--p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">ld</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7ffd000</span> <span class="number">0x00007ffff7ffe000</span> rw-p	/usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">ld</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7ffe000</span> <span class="number">0x00007ffff7fff000</span> rw-p	mapped</span><br><span class="line"><span class="number">0x00007ffffffde000</span> <span class="number">0x00007ffffffff000</span> rw-p	[stack]</span><br><span class="line"><span class="number">0xffffffffff600000</span> <span class="number">0xffffffffff601000</span> --xp	[vsyscall]</span><br><span class="line"></span><br><span class="line">gdb-peda$</span><br><span class="line">[------------------------------------------------------------------------------]</span><br><span class="line"><span class="symbol">Legend:</span> code, data, rodata, value</span><br><span class="line"><span class="number">0x000055555559c05a</span> in ParseRiffHeaderConfig (infile=<span class="number">0x555555675580</span>, infilename=<span class="number">0x9595</span> &lt;<span class="symbol">error:</span> Cannot access memory at address <span class="number">0x9595</span>&gt;, </span><br><span class="line">    fourcc=&lt;optimized <span class="keyword">out</span>&gt;, wpc=<span class="number">0x555555675300</span>, config=<span class="number">0x7fffffffbed0</span>) at riff.<span class="symbol">c:</span><span class="number">296</span></span><br><span class="line"><span class="number">296</span>	            <span class="keyword">if</span> (!DoReadFile (infile, buff, bytes_to_copy, &amp;bcount) ||</span><br><span class="line"></span><br><span class="line"><span class="string">``</span><span class="string">`。</span></span><br><span class="line"><span class="string">通过调试，关键点在286行，如下代码段</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>bash</span><br><span class="line">            int bytes_to_copy = (chunk_header.ckSize + <span class="number">1</span>) &amp; ~<span class="number">1</span>L;  <span class="comment"># &lt;&lt;&lt;&lt;&lt;&lt;代码出错的关键点 288行</span></span><br><span class="line">            char *buff = malloc (bytes_to_copy);                  <span class="comment"># &lt;&lt;&lt;&lt;&lt;&lt;代码出错的关键点 </span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (debug_logging_mode)</span><br><span class="line">                error_line (<span class="string">"extra unknown chunk \"%c%c%c%c\" of %d bytes"</span>,</span><br><span class="line">                    chunk_header.ckID [<span class="number">0</span>], chunk_header.ckID [<span class="number">1</span>], chunk_header.ckID [<span class="number">2</span>],</span><br><span class="line">                    chunk_header.ckID [<span class="number">3</span>], chunk_header.ckSize);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (!DoReadFile (infile, buff, bytes_to_copy, &amp;bcount) ||</span><br><span class="line">                bcount != bytes_to_copy ||</span><br><span class="line">                (!(config-&gt;qmode &amp; QMODE_NO_STORE_WRAPPER) &amp;&amp;</span><br><span class="line">                !WavpackAddWrapper (wpc, buff, bytes_to_copy))) &#123;</span><br><span class="line">                    error_line (<span class="string">"%s"</span>, WavpackGetErrorMessage (wpc));</span><br><span class="line">                    free (buff);</span><br><span class="line">                    <span class="keyword">return</span> WAVPACK_SOFT_ERROR;</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-4-总结"><a href="#2-4-总结" class="headerlink" title="2.4 总结"></a>2.4 总结</h2><p>&emsp;&emsp;出错核心在malloc函数，在申请内存过程中，申请bytes_to_copy=0x95959596（通过实际计算大约是2G内存），系统在执行中无法满足就返回0，表示堆上申请内存失败。在后续的DoReadFile函数中，依然直接读取0x0处内存地址的数据，导致系统报错，出现段错误。</p>
+<h1 id="3-发现的4个问题"><a href="#3-发现的4个问题" class="headerlink" title="3 发现的4个问题"></a>3 发现的4个问题</h1><ol>
+<li>一个程序运行可以申请的最大内存应该满足多少？</li>
+<li>为什么在调试中，部分不属于申请较大内存的操作也同样报错，这个内存申请的阀值是多少？</li>
+<li>wavpack转储文件的格式是什么样的？为什么申请内存是0x95959596,而不是其他值？</li>
+<li>其他所欠缺的知识点，包括IO_FILE文件结构、fread函数操作、x64架构下寄存器传参的具体实现？</li>
+</ol>
+<p>针对上述问题，计划再出几个博客记录，所以在这里不做过多赘述。</p>
+<h2 id="4-1-IO-FILE文件结构"><a href="#4-1-IO-FILE文件结构" class="headerlink" title="4.1 IO_FILE文件结构"></a>4.1 IO_FILE文件结构</h2><p>参考知识：_IO_FILE结构体可以看到，IO_read_ptr在地址偏移8字节位置，IO_read_end在偏移16字节的位置，一般情况下IO_read_ptr和IO_read_base保持一致。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">  <span class="keyword">int</span> _flags;		<span class="comment">/* High-order word is _IO_MAGIC; rest is flags. */</span>  <span class="comment">// 0偏移，8字节</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* The following pointers correspond to the C++ streambuf protocol. */</span> <span class="comment">//8偏移，8字节</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_read_ptr;	<span class="comment">/* Current read pointer */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_read_end;	<span class="comment">/* End of get area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_read_base;	<span class="comment">/* Start of putback+get area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_write_base;	<span class="comment">/* Start of put area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_write_ptr;	<span class="comment">/* Current put pointer. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_write_end;	<span class="comment">/* End of put area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_buf_base;	<span class="comment">/* Start of reserve area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_buf_end;	<span class="comment">/* End of reserve area. */</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/* The following fields are used to support backing up and undo. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_base; <span class="comment">/* Pointer to start of non-current get area. */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_backup_base;  <span class="comment">/* Pointer to first valid character of backup area */</span></span><br><span class="line">  <span class="keyword">char</span> *_IO_save_end; <span class="comment">/* Pointer to end of non-current get area. */</span></span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_marker</span> *_<span class="title">markers</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> _<span class="title">IO_FILE</span> *_<span class="title">chain</span>;</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">int</span> _fileno;</span><br><span class="line">  <span class="keyword">int</span> _flags2;</span><br></pre></td></tr></table></figure></p>
+<p>查看FILE结构体中各字段的具体数值，遵从小端模式：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ x/32w 0x555555675580</span><br><span class="line">0x555555675580: 0xfbad2488      0x00000000      0x55676258      0x00005555</span><br><span class="line">0x555555675590: 0x55676940      0x00005555      0x55675940      0x00005555</span><br><span class="line">0x5555556755a0: 0x55675940      0x00005555      0x55675940      0x00005555</span><br><span class="line">0x5555556755b0: 0x55675940      0x00005555      0x55675940      0x00005555</span><br></pre></td></tr></table></figure></p>
+<p>vmmap查看当前系统能够使用的内存区域,如下方系统显示，不管是超出内存区复制数据抑或覆盖的数据超过现内存边界，都会产生段错误。<br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ vmmap</span><br><span class="line">Start              End                Perm      Name</span><br><span class="line"><span class="number">0x0000555555554000</span> <span class="number">0x0000555555557000</span> r--p      /home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555557000</span> <span class="number">0x0000555555665000</span> r-xp      /home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555665000</span> <span class="number">0x0000555555673000</span> r--p      /home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555673000</span> <span class="number">0x0000555555674000</span> r--p      /home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"><span class="number">0x0000555555674000</span> <span class="number">0x0000555555675000</span> rw-p      /home/pwn/aflsmart/WavPack/cli/wavpack</span><br><span class="line"></span><br><span class="line"><span class="number">0x00007ffff7993000</span> <span class="number">0x00007ffff7994000</span> r--p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7994000</span> <span class="number">0x00007ffff7995000</span> rw-p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libdl</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7995000</span> <span class="number">0x00007ffff79b7000</span> r--p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff79b7000</span> <span class="number">0x00007ffff7b2f000</span> r-xp      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b2f000</span> <span class="number">0x00007ffff7b7d000</span> r--p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b7d000</span> <span class="number">0x00007ffff7b81000</span> r--p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b81000</span> <span class="number">0x00007ffff7b83000</span> rw-p      /usr/<span class="class"><span class="keyword">lib</span>/<span class="title">x86_64</span>-<span class="title">linux</span>-<span class="title">gnu</span>/<span class="title">libc</span>-2.31.<span class="title">so</span></span></span><br><span class="line"><span class="number">0x00007ffff7b83000</span> <span class="number">0x00007ffff7b87000</span> rw-p      mapped</span><br></pre></td></tr></table></figure></p>
+<h2 id="4-2-调试中寄存器细节问题"><a href="#4-2-调试中寄存器细节问题" class="headerlink" title="4.2 调试中寄存器细节问题"></a>4.2 调试中寄存器细节问题</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">   <span class="number">0x7ffff7b2077f</span> &lt;__memmove_avx_unaligned_erms+<span class="number">399</span>&gt;:	<span class="keyword">lea</span>    <span class="built_in">rcx</span>,[<span class="built_in">rdi</span>+<span class="built_in">rdx</span>*<span class="number">1</span>-<span class="number">0x20</span>]</span><br><span class="line">   <span class="number">0x7ffff7b20784</span> &lt;__memmove_avx_unaligned_erms+<span class="number">404</span>&gt;:	<span class="keyword">mov</span>    <span class="built_in">r8</span>,<span class="built_in">rdi</span>  //<span class="built_in">r8</span>=</span><br><span class="line">   <span class="number">0x7ffff7b20787</span> &lt;__memmove_avx_unaligned_erms+<span class="number">407</span>&gt;:	<span class="keyword">and</span>    <span class="built_in">r8</span>,<span class="number">0x1f</span></span><br><span class="line">=&gt; <span class="number">0x7ffff7b2078b</span> &lt;__memmove_avx_unaligned_erms+<span class="number">411</span>&gt;:	<span class="keyword">sub</span>    <span class="built_in">r8</span>,<span class="number">0x20</span></span><br></pre></td></tr></table></figure>
+<p>R8在执行sub命令前为0x00，因此减去0x20导致异常，R8变为0xffffffffffffffe0</p>
+<p>由于sub R8,0x20,R8=0后，导致 R8:0xffffffffffffffe0，后续对寄存器操作均使用R8寄存器进行计算。</p>
+<figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">=&gt; <span class="number">0x7ffff7a24380</span> &lt;__GI__IO_file_xsgetn+<span class="number">272</span>&gt;:	<span class="keyword">mov</span>    <span class="built_in">rdi</span>,<span class="built_in">r13</span></span><br><span class="line">   <span class="number">0x7ffff7a24383</span> &lt;__GI__IO_file_xsgetn+<span class="number">275</span>&gt;:	<span class="keyword">mov</span>    <span class="built_in">rdx</span>,<span class="built_in">rbp</span></span><br><span class="line">   <span class="number">0x7ffff7a24386</span> &lt;__GI__IO_file_xsgetn+<span class="number">278</span>&gt;:	<span class="keyword">sub</span>    <span class="built_in">r12</span>,<span class="built_in">rbp</span></span><br></pre></td></tr></table></figure>
+<p>在执行到这一行代码时，rbp、r13、r12进行计算，需要使用</p>
+<p>（1）vmovdqu 指令的具体作用，导致这个问题出现的主要原因，以及如何避免这种问题。</p>
+<h2 id="4-3-寄存器部分功能描述"><a href="#4-3-寄存器部分功能描述" class="headerlink" title="4.3 寄存器部分功能描述"></a>4.3 寄存器部分功能描述</h2><p>1.对寄存器掌握不深，对x64环境下各个寄存器的功能不熟悉。</p>
+<table>
+<thead>
+<tr>
+<th>第64位</th>
+<th>第32位</th>
+<th>第16位</th>
+<th>第8位</th>
+<th>一般作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>63</td>
+<td>31</td>
+<td>15</td>
+<td>7</td>
+<td>0</td>
+</tr>
+<tr>
+<td>%rax</td>
+<td>%eax</td>
+<td>%ax</td>
+<td>%al</td>
+<td>返回值</td>
+</tr>
+<tr>
+<td>%rbx</td>
+<td>%ebx</td>
+<td>%bx</td>
+<td>%bl</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%rcx</td>
+<td>%ecx</td>
+<td>%cx</td>
+<td>%cl</td>
+<td>第四个参数</td>
+</tr>
+<tr>
+<td>%rdx</td>
+<td>%edx</td>
+<td>%dx</td>
+<td>%dl</td>
+<td>第三个参数</td>
+</tr>
+<tr>
+<td>%rsi</td>
+<td>%esi</td>
+<td>%si</td>
+<td>%sil</td>
+<td>第二个参数</td>
+</tr>
+<tr>
+<td>%rdi</td>
+<td>%edi</td>
+<td>%di</td>
+<td>%dil</td>
+<td>第一个参数</td>
+</tr>
+<tr>
+<td>%rbp</td>
+<td>%ebp</td>
+<td>%bp</td>
+<td>%bpl</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%rsp</td>
+<td>%esp</td>
+<td>%sp</td>
+<td>%spl</td>
+<td>栈指针</td>
+</tr>
+<tr>
+<td>%r8</td>
+<td>%r8d</td>
+<td>%r8w</td>
+<td>%r8b</td>
+<td>第五个参数</td>
+</tr>
+<tr>
+<td>%r9</td>
+<td>%r9d</td>
+<td>%r9w</td>
+<td>%r9b</td>
+<td>第六个参数</td>
+</tr>
+<tr>
+<td>%r10</td>
+<td>%r10d</td>
+<td>%r10w</td>
+<td>%r10b</td>
+<td>调用者保存</td>
+</tr>
+<tr>
+<td>%r11</td>
+<td>%r11d</td>
+<td>%r11w</td>
+<td>%r11b</td>
+<td>调用者保存</td>
+</tr>
+<tr>
+<td>%r12</td>
+<td>%r12d</td>
+<td>%r12w</td>
+<td>%r12b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r13</td>
+<td>%r13d</td>
+<td>%r13w</td>
+<td>%r13b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r14</td>
+<td>%r14d</td>
+<td>%r14w</td>
+<td>%r14b</td>
+<td>被调用者保存</td>
+</tr>
+<tr>
+<td>%r15</td>
+<td>%r15d</td>
+<td>%r15w</td>
+<td>%r15b</td>
+<td>被调用者保存</td>
+</tr>
+</tbody>
+</table>
+<p>其中，字节级操作可以访问最低的字节，16位操作可以访问最低的2个字 节32位操作可以访问最低的4个字节，而64位操作可以访问整个寄存器</p>
+<h1 id="课后温习"><a href="#课后温习" class="headerlink" title="课后温习"></a>课后温习</h1><ol>
+<li>fread函数的详细实现讲解  <a href="https://ray-cp.github.io/archivers/IO_FILE_fread_analysis" target="_blank" rel="noopener">https://ray-cp.github.io/archivers/IO_FILE_fread_analysis</a></li>
+<li>glibc-2.3.1下fileops.c的实现  <a href="https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c" target="_blank" rel="noopener">https://elixir.bootlin.com/glibc/glibc-2.31/source/libio/fileops.c</a></li>
+</ol>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 youngcraft@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>初探wavpack测试crashes样本分析</p>
+    
+    <p><span class="copy-title">本文作者:</span><a title="拾荒者CD">拾荒者CD</a></p>
+    <p><span class="copy-title">发布时间:</span>2022-05-14, 08:42:53</p>
+    <p><span class="copy-title">最后更新:</span>2022-05-18, 19:34:01</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/" title="初探wavpack测试crashes样本分析">http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2016-2020 Gumeng</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket"></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close" onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1"></script>
+
+<script src="/js/script.js?v=1.0.1"></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Blog','#随笔','#Exploit','#Heap Pwn','#Linux','#Exp','#linux','#privilge','#Filename','#漏洞利用','#nmap','#Pwn','#基础概念类',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>

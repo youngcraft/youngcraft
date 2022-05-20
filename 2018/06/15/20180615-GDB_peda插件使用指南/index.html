@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  <title>GDB_PEDA Exploit 调试插件安装 | 拾荒者CD</title>
+  <meta name="keywords" content=" Exploit ">
+  <meta name="description" content="GDB_PEDA Exploit 调试插件安装 | 拾荒者CD">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="website">
+<meta property="og:title" content="about">
+<meta property="og:url" content="http://gumeng.fun/about/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+<meta property="og:locale" content="En">
+<meta property="og:updated_time" content="2022-01-28T15:31:43.935Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="about">
+<meta name="twitter:description" content="关于对博客世界的理解这个世界从HTML 1.0、2.0、3.0，不断进化的前端给人类的交流带来的新奇特殊的方式，这里借用王国维大师关于人生的三种境界：  古今之成大事业、大学问者，必经过三种之境界：“昨夜西风凋碧树。独上高楼，望尽天涯路”，此第一境也。“衣带渐宽终不悔，为伊消得人憔悴”，此第二境也。“众里寻他千百度，蓦然回首，那人却在，灯火阑珊处”，此第三境也。此等语皆非大词人不能道。然遽以此意解">
+
+
+<link rel="icon" href="/img/head.jpg">
+
+<link href="/css/style.css?v=1.0.1" rel="stylesheet">
+
+<link href="/css/hl_theme/atom-light.css?v=1.0.1" rel="stylesheet">
+
+<link href="//cdn.bootcss.com/animate.css/3.5.2/animate.min.css" rel="stylesheet">
+<link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+<script src="/js/jquery.autocomplete.min.js?v=1.0.1"></script>
+
+<script src="//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>
+    hljs.initHighlightingOnLoad();
+</script>
+
+<script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+
+
+
+<script src="//cdn.bootcss.com/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+
+<script src="/js/iconfont.js?v=1.0.1"></script>
+
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+<div style="display: none">
+  <input class="theme_disqus_on" value="false">
+  <input class="theme_preload_comment" value="false">
+  <input class="theme_blog_path" value="">
+</div>
+
+<body>
+<aside class="nav">
+    <div class="nav-left">
+        <a href="/" class="avatar_target">
+    <img class="avatar" src="/img/head.jpg">
+</a>
+<div class="author">
+    <span>拾荒者CD</span>
+</div>
+
+<div class="icon">
+    
+        
+        <a title="rss" href="/atom.xml" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-rss"/>
+                </svg>
+            
+        </a>
+        
+    
+        
+        <a title="github" href="https://github.com/youngcraft" target="_blank">
+            
+                <svg class="iconfont-svg" aria-hidden="true">
+                    <use xlink:href="#icon-github"/>
+                </svg>
+            
+        </a>
+        
+    
+</div>
+
+
+
+
+<ul>
+    <li><div class="all active">全部文章<small>(25)</small></div></li>
+    
+        
+            
+            <li><div data-rel="Linux">Linux<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="随笔">随笔<small>(0)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="tools">tools<small>(9)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Coding">Coding<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Pwn">Pwn<small>(4)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="Exploit">Exploit<small>(3)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="模糊测试">模糊测试<small>(2)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="CTF">CTF<small>(1)</small></div>
+                
+            </li>
+            
+        
+    
+        
+            
+            <li><div data-rel="工控协议"><i class="fold iconfont icon-right"></i>工控协议<small>(1)</small></div>
+                
+                    <ul class="sub hide">
+                        
+                        <li><div data-rel="逆向工程">逆向工程<small>(1)</small></div>
+                            
+                        </li>
+                            
+                    </ul>
+                
+            </li>
+            
+        
+    
+        
+            
+        
+    
+</ul>
+<div class="left-bottom">
+    <div class="menus">
+    
+    
+    
+    
+    </div>
+    <div><a class="about  hasFriend  site_url" href="/about">关于</a><a style="width: 50%" class="friends">友链</a></div>
+</div>
+<input type="hidden" id="yelog_site_posts_number" value="25">
+
+<div style="display: none">
+    <span id="busuanzi_value_site_uv"></span>
+    <span id="busuanzi_value_site_pv"></span>
+</div>
+
+    </div>
+    <div class="nav-right">
+        <div class="friends-area">
+    <div class="friends-title">
+        友情链接
+        <i class="back-title-list"></i>
+    </div>
+    <div class="friends-content">
+        <ul>
+            
+            <li><a target="_blank" href="http://yelog.org/">叶落阁</a></li>
+            
+            <li><a target="_blank" href="http://whereisk0shl.top">k0shl</a></li>
+            
+            <li><a target="_blank" href="https://lcamtuf.blogspot.com">AFL大神lcamtuf</a></li>
+            
+            <li><a target="_blank" href="https://www.fastly.com">国外Fastly大神</a></li>
+            
+        </ul>
+    </div>
+</div>
+        <div class="title-list">
+    <form onkeydown="if(event.keyCode === 13){return false;}">
+        <input id="local-search-input" class="search" type="text" placeholder="Search...">
+        <i class="cross"></i>
+        <span>
+            <label for="tagswitch">Tags:</label>
+            <input id="tagswitch" type="checkbox" style="display: none">
+            <i id="tagsWitchIcon"></i>
+        </span>
+    </form>
+    <div class="tags-list">
+    
+    <li class="article-tag-list-item">
+        <a class="color5">Blog</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">随笔</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color3">Exploit</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Heap Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">Linux</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Exp</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">linux</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">privilge</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Filename</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">漏洞利用</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color5">nmap</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color4">Pwn</a>
+    </li>
+    
+    <li class="article-tag-list-item">
+        <a class="color1">基础概念类</a>
+    </li>
+    
+    <div class="clearfix"></div>
+</div>
+
+    
+    <nav id="title-list-nav">
+        
+        <a class="tools " href="/2016/06/15/20160615-SQLChop检测引擎原理/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="长亭 SQLchop 实现方法">长亭 SQLchop 实现方法</span>
+            <span class="post-date" title="2016-06-15 09:50:08">2016/06/15</span>
+        </a>
+        
+        <a class="" href="/2017/08/28/20170828-heap初识/" data-tag="Heap Pwn" data-author="">
+            <span class="post-title" title="Linux下堆利用学习">Linux下堆利用学习</span>
+            <span class="post-date" title="2017-08-28 09:50:08">2017/08/28</span>
+        </a>
+        
+        <a class="Coding " href="/2017/10/30/20171030-Pyhon执行cmd命令的若干方式/" data-tag="Linux" data-author="">
+            <span class="post-title" title="Python执行系统命令方法">Python执行系统命令方法</span>
+            <span class="post-date" title="2017-10-30 09:50:08">2017/10/30</span>
+        </a>
+        
+        <a class="tools " href="/2017/07/01/20170701-ROPgadget使用方法/" data-tag="Exp" data-author="">
+            <span class="post-title" title="ROPgadget 使用指南">ROPgadget 使用指南</span>
+            <span class="post-date" title="2017-07-01 09:50:08">2017/07/01</span>
+        </a>
+        
+        <a class="Pwn " href="/2018/01/15/20180115-linux提权之setuid方法/" data-tag="linux,privilge" data-author="">
+            <span class="post-title" title="Linux 提权之setuid使用提权">Linux 提权之setuid使用提权</span>
+            <span class="post-date" title="2018-01-15 09:50:08">2018/01/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/01/01/20180101-modbus协议扫描器设计与实现/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Modbus协议扫描器的分析">Modbus协议扫描器的分析</span>
+            <span class="post-date" title="2018-01-01 09:50:08">2018/01/01</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-GDB_peda插件使用指南/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="GDB_PEDA Exploit 调试插件安装">GDB_PEDA Exploit 调试插件安装</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="tools " href="/2017/06/15/20170615-为什么文件名要用小名/" data-tag="Filename" data-author="">
+            <span class="post-title" title="为什么文件名用小名">为什么文件名用小名</span>
+            <span class="post-date" title="2017-06-15 09:50:08">2017/06/15</span>
+        </a>
+        
+        <a class="Linux " href="/2017/10/27/20171027-ssh配置远程登录问题/" data-tag="" data-author="">
+            <span class="post-title" title="SSH配置远程登陆问题">SSH配置远程登陆问题</span>
+            <span class="post-date" title="2017-10-27 09:50:08">2017/10/27</span>
+        </a>
+        
+        <a class="Pwn " href="/2018/06/15/20180615-Linux下的堆块伪造/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Linux Pwn 之堆块伪造技术">Linux Pwn 之堆块伪造技术</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="Exploit " href="/2019/02/15/20190215-bin文件中对齐问题/" data-tag="漏洞利用" data-author="">
+            <span class="post-title" title="二进制文件中堆栈对齐问题初探">二进制文件中堆栈对齐问题初探</span>
+            <span class="post-date" title="2019-02-15 09:50:08">2019/02/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-peda-pwntools安装使用问题/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="Peda 安装指南">Peda 安装指南</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="tools " href="/2018/06/15/20180615-gdb 无法attach进程/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="GDB 无法attach进程">GDB 无法attach进程</span>
+            <span class="post-date" title="2018-06-15 09:50:08">2018/06/15</span>
+        </a>
+        
+        <a class="Exploit " href="/2020/02/15/20200215-J2EE struts2远程命令执行漏洞 /" data-tag="漏洞利用" data-author="">
+            <span class="post-title" title="struts2远程命令执行漏洞S2-045">struts2远程命令执行漏洞S2-045</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="tools " href="/2020/02/15/20200215-nmap使用方法/" data-tag="nmap" data-author="">
+            <span class="post-title" title="nmap使用方法">nmap使用方法</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="" href="/2018/10/24/20181024-docker之容器逃逸问题/" data-tag="" data-author="">
+            <span class="post-title" title="escape">escape</span>
+            <span class="post-date" title="2018-10-24 23:51:52">2018/10/24</span>
+        </a>
+        
+        <a class="tools " href="/2020/02/16/20200215-aflsmart牛刀小试/" data-tag="" data-author="">
+            <span class="post-title" title="aflsmart小试">aflsmart小试</span>
+            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
+        </a>
+        
+        <a class="Pwn " href="/2020/02/16/20200216-ROP攻击技术/" data-tag="Pwn" data-author="">
+            <span class="post-title" title="一步一步学ROP之linux_x64篇">一步一步学ROP之linux_x64篇</span>
+            <span class="post-date" title="2020-02-16 22:09:29">2020/02/16</span>
+        </a>
+        
+        <a class="Linux " href="/2020/08/04/20200804-ELF 文件结构/" data-tag="基础概念类" data-author="">
+            <span class="post-title" title="ELF 文件结构初初级解析">ELF 文件结构初初级解析</span>
+            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
+        </a>
+        
+        <a class="Pwn " href="/2020/02/15/20200215-如何搭建pwn环境/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="如何搭建Pwn利用环境">如何搭建Pwn利用环境</span>
+            <span class="post-date" title="2020-02-15 09:50:08">2020/02/15</span>
+        </a>
+        
+        <a class="模糊测试 " href="/2022/04/07/20220413-fuzz技术最新进展与展望/" data-tag="" data-author="">
+            <span class="post-title" title="Fuzzing技术最新进展与展望">Fuzzing技术最新进展与展望</span>
+            <span class="post-date" title="2022-04-07 08:42:53">2022/04/07</span>
+        </a>
+        
+        <a class="Exploit " href="/2020/02/26/20200226-微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）/" data-tag="Exploit" data-author="">
+            <span class="post-title" title="微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）">微软EXCHANGE远程代码执行漏洞复现（CVE-2020-0688）</span>
+            <span class="post-date" title="2020-02-26 23:00:16">2020/02/26</span>
+        </a>
+        
+        <a class="CTF " href="/2020/08/04/20200804-外国ctf网站/" data-tag="" data-author="">
+            <span class="post-title" title="外国ctf学习网站集锦（未完待续）">外国ctf学习网站集锦（未完待续）</span>
+            <span class="post-date" title="2020-08-04 09:50:08">2020/08/04</span>
+        </a>
+        
+        <a class="工控协议 逆向工程 " href="/2022/05/07/20220507-UMAS协议初探/" data-tag="" data-author="">
+            <span class="post-title" title="施耐德umas工控协议初探">施耐德umas工控协议初探</span>
+            <span class="post-date" title="2022-05-07 08:42:53">2022/05/07</span>
+        </a>
+        
+        <a class="模糊测试 " href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-tag="" data-author="">
+            <span class="post-title" title="初探wavpack测试crashes样本分析">初探wavpack测试crashes样本分析</span>
+            <span class="post-date" title="2022-05-14 08:42:53">2022/05/14</span>
+        </a>
+        
+    </nav>
+</div>
+    </div>
+    <div class="hide-list">
+        <div class="semicircle">
+            <div class="brackets first"><</div>
+            <div class="brackets">&gt;</div>
+        </div>
+    </div>
+</aside>
+<div class="post">
+    <div class="pjax">
+        <article id="post-20180615-GDB_peda插件使用指南" class="article article-type-post" itemscope="" itemprop="blogPost">
+    
+        <h1 class="article-title">GDB_PEDA Exploit 调试插件安装</h1>
+    
+    <div class="article-meta">
+        
+        
+        
+        <span class="book">
+            
+                <a data-rel="tools">tools</a>
+            
+        </span>
+        
+        
+        <span class="tag">
+            
+            <a class="color3">Exploit</a>
+            
+        </span>
+        
+    </div>
+    <div class="article-meta">
+        
+        创建时间:<time class="date" title="更新时间: 2022-01-28 23:31:43">2018-06-15 09:50</time>
+        
+    </div>
+    <div class="article-meta">
+        
+        
+        <span id="busuanzi_container_page_pv">
+            阅读:<span id="busuanzi_value_page_pv">
+                <span class="count-comment">
+                    <span class="spinner">
+                      <div class="cube1"></div>
+                      <div class="cube2"></div>
+                    </span>
+                </span>
+            </span>
+        </span>
+        
+        
+    </div>
+    
+    <div class="toc-ref">
+    
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#GDB-peda-神器-利用命令"><span class="toc-text">GDB-peda 神器 利用命令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#linux-指令"><span class="toc-text">linux 指令</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ldd"><span class="toc-text">ldd</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#查询libc-so-版本号"><span class="toc-text">查询libc.so 版本号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#checksec-检测保护方式"><span class="toc-text">checksec 检测保护方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#GANNARY（栈保护）"><span class="toc-text">GANNARY（栈保护）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#FORTIFY"><span class="toc-text">FORTIFY</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#NX（DEP）"><span class="toc-text">NX（DEP）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ASLR（PIE）"><span class="toc-text">ASLR（PIE）</span></a></li></ol></li></ol></li></ol>
+    
+<style>
+    .left-col .switch-btn,
+    .left-col .switch-area {
+        display: none;
+    }
+    .toc-level-3 i,
+    .toc-level-3 ol {
+        display: none !important;
+    }
+</style>
+</div>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="GDB-peda-神器-利用命令"><a href="#GDB-peda-神器-利用命令" class="headerlink" title="GDB-peda 神器 利用命令"></a>GDB-peda 神器 利用命令</h1><pre><code>Key Features:
+
+Enhance the display of gdb: colorize and display disassembly codes, registers, memory information during debugging.
+Add commands to support debugging and exploit development (for a full list of commands use peda help):
+aslr -- Show/set ASLR setting of GDB
+checksec -- Check for various security options of binary
+dumpargs -- Display arguments passed to a function when stopped at a call instruction
+dumprop -- Dump all ROP gadgets in specific memory range
+elfheader -- Get headers information from debugged ELF file
+elfsymbol -- Get non-debugging symbol information from an ELF file
+lookup -- Search for all addresses/references to addresses which belong to a memory range
+patch -- Patch memory start at an address with string/hexstring/int
+pattern -- Generate, search, or write a cyclic pattern to memory
+procinfo -- Display various info from /proc/pid/
+pshow -- Show various PEDA options and other settings
+pset -- Set various PEDA options and other settings
+readelf -- Get headers information from an ELF file
+ropgadget -- Get common ROP gadgets of binary or library
+ropsearch -- Search for ROP gadgets in memory
+searchmem|find -- Search for a pattern in memory; support regex search
+shellcode -- Generate or download common shellcodes.
+skeleton -- Generate python exploit code template
+vmmap -- Get virtual mapping address ranges of section(s) in debugged process
+xormem -- XOR a memory region with a key
+
+
+用gdb查看内存
+格式: x /nfu
+说明
+x 是 examine 的缩写
+n表示要显示的内存单元的个数
+f表示显示方式, 可取如下值
+x 按十六进制格式显示变量。
+d 按十进制格式显示变量。
+u 按十进制格式显示无符号整型。
+o 按八进制格式显示变量。
+t 按二进制格式显示变量。
+a 按十六进制格式显示变量。
+i 指令地址格式
+c 按字符格式显示变量。
+f 按浮点数格式显示变量。
+u表示一个地址单元的长度
+b表示单字节，
+h表示双字节，
+w表示四字节，
+g表示八字节
+
+常用方法：
+x/16xw (address) 以16个内存单元，x表示十六进制显示，w表示四字节
+x/8xh  (address) 以8个内存单元，x表示十六进制显示，h表示两字节
+x/8ih  (address) 以8个内存单位，i表示地址格式表示，主要用于GOT表，PIT表中地址表示，h表示两字节。
+
+   gdb-peda$ x/16iw 0x8048380
+   0x8048380 &lt;read@plt&gt;:    jmpDWORD PTR ds:0x804a000
+   0x8048386 &lt;read@plt+6&gt;:    push   0x0
+=&gt; 0x804838b &lt;read@plt+11&gt;:    jmp0x8048370
+   0x8048390 &lt;getegid@plt&gt;:    jmpDWORD PTR ds:0x804a004
+   0x8048396 &lt;getegid@plt+6&gt;:    push   0x8
+   0x804839b &lt;getegid@plt+11&gt;:    jmp0x8048370
+   0x80483a0 &lt;system@plt&gt;:    jmpDWORD PTR ds:0x804a008
+   0x80483a6 &lt;system@plt+6&gt;:    push   0x10
+   0x80483ab &lt;system@plt+11&gt;:    jmp0x8048370
+   0x80483b0 &lt;__gmon_start__@plt&gt;:    jmpDWORD PTR ds:0x804a00c
+   0x80483b6 &lt;__gmon_start__@plt+6&gt;:    push   0x18
+   0x80483bb &lt;__gmon_start__@plt+11&gt;:    jmp0x8048370
+   0x80483c0 &lt;__libc_start_main@plt&gt;:    jmpDWORD PTR ds:0x804a010
+   0x80483c6 &lt;__libc_start_main@plt+6&gt;:    push   0x20
+   0x80483cb &lt;__libc_start_main@plt+11&gt;:    jmp0x8048370
+   0x80483d0 &lt;write@plt&gt;:    jmpDWORD PTR ds:0x804a014
+
+
+
+Format letters are o(octal), x(hex), d(decimal), u(unsigned decimal),
+t(binary), f(float), a(address), i(instruction), c(char) and s(string).
+Size letters are b(byte), h(halfword), w(word), g(giant, 8 bytes)
+举例
+x/3uh buf 
+表示从内存地址buf读取内容，
+h表示以双字节为一个单位，
+3表示三个单位，
+u表示按十六进制显示
+例子：
+n是个局部变量
+Breakpoint 1, main (argc=1, argv=0xbffff3a4) at calc.c:7
+7int n = atoi(argv[1]);
+(gdb) print &amp;n
+$1 = (int *) 0xbffff2ec
+(gdb) x 0xbffff2ec
+0xbffff2ec:0x00282ff4
+(gdb) print * (int *) 0xbffff2ec
+$2 = 2633716
+(gdb) x /4xw 0xbffff2ec
+0xbffff2ec:0x00282ff40x080484e00x000000000xbffff378
+(gdb) x /4dw 0xbffff2ec
+0xbffff2ec:26337161345138880-1073745032
+(gdb)
+
+设定参数，输入的参数设置
+
+pset arg &apos;cyclic_pattern(300)&apos;
+</code></pre><h1 id="linux-指令"><a href="#linux-指令" class="headerlink" title="linux 指令"></a>linux 指令</h1><h2 id="ldd"><a href="#ldd" class="headerlink" title="ldd"></a>ldd</h2><p>查询bin文件依赖</p>
+<pre><code>ubuntu:~/Desktop/pwntools_test$ ldd section_test
+linux-gate.so.1 =&gt;  (0xf7728000)
+libc.so.6 =&gt; /lib/i386-linux-gnu/libc.so.6 (0xf7554000)
+/lib/ld-linux.so.2 (0x5660a000)
+</code></pre><h2 id="查询libc-so-版本号"><a href="#查询libc-so-版本号" class="headerlink" title="查询libc.so 版本号"></a>查询libc.so 版本号</h2><p><a href="https://github.com/niklasb/libc-database" target="_blank" rel="noopener">https://github.com/niklasb/libc-database</a>  用来查询libc版本信息内容，为exp提供方便</p>
+<p><a href="http://libcdb.com/" target="_blank" rel="noopener">http://libcdb.com/</a><br>网上查询版本</p>
+<h2 id="checksec-检测保护方式"><a href="#checksec-检测保护方式" class="headerlink" title="checksec 检测保护方式"></a>checksec 检测保护方式</h2><p>我们最常见的保护明星</p>
+<pre><code>CANARY: disabled
+FORTIFY   : disabled
+NX: ENABLED
+PIE   : disabled
+RELRO : Partial
+</code></pre><h3 id="GANNARY（栈保护）"><a href="#GANNARY（栈保护）" class="headerlink" title="GANNARY（栈保护）"></a>GANNARY（栈保护）</h3><p>Windows下以security cookie形式存在，这个选项表示栈保护功能有没有开启。</p>
+<p>栈溢出保护是一种缓冲区溢出攻击缓解手段，当函数存在缓冲区溢出攻击漏洞时，攻击者可以覆盖栈上的返回地址来让shellcode能够得到执行。当启用栈保护后，函数开始执行的时候会先往栈里插入cookie信息，当函数真正返回的时候会验证cookie信息是否合法，如果不合法就停止程序运行。攻击者在覆盖返回地址的时候往往也会将cookie信息给覆盖掉，导致栈保护检查失败而阻止shellcode的执行。在Linux中我们将cookie信息称为canary。</p>
+<p>gcc在4.2版本中添加了-fstack-protector和-fstack-protector-all编译参数以支持栈保护功能，4.9新增了-fstack-protector-strong编译参数让保护的范围更广。</p>
+<p>因此在编译时可以控制是否开启栈保护以及程度，例如：</p>
+<pre><code>gcc -fno-stack-protector -o test test.c  //禁用栈保护
+gcc -fstack-protector -o test test.c   //启用堆栈保护，不过只为局部变量中含有 char 数组的函数插入保护代码
+gcc -fstack-protector-all -o test test.c //启用堆栈保护，为所有函数插入保护代码
+</code></pre><h3 id="FORTIFY"><a href="#FORTIFY" class="headerlink" title="FORTIFY"></a>FORTIFY</h3><p>。。。。。。</p>
+<h3 id="NX（DEP）"><a href="#NX（DEP）" class="headerlink" title="NX（DEP）"></a>NX（DEP）</h3><p>堆栈不可执行，通过修改页属性，不能执行代码。NX即No-eXecute（不可执行）的意思，NX（DEP）的基本原理是将数据所在内存页标识为不可执行，当程序溢出成功转入shellcode时，程序会尝试在数据页面上执行指令，此时CPU就会抛出异常，而不是去执行恶意指令。</p>
+<p><img src="http://i.imgur.com/mwQwzQF.jpg" alt=""></p>
+<h3 id="ASLR（PIE）"><a href="#ASLR（PIE）" class="headerlink" title="ASLR（PIE）"></a>ASLR（PIE）</h3><p>一般情况下NX（Windows平台上称其为DEP）和地址空间分布随机化（ASLR）会同时工作。</p>
+<p>内存地址随机化机制（address space layout randomization)，有以下三种情况</p>
+<ul>
+<li>0 表示关闭进程地址空间随机化。</li>
+<li>1 表示将mmap的基址，stack和vdso页面随机化。</li>
+<li>2 表示在1的基础上增加栈（heap）的随机化。</li>
+</ul>
+<p>可以防范基于Ret2libc方式的针对DEP的攻击。ASLR和DEP配合使用，能有效阻止攻击者在堆栈上运行恶意代码。</p>
+<p>Built as PIE：位置独立的可执行区域（position-independent executables）。这样使得在利用缓冲溢出和移动操作系统中存在的其他内存崩溃缺陷时采用面向返回的编程（return-oriented programming）方法变得难得多。</p>
+<p>liunx下关闭PIE的命令如下：</p>
+<p>sudo -s echo 0 &gt; /proc/sys/kernel/randomize_va_space</p>
+<p>确认ASLR是否已经被打开，”2”表示已经打开</p>
+<p>[plain] view plaincopy<br>shanks@shanks-ubuntu:/home/shanks# cat /proc/sys/kernel/randomize_va_space<br>2  </p>
+<p>/proc/sys/kernel/randomize_va_space</p>
+<p>切换到root用户来做更新，直接使用sudo会出现下面结果</p>
+<p>In any ASLR enabled binary (and most normal binaries for that<br>matter) there has to be a way for the binary to ‘know’ where the libc functions<br>are at. The binary creates a PLT stub for functions used in the source. These<br>are <strong>always at a constant address</strong>. This PLT stub is essentially a wrapper<br>function for the actual function in libc. The GOT contains the actual adresses<br>in libc for the functions used in the program. The actual adresses change from<br>runtime to runtime, but pointers to the same function are <strong>always in the same<br>spot in the GOT</strong>.</p>
+
+      
+       <hr><span style="font-style: italic;color: gray;"> 转载请注明来源，欢迎对文章中的引用来源进行考证，欢迎指出任何有错误或不够清晰的表达。可以在下面评论区评论，也可以邮件至 youngcraft@qq.com </span>
+    </div>
+</article>
+
+
+<p>
+    <a class="dashang" onclick="dashangToggle()">赏</a>
+</p>
+
+
+<div class="article_copyright">
+    <p><span class="copy-title">文章标题:</span>GDB_PEDA Exploit 调试插件安装</p>
+    
+    <p><span class="copy-title">本文作者:</span><a title="拾荒者CD">拾荒者CD</a></p>
+    <p><span class="copy-title">发布时间:</span>2018-06-15, 09:50:08</p>
+    <p><span class="copy-title">最后更新:</span>2022-01-28, 23:31:43</p>
+    <span class="copy-title">原始链接:</span><a class="post-url" href="/2018/06/15/20180615-GDB_peda插件使用指南/" title="GDB_PEDA Exploit 调试插件安装">http://gumeng.fun/2018/06/15/20180615-GDB_peda插件使用指南/</a>
+    <p>
+        <span class="copy-title">版权声明:</span><i class="fa fa-creative-commons"></i> <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" title="CC BY-NC-SA 4.0 International" target="_blank">"署名-非商用-相同方式共享 4.0"</a> 转载请保留原文链接及作者。
+    </p>
+</div>
+
+
+
+
+
+    
+
+
+
+
+    </div>
+    <div class="copyright">
+        <p class="footer-entry">©2016-2020 Gumeng</p>
+<p class="footer-entry">Built with <a href="https://hexo.io/" target="_blank">Hexo</a> and <a href="https://github.com/yelog/hexo-theme-3-hexo" target="_blank">3-hexo</a> theme</p>
+
+    </div>
+    <div class="full-toc">
+        <button class="full"><span class="min "></span></button>
+<button class="post-toc-menu"><span class="post-toc-menu-icons"></span></button>
+<div class="post-toc"><span class="post-toc-title">目录</span>
+    <div class="post-toc-content">
+
+    </div>
+</div>
+<a class="" id="rocket"></a>
+
+    </div>
+</div>
+<div class="acParent"></div>
+
+<div class="hide_box" onclick="dashangToggle()"></div>
+<div class="shang_box">
+    <a class="shang_close" onclick="dashangToggle()">×</a>
+    <div class="shang_tit">
+        <p>喜欢就点赞,疼爱就打赏</p>
+    </div>
+    <div class="shang_payimg">
+        <div class="pay_img">
+            <img src="/img/alipay.jpg" class="alipay" title="扫码支持">
+            <img src="/img/weixin.jpg" class="weixin" title="扫码支持">
+        </div>
+    </div>
+    <div class="shang_payselect">
+        <span><label><input type="radio" name="pay" checked value="alipay">支付宝</label></span><span><label><input type="radio" name="pay" value="weixin">微信</label></span>
+    </div>
+</div>
+
+
+</body>
+<script src="/js/jquery.pjax.js?v=1.0.1"></script>
+
+<script src="/js/script.js?v=1.0.1"></script>
+<script>
+    var img_resize = 'default';
+    /*作者、标签的自动补全*/
+    $(function () {
+        $('.search').AutoComplete({
+            'data': ['#Blog','#随笔','#Exploit','#Heap Pwn','#Linux','#Exp','#linux','#privilge','#Filename','#漏洞利用','#nmap','#Pwn','#基础概念类',],
+            'itemHeight': 20,
+            'width': 418
+        }).AutoComplete('show');
+    })
+    function initArticle() {
+        /*渲染对应的表格样式*/
+        
+            $(".post .pjax table").addClass("green_title");
+        
+
+        /*渲染打赏样式*/
+        
+        $("input[name=pay]").on("click", function () {
+            if($("input[name=pay]:checked").val()=="weixin"){
+                $(".shang_box .shang_payimg .pay_img").addClass("weixin_img");
+            } else {
+                $(".shang_box .shang_payimg .pay_img").removeClass("weixin_img");
+            }
+        })
+        
+
+        /*高亮代码块行号*/
+        
+        $('pre code').each(function(){
+            var lines = $(this).text().split('\n').length - 1, widther='';
+            if (lines>99) {
+                widther = 'widther'
+            }
+            var $numbering = $('<ul/>').addClass('pre-numbering ' + widther).attr("unselectable","on");
+            $(this).addClass('has-numbering ' + widther)
+                    .parent()
+                    .append($numbering);
+            for(var i=1;i<=lines;i++){
+                $numbering.append($('<li/>').text(i));
+            }
+        });
+        
+
+        /*访问数量*/
+        
+        $.getScript("//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js");
+        
+
+        /*代码高亮，行号对齐*/
+        $('.pre-numbering').css('line-height',$('.has-numbering').css('line-height'));
+
+        
+        
+    }
+
+    /*打赏页面隐藏与展示*/
+    
+    function dashangToggle() {
+        $(".shang_box").fadeToggle();
+        $(".hide_box").fadeToggle();
+    }
+    
+
+</script>
+
+<!--加入行号的高亮代码块样式-->
+
+<style>
+    pre{
+        position: relative;
+        margin-bottom: 24px;
+        border-radius: 10px;
+        border: 1px solid #e2dede;
+        background: #FFF;
+        overflow: hidden;
+    }
+    code.has-numbering{
+        margin-left: 30px;
+    }
+    code.has-numbering.widther{
+        margin-left: 35px;
+    }
+    .pre-numbering{
+        margin: 0px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 20px;
+        padding: 0.5em 3px 0.7em 5px;
+        border-right: 1px solid #C3CCD0;
+        text-align: right;
+        color: #AAA;
+        background-color: #fafafa;
+    }
+    .pre-numbering.widther {
+        width: 35px;
+    }
+</style>
+
+<!--自定义样式设置-->
+<style>
+    
+    
+    .nav {
+        width: 542px;
+    }
+    .nav.fullscreen {
+        margin-left: -542px;
+    }
+    .nav-left {
+        width: 120px;
+    }
+    
+    
+    @media screen and (max-width: 1468px) {
+        .nav {
+            width: 492px;
+        }
+        .nav.fullscreen {
+            margin-left: -492px;
+        }
+        .nav-left {
+            width: 100px;
+        }
+    }
+    
+    
+    @media screen and (max-width: 1024px) {
+        .nav {
+            width: 492px;
+            margin-left: -492px
+        }
+        .nav.fullscreen {
+            margin-left: 0;
+        }
+        .nav .hide-list.fullscreen {
+            left: 492px
+        }
+    }
+    
+    @media screen and (max-width: 426px) {
+        .nav {
+            width: 100%;
+        }
+        .nav-left {
+            width: 100%;
+        }
+    }
+    
+    
+    .nav-right .title-list nav a .post-title, .nav-right .title-list #local-search-result a .post-title {
+        color: #383636;
+    }
+    
+    
+    .nav-right .title-list nav a .post-date, .nav-right .title-list #local-search-result a .post-date {
+        color: #5e5e5f;
+    }
+    
+    
+    .nav-right nav a.hover, #local-search-result a.hover{
+        background-color: #e2e0e0;
+    }
+    
+    
+
+    /*列表样式*/
+    
+    .post .pjax article .article-entry>ol, .post .pjax article .article-entry>ul, .post .pjax article>ol, .post .pjax article>ul{
+        border: #e2dede solid 1px;
+        border-radius: 10px;
+        padding: 10px 32px 10px 56px;
+    }
+    .post .pjax article .article-entry li>ol, .post .pjax article .article-entry li>ul,.post .pjax article li>ol, .post .pjax article li>ul{
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .post .pjax article .article-entry>ol>li, .post .pjax article .article-entry>ul>li,.post .pjax article>ol>li, .post .pjax article>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    .post .pjax article .article-entry li>ol>li, .post .pjax article .article-entry li>ul>li,.post .pjax article li>ol>li, .post .pjax article li>ul>li{
+        margin-bottom: auto;
+        margin-left: auto;
+    }
+    
+
+    /* 背景图样式 */
+    
+    
+
+
+    /*引用块样式*/
+    
+
+    /*文章列表背景图*/
+    
+    .nav-right:before {
+        content: ' ';
+        display: block;
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0.3;
+        background: url("https://i.loli.net/2019/07/22/5d3521411f3f169375.png");
+        background-repeat: no-repeat;
+        background-position: 50% 0;
+        -ms-background-size: cover;
+        -o-background-size: cover;
+        -moz-background-size: cover;
+        -webkit-background-size: cover;
+        background-size: cover;
+    }
+    
+
+    
+</style>
+
+
+
+
+
+
+
+</html>
