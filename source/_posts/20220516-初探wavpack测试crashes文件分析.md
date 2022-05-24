@@ -6,9 +6,12 @@ categories:
     - 模糊测试
 ---
 
-# wavpack crash文件分析
+#  CVE-2018-10538 Wavpack crash分析
 
-&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。
+&emsp;&emsp;前期通过CVE-2018-10538复现与发现，可以发现问题描述An issue was discovered in WavPack 5.1.0 and earlier for WAV input. Out-of-bounds writes can occur because ParseRiffHeaderConfig in riff.c does not validate the sizes of unknown chunks before attempting memory allocation, related to a lack of integer-overflow protection within a bytes_to_copy calculation and subsequent malloc call, leading to insufficient memory allocation.
+
+
+&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析，对应CVE-2018-10538。如有错误请各位大佬多多指教。
 
 # 1 关于崩溃样本文件
 
