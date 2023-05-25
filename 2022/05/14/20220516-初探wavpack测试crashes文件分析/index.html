@@ -5,21 +5,21 @@
   
 
   
-  <title>初探wavpack测试crashes样本分析 | 拾荒者CD</title>
+  <title>CVE-2018-10538 初探wavpack测试crashes样本分析 | 拾荒者CD</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+  <meta name="description" content="CVE-2018-10538&amp;emsp;&amp;emsp;前期通过CVE-2018-10538复现环境，可以发现CVE issue问题描述为：An issue was discovered in WavPack 5.1.0 and earlier for WAV input. Out-of-bounds writes can occur because ParseRiffHeaderConfig in">
 <meta name="keywords" content="Pwn,ICS,Python">
 <meta property="og:type" content="article">
-<meta property="og:title" content="初探wavpack测试crashes样本分析">
+<meta property="og:title" content="CVE-2018-10538 初探wavpack测试crashes样本分析">
 <meta property="og:url" content="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/index.html">
 <meta property="og:site_name" content="拾荒者CD">
-<meta property="og:description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+<meta property="og:description" content="CVE-2018-10538&amp;emsp;&amp;emsp;前期通过CVE-2018-10538复现环境，可以发现CVE issue问题描述为：An issue was discovered in WavPack 5.1.0 and earlier for WAV input. Out-of-bounds writes can occur because ParseRiffHeaderConfig in">
 <meta property="og:locale" content="En">
 <meta property="og:image" content="http://gumeng.fun/img/wavpack代码行1.png">
-<meta property="og:updated_time" content="2022-05-18T11:34:01.738Z">
+<meta property="og:updated_time" content="2022-05-25T14:11:23.056Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="初探wavpack测试crashes样本分析">
-<meta name="twitter:description" content="wavpack crash文件分析&amp;emsp;&amp;emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。 1 关于崩溃样本文件&amp;emsp;&amp;emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自a">
+<meta name="twitter:title" content="CVE-2018-10538 初探wavpack测试crashes样本分析">
+<meta name="twitter:description" content="CVE-2018-10538&amp;emsp;&amp;emsp;前期通过CVE-2018-10538复现环境，可以发现CVE issue问题描述为：An issue was discovered in WavPack 5.1.0 and earlier for WAV input. Out-of-bounds writes can occur because ParseRiffHeaderConfig in">
 <meta name="twitter:image" content="http://gumeng.fun/img/wavpack代码行1.png">
   
     <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
@@ -89,7 +89,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      初探wavpack测试crashes样本分析
+      CVE-2018-10538 初探wavpack测试crashes样本分析
     </h1>
   
 
@@ -97,7 +97,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="wavpack-crash文件分析"><a href="#wavpack-crash文件分析" class="headerlink" title="wavpack crash文件分析"></a>wavpack crash文件分析</h1><p>&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析。如有错误请各位大佬多多指教。</p>
+        <h1 id="CVE-2018-10538"><a href="#CVE-2018-10538" class="headerlink" title="CVE-2018-10538"></a>CVE-2018-10538</h1><p>&emsp;&emsp;前期通过CVE-2018-10538复现环境，可以发现CVE issue问题描述为：An issue was discovered in WavPack 5.1.0 and earlier for WAV input. Out-of-bounds writes can occur because ParseRiffHeaderConfig in riff.c does not validate the sizes of unknown chunks before attempting memory allocation, related to a lack of integer-overflow protection within a bytes_to_copy calculation and subsequent malloc call, leading to insufficient memory allocation.</p>
+<p>&emsp;&emsp;最近使用afl对wavpack进行了一次模糊测试，跑出来了15个crashes,针对其中test09.wav样本进行一下分析，对应CVE-2018-10538。如有错误请各位大佬多多指教。</p>
 <h1 id="1-关于崩溃样本文件"><a href="#1-关于崩溃样本文件" class="headerlink" title="1 关于崩溃样本文件"></a>1 关于崩溃样本文件</h1><p>&emsp;&emsp;crash09-关于id_000009,sig_11,src_001266,time_25197388,op_havoc,rep_16，出自afl fuzz的结果，系统栈帧崩溃时的backtrace如下：</p>
 <figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">gdb-peda$ <span class="keyword">bt</span></span><br><span class="line">#<span class="number">0</span>  __memmove_avx_unaligned_erms () <span class="meta">at</span> ../sysdeps/x86_64/multiarch/memmove-vec-unaligned-erms.S:<span class="number">416</span></span><br><span class="line">#<span class="number">1</span>  <span class="number">0x00007ffff7a2438e</span> <span class="keyword">in</span> __GI__IO_file_xsgetn (fp=<span class="number">0x555555675580</span>, data=&lt;optimized <span class="keyword">out</span>&gt;, n=<span class="number">0x95959596</span>) <span class="meta">at</span> fileops.c:<span class="number">1304</span></span><br><span class="line">#<span class="number">2</span>  <span class="number">0x00007ffff7a17f13</span> <span class="keyword">in</span> __GI__IO_fread (buf=<span class="number">0x0</span>, size=size@entry=<span class="number">0x1</span>, count=count@entry=<span class="number">0x95959596</span>, fp=fp@entry=<span class="number">0x555555675580</span>) <span class="meta">at</span> iofread.c:<span class="number">38</span></span><br><span class="line">#<span class="number">3</span>  <span class="number">0x00005555555b4cd6</span> <span class="keyword">in</span> fread (__stream=<span class="number">0x555555675580</span>, __n=<span class="number">0x95959596</span>, __size=<span class="number">0x1</span>, __<span class="built_in">ptr</span>=&lt;optimized <span class="keyword">out</span>&gt;) <span class="meta">at</span> /usr/include/x86_64-linux-gnu/<span class="meta">bits</span>/stdio2.h:<span class="number">297</span></span><br><span class="line">#<span class="number">4</span>  DoReadFile (hFile=hFile@entry=<span class="number">0x555555675580</span>, lpBuffer=lpBuffer@entry=<span class="number">0x0</span>, nNumberOfBytesToRead=nNumberOfBytesToRead@entry=<span class="number">0x95959596</span>, </span><br><span class="line">    lpNumberOfBytesRead=lpNumberOfBytesRead@entry=<span class="number">0x7fffffffba0c</span>) <span class="meta">at</span> utils.c:<span class="number">618</span></span><br><span class="line">#<span class="number">5</span>  <span class="number">0x000055555559c086</span> <span class="keyword">in</span> ParseRiffHeaderConfig (infile=<span class="number">0x555555675580</span>, infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, fourcc=&lt;optimized <span class="keyword">out</span>&gt;, wpc=<span class="number">0x555555675300</span>, </span><br><span class="line">    config=<span class="number">0x7fffffffbc60</span>) <span class="meta">at</span> riff.c:<span class="number">296</span></span><br><span class="line">#<span class="number">6</span>  <span class="number">0x0000555555599386</span> <span class="keyword">in</span> pack_file (infilename=<span class="number">0x5555556752c0</span> <span class="string">"test09.wav"</span>, outfilename=<span class="number">0x5555556752e0</span> <span class="string">"test09.wv"</span>, out2filename=<span class="number">0x0</span>, config=&lt;optimized <span class="keyword">out</span>&gt;)</span><br><span class="line">    <span class="meta">at</span> wavpack.c:<span class="number">1776</span></span><br><span class="line">#<span class="number">7</span>  <span class="number">0x000055555555af58</span> <span class="keyword">in</span> main (argc=&lt;optimized <span class="keyword">out</span>&gt;, argc@entry=<span class="number">0x3</span>, argv=&lt;optimized <span class="keyword">out</span>&gt;, argv@entry=<span class="number">0x7fffffffe338</span>) <span class="meta">at</span> wavpack.c:<span class="number">1272</span></span><br><span class="line">#<span class="number">8</span>  <span class="number">0x00007ffff79b90b3</span> <span class="keyword">in</span> __libc_start_main (main=<span class="number">0x555555557600</span> &lt;main&gt;, argc=<span class="number">0x3</span>, argv=<span class="number">0x7fffffffe338</span>, init=&lt;optimized <span class="keyword">out</span>&gt;, fini=&lt;optimized <span class="keyword">out</span>&gt;, </span><br><span class="line">    rtld_fini=&lt;optimized <span class="keyword">out</span>&gt;, stack_end=<span class="number">0x7fffffffe328</span>) <span class="meta">at</span> ../csu/libc-start.c:<span class="number">308</span></span><br><span class="line">#<span class="number">9</span>  <span class="number">0x000055555556d8ee</span> <span class="keyword">in</span> _start ()</span><br></pre></td></tr></table></figure>
 <p>&emsp;&emsp;其中，#3,#4分别表示在fread和utils.c 618行函数DoReadFile出现错误，从具体调用关系上看，#4在调用#3过程中，需要调用fread函数，fread函数的标准释义是：</p>
@@ -277,7 +278,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-id="cl3ej0qur002tq4vk9ke44x9s" class="article-share-link">Share</a>
+      <a data-url="http://gumeng.fun/2022/05/14/20220516-初探wavpack测试crashes文件分析/" data-id="cli32j4nf002q7cvkw8ii3w42" class="article-share-link">Share</a>
       
       
     </footer>
@@ -285,6 +286,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2022/06/08/20220608-Linux中SIGSEGV和SIGBUS的异同/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          20220608-Linux中SIGSEGV和SIGBUS的异同
+        
+      </div>
+    </a>
   
   
     <a href="/2022/05/07/20220507-UMAS协议初探/" id="article-nav-older" class="article-nav-link-wrap">
@@ -334,7 +344,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
     </div>
   </div>
 
@@ -347,7 +357,15 @@
       <ul>
         
           <li>
-            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">初探wavpack测试crashes样本分析</a>
+            <a href="/2023/05/25/living-off-the-land-attacks/">living-off-the-land-attacks</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/08/20220608-Linux中SIGSEGV和SIGBUS的异同/">20220608-Linux中SIGSEGV和SIGBUS的异同</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">CVE-2018-10538 初探wavpack测试crashes样本分析</a>
           </li>
         
           <li>
@@ -356,14 +374,6 @@
         
           <li>
             <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/04/20200804-ELF 文件结构/">ELF 文件结构初初级解析</a>
-          </li>
-        
-          <li>
-            <a href="/2020/08/04/20200804-外国ctf网站/">外国ctf学习网站集锦（未完待续）</a>
           </li>
         
       </ul>
@@ -378,7 +388,7 @@
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2022 拾荒者CD<br>
+      &copy; 2023 拾荒者CD<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>

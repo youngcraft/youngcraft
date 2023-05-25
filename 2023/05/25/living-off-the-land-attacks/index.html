@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>living-off-the-land-attacks | 拾荒者CD</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="“ living-off-the-land ”攻击技术(LOTL)是一种无文件恶意软件或利用链网络攻击技术，攻击者使用受害者系统中的本机合法工具来维持和推进攻击。 “本地为生”的(LOTL)是如何运作的?与利用签名文件执行攻击计划的传统恶意软件攻击不同，LOTL攻击是无文件的——这意味着攻击者不需要在目标系统中安装任何代码或脚本。相反，攻击者使用环境中已经存在的工具，例如PowerShell、Wi">
+<meta name="keywords" content="Pwn,ICS,Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="living-off-the-land-attacks">
+<meta property="og:url" content="http://gumeng.fun/2023/05/25/living-off-the-land-attacks/index.html">
+<meta property="og:site_name" content="拾荒者CD">
+<meta property="og:description" content="“ living-off-the-land ”攻击技术(LOTL)是一种无文件恶意软件或利用链网络攻击技术，攻击者使用受害者系统中的本机合法工具来维持和推进攻击。 “本地为生”的(LOTL)是如何运作的?与利用签名文件执行攻击计划的传统恶意软件攻击不同，LOTL攻击是无文件的——这意味着攻击者不需要在目标系统中安装任何代码或脚本。相反，攻击者使用环境中已经存在的工具，例如PowerShell、Wi">
+<meta property="og:locale" content="En">
+<meta property="og:updated_time" content="2023-05-25T11:45:57.629Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="living-off-the-land-attacks">
+<meta name="twitter:description" content="“ living-off-the-land ”攻击技术(LOTL)是一种无文件恶意软件或利用链网络攻击技术，攻击者使用受害者系统中的本机合法工具来维持和推进攻击。 “本地为生”的(LOTL)是如何运作的?与利用签名文件执行攻击计划的传统恶意软件攻击不同，LOTL攻击是无文件的——这意味着攻击者不需要在目标系统中安装任何代码或脚本。相反，攻击者使用环境中已经存在的工具，例如PowerShell、Wi">
+  
+    <link rel="alternate" href="/atom.xml" title="拾荒者CD" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/prism.css" type="text/css"></head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">拾荒者CD</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Pwner in ICS/Linux,Linux amateur, Python Exploit developer/addict</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://gumeng.fun"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-living-off-the-land-attacks" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2023/05/25/living-off-the-land-attacks/" class="article-date">
+  <time datetime="2023-05-25T11:43:03.000Z" itemprop="datePublished">2023-05-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      living-off-the-land-attacks
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>“ living-off-the-land ”攻击技术(LOTL)是一种无文件恶意软件或利用链网络攻击技术，攻击者使用受害者系统中的本机合法工具来维持和推进攻击。</p>
+<h1 id="“本地为生”的-LOTL-是如何运作的"><a href="#“本地为生”的-LOTL-是如何运作的" class="headerlink" title="“本地为生”的(LOTL)是如何运作的?"></a>“本地为生”的(LOTL)是如何运作的?</h1><p>与利用签名文件执行攻击计划的传统恶意软件攻击不同，LOTL攻击是无文件的——这意味着攻击者不需要在目标系统中安装任何代码或脚本。相反，攻击者使用环境中已经存在的工具，例如PowerShell、Windows Management Instrumentation (WMI)或密码保存工具Mimikatz来执行攻击。</p>
+<p>使用本地工具使LOTL攻击更难以检测，特别是如果组织利用传统的安全工具来搜索已知的恶意软件脚本或文件。由于安全工具集的这个漏洞，黑客经常能够在受害者的环境中潜伏数周、数月甚至数年而不被发现。</p>
+<h2 id="LOTL工具"><a href="#LOTL工具" class="headerlink" title="LOTL工具"></a>LOTL工具</h2><p>如果攻击者不需要安装代码来发起无文件恶意软件攻击，那么他们如何获得对环境的访问权限，以便修改其本地工具以达到他们的目的?访问可以通过几种方式完成，例如通过使用:</p>
+<p>利用工具</p>
+<ol>
+<li>劫持本地工具</li>
+<li>注册表驻留恶意软件</li>
+<li>内存的恶意软件</li>
+<li>Fileless ransomware</li>
+<li>偷来的凭证</li>
+</ol>
+<h3 id="利用工具1：劫持本地工具"><a href="#利用工具1：劫持本地工具" class="headerlink" title="利用工具1：劫持本地工具"></a>利用工具1：劫持本地工具</h3><p>漏洞是代码片段、命令序列或数据集合;漏洞利用工具包是漏洞利用的集合。攻击者利用这些工具利用已知存在于操作系统或已安装应用程序中的漏洞。<br>漏洞利用是发起无文件恶意软件攻击(如LOTL攻击)的有效方法，因为它们可以直接注入内存，而不需要向磁盘写入任何内容。攻击者可以使用它们来自动进行大规模的初始妥协。</p>
+<p>无论攻击是无文件攻击还是使用传统恶意软件，漏洞利用都以同样的方式开始。通常，受害者是通过网络钓鱼邮件或社交工程来引诱的。攻击工具包通常包括针对许多漏洞的攻击，以及攻击者可以用来控制系统的管理控制台。在某些情况下，漏洞利用工具包将包括扫描目标系统的漏洞，然后在运行中制作和启动定制的漏洞利用的能力。</p>
+<p>劫持本地工具或两用工具</p>
+<p>在LOTL攻击中，攻击者通常劫持合法工具来升级权限、访问不同的系统和网络、窃取或加密数据、安装恶意软件、设置后门接入点或以其他方式推进攻击路径。本地或两用工具的例子包括:</p>
+<p>FTP (File transfer protocol)客户端或系统功能，如PsExec</p>
+<p>取证工具，如密码提取工具Mimikatz</p>
+<p>PowerShell，一个脚本启动框架，为Windows设备管理提供了广泛的功能</p>
+<p>WMI，用于访问各种Windows组件的接口</p>
+<p>注册表驻留恶意软件</p>
+<p>注册表驻留恶意软件是一种恶意软件，它将自己安装在Windows注册表中，以便在逃避检测的同时保持持久性。</p>
+<p>通常，Windows系统是通过使用下载恶意文件的滴管程序感染的。此恶意文件在目标系统上保持活动状态，这使得它容易被防病毒软件检测到。无文件恶意软件也可能使用dropper程序，但它不下载恶意文件。相反，dropper程序本身直接将恶意代码写入Windows注册表中。</p>
+<p>恶意代码可以被编程为每次操作系统启动时启动，并且没有恶意文件可以被发现-恶意代码隐藏在不受反病毒检测的本地文件中。</p>
+<p>这类攻击最古老的变种是Poweliks，但此后出现了许多变种，包括Kovter和GootKit。修改注册表项的恶意软件很可能在很长一段时间内不被发现。</p>
+<p>内存的恶意软件</p>
+<p>内存型恶意软件只存在于内存中。仅内存恶意软件的一个例子是Duqu蠕虫，它可以保持不被检测到，因为它只驻留在内存中。Duqu 2.0有两个版本;第一种是后门，允许对手在组织中获得立足点。然后，攻击者可以使用Duqu 2.0的高级版本，该版本提供了侦察、横向移动和数据泄露等附加功能。Duqu 2.0已经被用来成功入侵电信行业的公司和至少一家知名的安全软件提供商。</p>
+<p>Fileless Ransomware</p>
+<p>对手并不局限于一种攻击方式。他们使用任何能帮助他们捕获有效载荷的技术。今天，勒索软件攻击者正在使用无文件技术，通过使用nati将恶意代码嵌入到文档中</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://gumeng.fun/2023/05/25/living-off-the-land-attacks/" data-id="cli32j4ni002x7cvkq2q3zk3u" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2022/06/08/20220608-Linux中SIGSEGV和SIGBUS的异同/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">20220608-Linux中SIGSEGV和SIGBUS的异同</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/CTF/">CTF</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Coding/">Coding</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Exploit/">Exploit</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/Pwn/">Pwn</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/tools/">tools</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/">工控协议</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/工控协议/逆向工程/">逆向工程</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/模糊测试/">模糊测试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exp/">Exp</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Exploit/">Exploit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Filename/">Filename</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Heap-Pwn/">Heap Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/">Linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Pwn/">Pwn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/linux/">linux</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/nmap/">nmap</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/privilge/">privilge</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/基础概念类/">基础概念类</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/漏洞利用/">漏洞利用</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Exp/" style="font-size: 10px;">Exp</a> <a href="/tags/Exploit/" style="font-size: 20px;">Exploit</a> <a href="/tags/Filename/" style="font-size: 10px;">Filename</a> <a href="/tags/Heap-Pwn/" style="font-size: 10px;">Heap Pwn</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/Pwn/" style="font-size: 10px;">Pwn</a> <a href="/tags/linux/" style="font-size: 10px;">linux</a> <a href="/tags/nmap/" style="font-size: 10px;">nmap</a> <a href="/tags/privilge/" style="font-size: 10px;">privilge</a> <a href="/tags/基础概念类/" style="font-size: 10px;">基础概念类</a> <a href="/tags/漏洞利用/" style="font-size: 15px;">漏洞利用</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/05/">May 2023</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">June 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">May 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">April 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/02/">February 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/10/">October 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/06/">June 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/10/">October 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">June 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/25/living-off-the-land-attacks/">living-off-the-land-attacks</a>
+          </li>
+        
+          <li>
+            <a href="/2022/06/08/20220608-Linux中SIGSEGV和SIGBUS的异同/">20220608-Linux中SIGSEGV和SIGBUS的异同</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/14/20220516-初探wavpack测试crashes文件分析/">CVE-2018-10538 初探wavpack测试crashes样本分析</a>
+          </li>
+        
+          <li>
+            <a href="/2022/05/07/20220507-UMAS协议初探/">施耐德umas工控协议初探</a>
+          </li>
+        
+          <li>
+            <a href="/2022/04/07/20220413-fuzz技术最新进展与展望/">Fuzzing技术最新进展与展望</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2023 拾荒者CD<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
